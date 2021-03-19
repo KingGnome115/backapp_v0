@@ -39,7 +39,7 @@ public class Companieros extends javax.swing.JFrame
         jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Eliminar libreta");
+        setTitle("Compañeros");
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(234, 239, 210));
@@ -125,6 +125,7 @@ public class Companieros extends javax.swing.JFrame
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton3ActionPerformed
