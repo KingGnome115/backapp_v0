@@ -3,8 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package frames;
+package backapp;
 
+import backapp.configuracion.Companieros;
+import backapp.libretas.Compartir;
+import backapp.libretas.Creacion;
+import backapp.libretas.Eliminacion;
+import backapp.libretas.Exportar;
+import backapp.configuracion.Horario;
+import backapp.libretas.Importar;
+import backapp.libretas.Libreta;
 import java.awt.Image;
 import java.awt.Toolkit;
 
@@ -49,6 +57,7 @@ public class Opciones extends javax.swing.JFrame
         jLabel9 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu3 = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
@@ -56,6 +65,8 @@ public class Opciones extends javax.swing.JFrame
         jMenu5 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem18 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem14 = new javax.swing.JMenuItem();
@@ -66,6 +77,7 @@ public class Opciones extends javax.swing.JFrame
         jMenuItem16 = new javax.swing.JMenuItem();
         jMenuItem17 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
@@ -114,6 +126,10 @@ public class Opciones extends javax.swing.JFrame
         jMenuBar2.setMinimumSize(new java.awt.Dimension(450, 35));
         jMenuBar2.setPreferredSize(new java.awt.Dimension(450, 35));
 
+        jMenu3.setText("Salir");
+        jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jMenuBar2.add(jMenu3);
+
         jMenu1.setText("Ayuda");
         jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuBar2.add(jMenu1);
@@ -136,7 +152,7 @@ public class Opciones extends javax.swing.JFrame
         jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jMenuItem2.setText("Horario");
+        jMenuItem2.setText("Horario y Materias");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -156,6 +172,18 @@ public class Opciones extends javax.swing.JFrame
             }
         });
         jMenu5.add(jMenuItem15);
+        jMenu5.add(jSeparator7);
+
+        jMenuItem18.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jMenuItem18.setText("Shortcuts");
+        jMenuItem18.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMenuItem18ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem18);
 
         jMenuBar2.add(jMenu5);
 
@@ -197,12 +225,30 @@ public class Opciones extends javax.swing.JFrame
         jMenu2.add(jMenu6);
         jMenu2.add(jSeparator1);
 
+        jMenuItem5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jMenuItem5.setText("Compartir ");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem5);
+
         jMenuItem8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jMenuItem8.setText("Crear nueva libreta");
+        jMenuItem8.setText("Crear ");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem8);
 
         jMenuItem9.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jMenuItem9.setText("Eliminar libreta");
+        jMenuItem9.setText("Eliminar ");
         jMenuItem9.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -215,10 +261,24 @@ public class Opciones extends javax.swing.JFrame
 
         jMenuItem3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem3.setText("Importar");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem4.setText("Exportar");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuBar2.add(jMenu2);
@@ -258,6 +318,31 @@ public class Opciones extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jMenuItem15ActionPerformed
         new Companieros().setVisible(true);
     }//GEN-LAST:event_jMenuItem15ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem8ActionPerformed
+    {//GEN-HEADEREND:event_jMenuItem8ActionPerformed
+        new Creacion().setVisible(true);
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem3ActionPerformed
+    {//GEN-HEADEREND:event_jMenuItem3ActionPerformed
+        new Importar().setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem4ActionPerformed
+    {//GEN-HEADEREND:event_jMenuItem4ActionPerformed
+      new Exportar().setVisible(true);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem5ActionPerformed
+    {//GEN-HEADEREND:event_jMenuItem5ActionPerformed
+        new Compartir().setVisible(true);
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem18ActionPerformed
+    {//GEN-HEADEREND:event_jMenuItem18ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem18ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,6 +399,7 @@ public class Opciones extends javax.swing.JFrame
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
@@ -322,9 +408,11 @@ public class Opciones extends javax.swing.JFrame
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
     private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
@@ -335,5 +423,6 @@ public class Opciones extends javax.swing.JFrame
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
     // End of variables declaration//GEN-END:variables
 }
