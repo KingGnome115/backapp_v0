@@ -57,7 +57,6 @@ public class Opciones extends javax.swing.JFrame
         jLabel9 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
-        jMenu3 = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
@@ -125,10 +124,6 @@ public class Opciones extends javax.swing.JFrame
         jMenuBar2.setMaximumSize(new java.awt.Dimension(450, 32769));
         jMenuBar2.setMinimumSize(new java.awt.Dimension(450, 35));
         jMenuBar2.setPreferredSize(new java.awt.Dimension(450, 35));
-
-        jMenu3.setText("Salir");
-        jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jMenuBar2.add(jMenu3);
 
         jMenu1.setText("Ayuda");
         jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -399,7 +394,6 @@ public class Opciones extends javax.swing.JFrame
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
