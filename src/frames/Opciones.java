@@ -41,31 +41,30 @@ public class Opciones extends javax.swing.JFrame
     private void initComponents()
     {
 
-        jMenu3 = new javax.swing.JMenu();
-        jMenuItem11 = new javax.swing.JMenuItem();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenu5 = new javax.swing.JMenu();
         jMenu7 = new javax.swing.JMenu();
         jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
+        jMenu5 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jSeparator4 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem13 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         jMenuItem14 = new javax.swing.JMenuItem();
         jSeparator5 = new javax.swing.JPopupMenu.Separator();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -73,42 +72,70 @@ public class Opciones extends javax.swing.JFrame
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
 
-        jMenu3.setText("jMenu3");
-
-        jMenuItem11.setText("jMenuItem11");
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("BackApp v0");
-        setFont(new java.awt.Font("DengXian", 1, 18)); // NOI18N
+        setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         setIconImage(getIconImage());
+        setMinimumSize(new java.awt.Dimension(450, 85));
         setResizable(false);
 
-        jLabel1.setText("Fecha y hora:");
+        jPanel1.setBackground(new java.awt.Color(234, 239, 210));
+        jPanel1.setMinimumSize(new java.awt.Dimension(450, 50));
+        jPanel1.setPreferredSize(new java.awt.Dimension(450, 50));
+        jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel2.setText("Clase actual: Administracion");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/tiempo.png"))); // NOI18N
+        jPanel1.add(jLabel1);
 
-        jButton1.setText("abri libreta");
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setText("10:45 ");
+        jPanel1.add(jLabel4);
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/074-question.png"))); // NOI18N
-        jMenu1.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
+        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator2.setMinimumSize(new java.awt.Dimension(5, 10));
+        jSeparator2.setPreferredSize(new java.awt.Dimension(5, 40));
+        jPanel1.add(jSeparator2);
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel7.setText("Clase actual:");
+        jPanel1.add(jLabel7);
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel9.setText("Administracion");
+        jPanel1.add(jLabel9);
+
+        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jButton3.setText("nueva hoja");
+        jPanel1.add(jButton3);
+
+        jMenuBar2.setBackground(new java.awt.Color(240, 234, 210));
+        jMenuBar2.setMaximumSize(new java.awt.Dimension(450, 32769));
+        jMenuBar2.setMinimumSize(new java.awt.Dimension(450, 35));
+        jMenuBar2.setPreferredSize(new java.awt.Dimension(450, 35));
+
+        jMenu1.setText("Ayuda");
+        jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuBar2.add(jMenu1);
 
-        jMenu5.setText("Configuraciones");
-        jMenu5.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
-
         jMenu7.setText("Notificaciones");
-        jMenu7.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
+        jMenu7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
+        jCheckBoxMenuItem1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("Notificar siguiente clase");
         jMenu7.add(jCheckBoxMenuItem1);
 
+        jCheckBoxMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jCheckBoxMenuItem2.setText("Silenciar notificaciones");
         jMenu7.add(jCheckBoxMenuItem2);
 
-        jMenu5.add(jMenu7);
+        jMenuBar2.add(jMenu7);
 
-        jMenuItem2.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
+        jMenu5.setText("Configuración");
+        jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+
+        jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem2.setText("Horario");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener()
         {
@@ -119,41 +146,19 @@ public class Opciones extends javax.swing.JFrame
         });
         jMenu5.add(jMenuItem2);
 
-        jMenuItem15.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
+        jMenuItem15.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem15.setText("Compañeros");
         jMenu5.add(jMenuItem15);
 
         jMenuBar2.add(jMenu5);
 
         jMenu2.setText("Libretas");
-        jMenu2.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
-
-        jMenu4.setText("Bases de datos");
-        jMenu4.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
-
-        jMenuItem5.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
-        jMenuItem5.setText("Abrir");
-        jMenu4.add(jMenuItem5);
-        jMenu4.add(jSeparator4);
-
-        jMenuItem10.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
-        jMenuItem10.setText("Hoja 1");
-        jMenu4.add(jMenuItem10);
-
-        jMenuItem12.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
-        jMenuItem12.setText("Hoja 2");
-        jMenu4.add(jMenuItem12);
-
-        jMenuItem13.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
-        jMenuItem13.setText("Hoja 3");
-        jMenu4.add(jMenuItem13);
-
-        jMenu2.add(jMenu4);
+        jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         jMenu6.setText("Administracion");
-        jMenu6.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
+        jMenu6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
-        jMenuItem14.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
+        jMenuItem14.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem14.setText("Abrir");
         jMenuItem14.addActionListener(new java.awt.event.ActionListener()
         {
@@ -165,31 +170,40 @@ public class Opciones extends javax.swing.JFrame
         jMenu6.add(jMenuItem14);
         jMenu6.add(jSeparator5);
 
-        jMenuItem6.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
+        jMenuItem6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem6.setText("Hoja 1");
         jMenu6.add(jMenuItem6);
 
-        jMenuItem7.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
+        jMenuItem7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem7.setText("Hoja 2");
         jMenu6.add(jMenuItem7);
+        jMenu6.add(jSeparator6);
+
+        jMenuItem16.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jMenuItem16.setText("Nueva hoja");
+        jMenu6.add(jMenuItem16);
+
+        jMenuItem17.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jMenuItem17.setText("Eliminar hoja");
+        jMenu6.add(jMenuItem17);
 
         jMenu2.add(jMenu6);
         jMenu2.add(jSeparator1);
 
-        jMenuItem8.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
+        jMenuItem8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem8.setText("Crear nueva libreta");
         jMenu2.add(jMenuItem8);
 
-        jMenuItem9.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
+        jMenuItem9.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem9.setText("Eliminar libreta");
         jMenu2.add(jMenuItem9);
         jMenu2.add(jSeparator3);
 
-        jMenuItem3.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
+        jMenuItem3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem3.setText("Importar");
         jMenu2.add(jMenuItem3);
 
-        jMenuItem4.setFont(new java.awt.Font("DengXian", 0, 18)); // NOI18N
+        jMenuItem4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem4.setText("Exportar");
         jMenu2.add(jMenuItem4);
 
@@ -201,28 +215,11 @@ public class Opciones extends javax.swing.JFrame
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 8, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jButton1))
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -284,36 +281,35 @@ public class Opciones extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
-    private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
     // End of variables declaration//GEN-END:variables
 }

@@ -6,7 +6,8 @@
 package frames;
 
 import java.awt.Image;
-import javax.swing.ImageIcon;
+import java.awt.Toolkit;
+
 
 /**
  *
@@ -21,12 +22,14 @@ public class Libreta extends javax.swing.JFrame
     public Libreta()
     {
         initComponents();
-        jLabel9.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/capturas/1.PNG"))
-                .getImage().getScaledInstance(200, 150, Image.SCALE_AREA_AVERAGING)));
-        jLabel10.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/capturas/2.PNG"))
-                .getImage().getScaledInstance(200, 150, Image.SCALE_AREA_AVERAGING)));
-        jLabel8.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/capturas/3.PNG"))
-                .getImage().getScaledInstance(200, 150, Image.SCALE_AREA_AVERAGING)));
+        jTabbedPane1.addTab("Hoja 1", new Hoja());
+        this.pack();
+    }
+  @Override
+    public Image getIconImage()
+    {
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("iconos/libro.png"));
+        return retValue;
     }
 
     /**
@@ -40,132 +43,30 @@ public class Libreta extends javax.swing.JFrame
     {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        jSplitPane1 = new javax.swing.JSplitPane();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Administracion");
+        setIconImage(getIconImage());
 
-        jSplitPane1.setDividerLocation(225);
-        jSplitPane1.setDividerSize(10);
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("La ingenieria es una profesión en la que los conocimientos científicos \ny empíricos se aplican para la conversión óptima de los materiales y \nfuerzas de la naturaleza en usos prácticos para la humanidad, así como,\n la invención, perfeccionamiento y utilización de la técnica industrial,\n y a la resolución de problemas técnicos-sociales. Esta disciplina también \nes considerada como un arte, debido a que la capacidad imaginativa y de\n creación del ser humano sobresale para concebir cosas que aún no existen,\n y es por medio de la aplicación de sus conocimientos científicos que \ntransforma esas ideas en acción o en una realidad.");
-        jScrollPane1.setViewportView(jTextArea1);
-
-        jSplitPane1.setRightComponent(jScrollPane1);
-
-        jPanel3.setLayout(new java.awt.GridLayout(0, 1, 0, 10));
-        jPanel3.add(jLabel10);
-        jPanel3.add(jLabel9);
-        jPanel3.add(jLabel8);
-
-        jScrollPane2.setViewportView(jPanel3);
-
-        jSplitPane1.setLeftComponent(jScrollPane2);
-
-        jLabel1.setText("Titulo:");
-
-        jTextField1.setText("Hoja 1");
-
-        jLabel2.setText("Tipo de letra");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Arial", "Sans", "Ink Free", "DengXian" }));
-
-        jLabel3.setText("Tamaño de letra");
-
-        jComboBox2.setEditable(true);
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "12", "14", "16", "18" }));
-
-        jLabel4.setText("Agregar imagen");
-
-        jButton1.setText("seleccionar archivo");
-
-        jButton2.setText("portapapeles");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 333, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addComponent(jSplitPane1)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
-                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(15, 15, 15))
-        );
-
-        jTabbedPane1.addTab("Hoja 1", jPanel1);
+        jTabbedPane1.setBackground(new java.awt.Color(196, 170, 151));
+        jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jTabbedPane1.setOpaque(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -214,24 +115,6 @@ public class Libreta extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
