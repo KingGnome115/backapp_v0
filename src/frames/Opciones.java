@@ -148,6 +148,13 @@ public class Opciones extends javax.swing.JFrame
 
         jMenuItem15.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem15.setText("Compañeros");
+        jMenuItem15.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMenuItem15ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem15);
 
         jMenuBar2.add(jMenu5);
@@ -246,6 +253,11 @@ public class Opciones extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jMenuItem9ActionPerformed
         new Eliminacion().setVisible(true);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem15ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem15ActionPerformed
+    {//GEN-HEADEREND:event_jMenuItem15ActionPerformed
+        new Companieros().setVisible(true);
+    }//GEN-LAST:event_jMenuItem15ActionPerformed
 
     /**
      * @param args the command line arguments
