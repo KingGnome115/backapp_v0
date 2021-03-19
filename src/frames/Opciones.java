@@ -196,6 +196,13 @@ public class Opciones extends javax.swing.JFrame
 
         jMenuItem9.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem9.setText("Eliminar libreta");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem9);
         jMenu2.add(jSeparator3);
 
@@ -234,6 +241,11 @@ public class Opciones extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jMenuItem2ActionPerformed
         new Horario().setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem9ActionPerformed
+    {//GEN-HEADEREND:event_jMenuItem9ActionPerformed
+        new Eliminacion().setVisible(true);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments
