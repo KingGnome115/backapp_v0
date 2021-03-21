@@ -1,16 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package backapp.configuracion;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  *
  * @author rosal
  */
-public class Horario extends javax.swing.JFrame
+public class Horario extends javax.swing.JFrame implements Runnable
 {
+
+    private String hora, minuto;
+    private Thread hilo;
 
     /**
      * Creates new form Horario
@@ -18,6 +20,28 @@ public class Horario extends javax.swing.JFrame
     public Horario()
     {
         initComponents();
+        hilo = new Thread(this);
+        hilo.start();
+    }
+
+    @Override
+    public void run()
+    {
+        Thread current = Thread.currentThread();
+        while (current == hilo)
+        {
+            hora();
+            jLHora.setText(hora + ":" + minuto);
+        }
+    }
+
+    public void hora()
+    {
+        Calendar calendario = new GregorianCalendar();
+        Date horaactual = new Date();
+        calendario.setTime(horaactual);
+        hora = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY) : "0" + calendario.get(Calendar.HOUR_OF_DAY);
+        minuto = calendario.get(Calendar.MINUTE) > 9 ? "" + calendario.get(Calendar.MINUTE) : "0" + calendario.get(Calendar.MINUTE);
     }
 
     /**
@@ -37,7 +61,7 @@ public class Horario extends javax.swing.JFrame
         jPanel3 = new javax.swing.JPanel();
         jLabel55 = new javax.swing.JLabel();
         jLabel54 = new javax.swing.JLabel();
-        jLabel57 = new javax.swing.JLabel();
+        jLFecha = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel5 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
@@ -98,6 +122,8 @@ public class Horario extends javax.swing.JFrame
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
+        jLHora = new javax.swing.JLabel();
+        jLSalir = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel8 = new javax.swing.JPanel();
@@ -150,11 +176,11 @@ public class Horario extends javax.swing.JFrame
 
         jPanel2.add(jPanel3);
 
-        jLabel57.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel57.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel57.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/tiempo.png"))); // NOI18N
-        jLabel57.setText("Miercoles 26 de marzo, 7:15 am");
-        jLabel57.setIconTextGap(10);
+        jLFecha.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLFecha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/tiempo.png"))); // NOI18N
+        jLFecha.setText("Miercoles 26 de marzo");
+        jLFecha.setIconTextGap(10);
 
         jScrollPane3.setBorder(null);
 
@@ -441,30 +467,52 @@ public class Horario extends javax.swing.JFrame
         jLabel19.setText("Sabado");
         jPanel4.add(jLabel19);
 
+        jLHora.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLHora.setText("HH:mm");
+
+        jLSalir.setText("Salir");
+        jLSalir.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                jLSalirMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel57, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE))
-                        .addGap(30, 30, 30)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap()
+                .addComponent(jLSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(204, 204, 204)
+                .addComponent(jLFecha)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLHora, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel57)
-                .addGap(18, 18, 18)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLFecha)
+                            .addComponent(jLHora, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
+                        .addGap(15, 15, 15))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -472,7 +520,7 @@ public class Horario extends javax.swing.JFrame
                         .addGap(5, 5, 5)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)))
                 .addGap(30, 30, 30))
         );
 
@@ -480,7 +528,6 @@ public class Horario extends javax.swing.JFrame
 
         jSplitPane1.setBackground(new java.awt.Color(234, 239, 210));
         jSplitPane1.setDividerLocation(450);
-        jSplitPane1.setDividerSize(10);
 
         jPanel8.setBackground(new java.awt.Color(234, 239, 210));
         jPanel8.setMinimumSize(new java.awt.Dimension(450, 100));
@@ -682,6 +729,11 @@ public class Horario extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jLSalirMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jLSalirMouseClicked
+    {//GEN-HEADEREND:event_jLSalirMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_jLSalirMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -734,6 +786,9 @@ public class Horario extends javax.swing.JFrame
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JLabel jLFecha;
+    private javax.swing.JLabel jLHora;
+    private javax.swing.JLabel jLSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -779,7 +834,6 @@ public class Horario extends javax.swing.JFrame
     private javax.swing.JLabel jLabel54;
     private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
-    private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel6;

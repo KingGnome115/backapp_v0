@@ -72,6 +72,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     private void initComponents()
     {
 
+        jMenu3 = new javax.swing.JMenu();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLHora = new javax.swing.JLabel();
@@ -105,12 +106,17 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMSalir = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+
+        jMenu3.setText("jMenu3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("BackApp v0");
         setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         setIconImage(getIconImage());
         setMinimumSize(new java.awt.Dimension(450, 85));
+        setUndecorated(true);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(234, 239, 210));
@@ -301,6 +307,30 @@ public class Opciones extends javax.swing.JFrame implements Runnable
 
         jMenuBar2.add(jMenu2);
 
+        jMSalir.setText("Salir");
+        jMSalir.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jMSalir.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMSalirActionPerformed(evt);
+            }
+        });
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
+        jMenuItem1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jMenuItem1.setText("Salir de la aplicación");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMSalir.add(jMenuItem1);
+
+        jMenuBar2.add(jMSalir);
+
         setJMenuBar(jMenuBar2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -362,6 +392,17 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem18ActionPerformed
 
+    private void jMSalirActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMSalirActionPerformed
+    {//GEN-HEADEREND:event_jMSalirActionPerformed
+        
+    }//GEN-LAST:event_jMSalirActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem1ActionPerformed
+    {//GEN-HEADEREND:event_jMenuItem1ActionPerformed
+        dispose();
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -415,12 +456,15 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMSalir;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem16;
