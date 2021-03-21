@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package backapp;
 
 import backapp.configuracion.Companieros;
@@ -15,13 +10,19 @@ import backapp.libretas.Importar;
 import backapp.libretas.Libreta;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  *
  * @author rosal
  */
-public class Opciones extends javax.swing.JFrame
+public class Opciones extends javax.swing.JFrame implements Runnable
 {
+    
+    private String hora, minuto;
+    private Thread hilo;
 
     /**
      * Creates new form Opciones
@@ -30,13 +31,35 @@ public class Opciones extends javax.swing.JFrame
     {
         this.setLocation(100, 30);
         initComponents();
+        hilo = new Thread(this);
+        hilo.start();
     }
-
+    
     @Override
     public Image getIconImage()
     {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("iconos/mochila.png"));
         return retValue;
+    }
+    
+    @Override
+    public void run()
+    {
+        Thread current = Thread.currentThread();
+        while (current == hilo)
+        {
+            hora();
+            jLHora.setText(hora + ":" + minuto);
+        }
+    }
+    
+    public void hora()
+    {
+        Calendar calendario = new GregorianCalendar();
+        Date horaactual = new Date();
+        calendario.setTime(horaactual);
+        hora = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY) : "0" + calendario.get(Calendar.HOUR_OF_DAY);
+        minuto = calendario.get(Calendar.MINUTE) > 9 ? "" + calendario.get(Calendar.MINUTE) : "0" + calendario.get(Calendar.MINUTE);
     }
 
     /**
@@ -51,7 +74,7 @@ public class Opciones extends javax.swing.JFrame
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jLHora = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -99,9 +122,9 @@ public class Opciones extends javax.swing.JFrame
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/tiempo.png"))); // NOI18N
         jPanel1.add(jLabel1);
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setText("10:45 ");
-        jPanel1.add(jLabel4);
+        jLHora.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLHora.setText("10:45 ");
+        jPanel1.add(jLHora);
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
         jSeparator2.setMinimumSize(new java.awt.Dimension(5, 10));
@@ -326,7 +349,7 @@ public class Opciones extends javax.swing.JFrame
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem4ActionPerformed
     {//GEN-HEADEREND:event_jMenuItem4ActionPerformed
-      new Exportar().setVisible(true);
+        new Exportar().setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -388,8 +411,8 @@ public class Opciones extends javax.swing.JFrame
     private javax.swing.JButton jButton3;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
+    private javax.swing.JLabel jLHora;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
