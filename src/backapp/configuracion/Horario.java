@@ -1,5 +1,8 @@
 package backapp.configuracion;
 
+import backapp.Opciones;
+import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -13,6 +16,9 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
     private String hora, minuto;
     private Thread hilo;
+    
+    SimpleDateFormat formato = new SimpleDateFormat("EEEE d MMMM");
+    Date fecha = new Date();
 
     /**
      * Creates new form Horario
@@ -22,6 +28,10 @@ public class Horario extends javax.swing.JFrame implements Runnable
         initComponents();
         hilo = new Thread(this);
         hilo.start();
+        jLFecha.setText(formato.format(fecha));
+        
+        btnSalir.setMnemonic(KeyEvent.VK_ESCAPE);
+        
     }
 
     @Override
@@ -123,7 +133,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jLabel6 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLHora = new javax.swing.JLabel();
-        jLSalir = new javax.swing.JLabel();
+        btnSalir = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel8 = new javax.swing.JPanel();
@@ -144,6 +154,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jTable2 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setUndecorated(true);
 
         jTabbedPane1.setBackground(new java.awt.Color(196, 170, 151));
         jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -470,12 +481,12 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jLHora.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLHora.setText("HH:mm");
 
-        jLSalir.setText("Salir");
-        jLSalir.addMouseListener(new java.awt.event.MouseAdapter()
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener()
         {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
+            public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jLSalirMouseClicked(evt);
+                btnSalirActionPerformed(evt);
             }
         });
 
@@ -485,8 +496,8 @@ public class Horario extends javax.swing.JFrame implements Runnable
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(204, 204, 204)
+                .addComponent(btnSalir)
+                .addGap(167, 167, 167)
                 .addComponent(jLFecha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLHora, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -504,15 +515,11 @@ public class Horario extends javax.swing.JFrame implements Runnable
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLFecha)
-                            .addComponent(jLHora, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
-                        .addGap(15, 15, 15))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLFecha)
+                    .addComponent(jLHora, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                    .addComponent(btnSalir))
+                .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -729,10 +736,11 @@ public class Horario extends javax.swing.JFrame implements Runnable
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jLSalirMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jLSalirMouseClicked
-    {//GEN-HEADEREND:event_jLSalirMouseClicked
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSalirActionPerformed
+    {//GEN-HEADEREND:event_btnSalirActionPerformed
+        new Opciones().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jLSalirMouseClicked
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -780,6 +788,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSalir;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -788,7 +797,6 @@ public class Horario extends javax.swing.JFrame implements Runnable
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLFecha;
     private javax.swing.JLabel jLHora;
-    private javax.swing.JLabel jLSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
