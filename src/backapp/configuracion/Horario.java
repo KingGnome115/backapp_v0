@@ -1,8 +1,10 @@
 package backapp.configuracion;
 
 import backapp.Opciones;
+import clases.Horarios;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -16,9 +18,12 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
     private String hora, minuto;
     private Thread hilo;
-    
+
     SimpleDateFormat formato = new SimpleDateFormat("EEEE d MMMM");
     Date fecha = new Date();
+
+    ArrayList<Horarios> horarios = new ArrayList<>();
+    private int tam = horarios.size();
 
     /**
      * Creates new form Horario
@@ -29,9 +34,11 @@ public class Horario extends javax.swing.JFrame implements Runnable
         hilo = new Thread(this);
         hilo.start();
         jLFecha.setText(formato.format(fecha));
-        
+
         btnSalir.setMnemonic(KeyEvent.VK_ESCAPE);
-        
+
+        actualizarTabla();
+
     }
 
     @Override
@@ -52,6 +59,54 @@ public class Horario extends javax.swing.JFrame implements Runnable
         calendario.setTime(horaactual);
         hora = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY) : "0" + calendario.get(Calendar.HOUR_OF_DAY);
         minuto = calendario.get(Calendar.MINUTE) > 9 ? "" + calendario.get(Calendar.MINUTE) : "0" + calendario.get(Calendar.MINUTE);
+    }
+
+    public void actualizarTabla()
+    {
+        if (tam == 0)
+        {
+            tam = 1;
+        }
+
+        Object matriz[][] = new Object[tam][5];
+
+        for (int i = 0; i < horarios.size(); i++)
+        {
+            matriz[i][0] = horarios.get(i).getMateria();
+            matriz[i][1] = horarios.get(i).getDia();
+            matriz[i][2] = horarios.get(i).getHoraInicio();
+            matriz[i][3] = horarios.get(i).getHoraFinal();
+            matriz[i][4] = horarios.get(i).isNotificar();
+        }
+
+        jTableHorarios.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]
+        {
+            "Materia", "Día", "Hora Inicio", "Hora Final", "Hora Termino", "Notificar clase"
+        }
+        )
+        {
+            Class[] types = new Class[]
+            {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+
+            boolean[] canEdit = new boolean[]
+            {
+                false, false, false, false, false
+            };
+
+            @Override
+            public Class getColumnClass(int columnIndex)
+            {
+                return types[columnIndex];
+            }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
+                return canEdit[columnIndex];
+            }
+        });
     }
 
     /**
@@ -142,7 +197,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableHorarios = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jPanel9 = new javax.swing.JPanel();
@@ -546,6 +601,13 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton1.setText("Nueva fila");
+        jButton1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton2.setText("Eliminar fila");
@@ -560,21 +622,18 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton4.setText("Guardar cambios");
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableHorarios.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTableHorarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
             {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String []
             {
-                "Materia", "Dia", "Hora inicio", "Hora termino", "Notificar clase"
+
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableHorarios);
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -742,6 +801,14 @@ public class Horario extends javax.swing.JFrame implements Runnable
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
+    {//GEN-HEADEREND:event_jButton1ActionPerformed
+
+        tam++;
+        actualizarTabla();
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -873,8 +940,8 @@ public class Horario extends javax.swing.JFrame implements Runnable
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTableHorarios;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

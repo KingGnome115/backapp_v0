@@ -1,9 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package backapp.configuracion;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -12,12 +9,23 @@ package backapp.configuracion;
 public class Companieros extends javax.swing.JFrame
 {
 
+    ArrayList<Companieros> horarios = new ArrayList<>();
+    private int tam = horarios.size();
+
     /**
      * Creates new form Eliminar
      */
     public Companieros()
     {
         initComponents();
+    }
+
+    public void ActualizarTabla()
+    {
+        if (tam == 0)
+        {
+            tam = 1;
+        }
     }
 
     /**
@@ -67,14 +75,11 @@ public class Companieros extends javax.swing.JFrame
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
             {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String []
             {
-                "Nombre", "Correo"
+
             }
         ));
         jScrollPane1.setViewportView(jTable1);
