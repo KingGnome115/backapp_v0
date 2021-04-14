@@ -13,6 +13,7 @@ public class Companieros extends javax.swing.JFrame
 
     ArrayList<CompanierosObj> compa = new ArrayList<>();
     private int tam;
+    private int total;
 
     /**
      * Creates new form Eliminar
@@ -25,16 +26,24 @@ public class Companieros extends javax.swing.JFrame
         {
             tam = compa.size();
             ActualizarTabla();
+            try
+            {
+                if (!compa.isEmpty())
+                {
+                    total = compa.get(compa.size() - 1).getId() + 1;
+                } else
+                {
+                    total = 0;
+                }
+            } catch (Exception e)
+            {
+                total = 0;
+            }
         }
     }
 
     public void ActualizarTabla()
     {
-        if (tam == 0)
-        {
-            tam = 1;
-        }
-
         Object matriz[][] = new Object[tam][3];
         for (int i = 0; i < compa.size(); i++)
         {
@@ -106,6 +115,13 @@ public class Companieros extends javax.swing.JFrame
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton2.setText("Nueva fila");
+        jButton2.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton3.setText("Eliminar fila");
@@ -182,6 +198,13 @@ public class Companieros extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jButton3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton2ActionPerformed
+    {//GEN-HEADEREND:event_jButton2ActionPerformed
+        new NuevoCompaniero(this, true, total).setVisible(true);
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

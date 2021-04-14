@@ -1,9 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package backapp.configuracion;
+
+import basededatos.ManipulaBD;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -12,10 +11,12 @@ package backapp.configuracion;
 public class NuevoCompaniero extends javax.swing.JDialog
 {
 
+    private int total;
+
     /**
      * Creates new form NuevoCompaniero
      */
-    public NuevoCompaniero(java.awt.Frame parent, boolean modal)
+    public NuevoCompaniero(java.awt.Frame parent, boolean modal, int total)
     {
         super(parent, modal);
         initComponents();
@@ -36,7 +37,7 @@ public class NuevoCompaniero extends javax.swing.JDialog
         txtNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtEmail = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -46,9 +47,23 @@ public class NuevoCompaniero extends javax.swing.JDialog
 
         jLabel2.setText("Email");
 
-        jButton1.setText("Aceptar");
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnAceptarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -68,7 +83,7 @@ public class NuevoCompaniero extends javax.swing.JDialog
                 .addContainerGap()
                 .addComponent(btnCancelar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(btnAceptar)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -84,7 +99,7 @@ public class NuevoCompaniero extends javax.swing.JDialog
                     .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -101,7 +116,47 @@ public class NuevoCompaniero extends javax.swing.JDialog
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
+    {//GEN-HEADEREND:event_btnCancelarActionPerformed
+        new Companieros().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAceptarActionPerformed
+    {//GEN-HEADEREND:event_btnAceptarActionPerformed
+
+        String nombre = txtNombre.getText();
+        String email = txtEmail.getText();
+
+        if (Verificar(email))
+        {
+            ManipulaBD.AltaCompanieros(total++, nombre, email);
+            new Companieros().setVisible(true);
+            this.dispose();
+        } else
+        {
+            txtEmail.setText("");
+        }
+
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
+    public static boolean Verificar(String cadena)
+    {
+        String exrex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Pattern pattern = Pattern.compile(exrex);
+        Matcher mather = pattern.matcher(cadena);
+        if (mather.find())
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -143,7 +198,7 @@ public class NuevoCompaniero extends javax.swing.JDialog
         {
             public void run()
             {
-                NuevoCompaniero dialog = new NuevoCompaniero(new javax.swing.JFrame(), true);
+                NuevoCompaniero dialog = new NuevoCompaniero(new javax.swing.JFrame(), true, 0);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter()
                 {
                     @Override
@@ -158,8 +213,8 @@ public class NuevoCompaniero extends javax.swing.JDialog
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

@@ -12,26 +12,26 @@ import poo.bd.Querys;
  */
 public class ManipulaBD
 {
-    
+
     private static Conexion con = new Conexion();
-    
+
     public static Connection conecta()
     {
         try
         {
-            return con.Conecta("Localhost:3306", "backapp", "root", "", 2);
+            return con.Conecta("localhost:3306", "backapp", "root", "", 2);
         } catch (Exception e)
         {
             System.out.println("No se pudo conectar a la bd");
             return null;
         }
     }
-    
+
     public static void desconecta(Connection conn)
     {
         con.desconectar(conn);
     }
-    
+
     public static ArrayList<CompanierosObj> cargarCom(ArrayList<Object> reg)
     {
         ArrayList<CompanierosObj> v = new ArrayList<>();
@@ -71,14 +71,15 @@ public class ManipulaBD
      * @param nombre Nombre de la persona
      * @param email Correo electronico de la persona
      */
-    public static void AltaCompanieros(String nombre, String email)
+    public static void AltaCompanieros(int id, String nombre, String email)
     {
         Connection con = ManipulaBD.conecta();
         if (con != null)
         {
             Querys sql = new Querys();
             sql.Insertar(con, "companieros",
-                    "" + nombre + "','"
+                    "" + id + ",'"
+                    + nombre + "','"
                     + email + "'"
             );
         }
@@ -123,9 +124,10 @@ public class ManipulaBD
         }
         return ap;
     }
-    
+
     /**
      * Método para modificar los datos de los Companieros
+     *
      * @param id identificador de la persona
      * @param campos los campos que seran cambiados "Nombre,Email"
      * @param datos los nuevos datos
