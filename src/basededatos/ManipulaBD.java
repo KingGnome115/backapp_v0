@@ -46,7 +46,7 @@ public class ManipulaBD
                 {
                     int id = Integer.parseInt(idS.trim());
                     String nombre = ((String) reg.get(i + 1)).trim();
-                    String email = ((String) reg.get(i + 1)).trim();
+                    String email = ((String) reg.get(i + 2)).trim();
                     CompanierosObj obj = new CompanierosObj(id, nombre, email);
                     v.add(obj);
                 }
@@ -124,6 +124,12 @@ public class ManipulaBD
         return ap;
     }
     
+    /**
+     * Método para modificar los datos de los Companieros
+     * @param id identificador de la persona
+     * @param campos los campos que seran cambiados "Nombre,Email"
+     * @param datos los nuevos datos
+     */
     public static void ModificarCompanieros(int id, String campos, String datos)
     {
         Connection con = ManipulaBD.conecta();

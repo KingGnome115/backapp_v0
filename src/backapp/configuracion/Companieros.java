@@ -1,5 +1,7 @@
 package backapp.configuracion;
 
+import basededatos.ManipulaBD;
+import clases.CompanierosObj;
 import java.util.ArrayList;
 
 /**
@@ -9,8 +11,8 @@ import java.util.ArrayList;
 public class Companieros extends javax.swing.JFrame
 {
 
-    ArrayList<Companieros> horarios = new ArrayList<>();
-    private int tam = horarios.size();
+    ArrayList<CompanierosObj> compa = new ArrayList<>();
+    private int tam;
 
     /**
      * Creates new form Eliminar
@@ -18,6 +20,12 @@ public class Companieros extends javax.swing.JFrame
     public Companieros()
     {
         initComponents();
+        compa = ManipulaBD.ConsultaCompanieros("id!=", "-1");
+        if (compa != null)
+        {
+            tam = compa.size();
+            ActualizarTabla();
+        }
     }
 
     public void ActualizarTabla()
@@ -26,6 +34,43 @@ public class Companieros extends javax.swing.JFrame
         {
             tam = 1;
         }
+
+        Object matriz[][] = new Object[tam][3];
+        for (int i = 0; i < compa.size(); i++)
+        {
+            matriz[i][0] = compa.get(i).getId();
+            matriz[i][1] = compa.get(i).getNombre();
+            matriz[i][2] = compa.get(i).getEmail();
+        }
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]
+        {
+            "Id", "Nombre", "Email"
+        })
+        {
+            Class[] types = new Class[]
+            {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+
+            boolean[] canEdit = new boolean[]
+            {
+                false, true, true
+            };
+
+            @Override
+            public Class getColumnClass(int columnIndex)
+            {
+                return types[columnIndex];
+            }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
+                return canEdit[columnIndex];
+            }
+        });
+
     }
 
     /**
