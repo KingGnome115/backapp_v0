@@ -4,17 +4,17 @@ package clases;
  *
  * @author Kevin
  */
-public class Companieros
+public class CompanierosObj
 {
     private int id;
     private String nombre;
     private String email;
 
-    public Companieros()
+    public CompanierosObj()
     {
     }
 
-    public Companieros(int id, String nombre, String email)
+    public CompanierosObj(int id, String nombre, String email)
     {
         this.id = id;
         this.nombre = nombre;
