@@ -1,8 +1,11 @@
 package backapp.configuracion;
 
+import backapp.Opciones;
 import basededatos.ManipulaBD;
 import clases.CompanierosObj;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -21,16 +24,16 @@ public class Companieros extends javax.swing.JFrame
     public Companieros()
     {
         initComponents();
-        compa = ManipulaBD.ConsultaCompanieros("id!=", "-1");
-        if (compa != null)
+        compa = ManipulaBD.ConsultaCompanieros("id!=", "-1"); //Recibo todos los datos de la bd
+        if (compa != null) //Por si la bd esta vacia
         {
-            tam = compa.size();
-            ActualizarTabla();
+            tam = compa.size(); //cuantos datos existen en la bd
+            ActualizarTabla(); //método para generar e ir actualizando la tabla
             try
             {
                 if (!compa.isEmpty())
                 {
-                    total = compa.get(compa.size() - 1).getId() + 1;
+                    total = compa.get(compa.size() - 1).getId() + 1; //Para calcular el id por si hay nuevo dato
                 } else
                 {
                     total = 0;
@@ -44,27 +47,37 @@ public class Companieros extends javax.swing.JFrame
 
     public void ActualizarTabla()
     {
-        Object matriz[][] = new Object[tam][3];
+        Object matriz[][] = new Object[tam][4]; //Creo una matriz de objetos para mantener los types de las propiedades
         for (int i = 0; i < compa.size(); i++)
         {
             matriz[i][0] = compa.get(i).getId();
             matriz[i][1] = compa.get(i).getNombre();
             matriz[i][2] = compa.get(i).getEmail();
+            matriz[i][3] = compa.get(i).isEstatus();
         }
 
+        /*
+        Los titulos de las columnas
+         */
         jTable1.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]
         {
-            "Id", "Nombre", "Email"
+            "Id", "Nombre", "Email", "Estatus"
         })
         {
+            /*
+            Las clases de cada propiedad para tener un nivel de validación
+             */
             Class[] types = new Class[]
             {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
             };
 
+            /*
+            Cuales columnas pueden ser modificadas
+             */
             boolean[] canEdit = new boolean[]
             {
-                false, true, true
+                false, true, true, true
             };
 
             @Override
@@ -94,14 +107,15 @@ public class Companieros extends javax.swing.JFrame
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnNuevo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        btnSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Compañeros");
+        setUndecorated(true);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(234, 239, 210));
@@ -110,26 +124,23 @@ public class Companieros extends javax.swing.JFrame
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Lista de compañeros");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setText("Guardar cambios");
-
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton2.setText("Nueva fila");
-        jButton2.addActionListener(new java.awt.event.ActionListener()
+        btnGuardar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnGuardar.setText("Guardar cambios");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jButton2ActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton3.setText("Eliminar fila");
-        jButton3.addActionListener(new java.awt.event.ActionListener()
+        btnNuevo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnNuevo.setText("Nueva fila");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                jButton3ActionPerformed(evt);
+                btnNuevoActionPerformed(evt);
             }
         });
 
@@ -145,6 +156,15 @@ public class Companieros extends javax.swing.JFrame
         ));
         jScrollPane1.setViewportView(jTable1);
 
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -155,11 +175,11 @@ public class Companieros extends javax.swing.JFrame
                     .addComponent(jScrollPane1)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)
+                        .addComponent(btnNuevo)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnSalir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(btnGuardar)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -169,9 +189,9 @@ public class Companieros extends javax.swing.JFrame
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3))
+                    .addComponent(btnNuevo)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnSalir))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -194,17 +214,62 @@ public class Companieros extends javax.swing.JFrame
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton3ActionPerformed
-    {//GEN-HEADEREND:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton2ActionPerformed
-    {//GEN-HEADEREND:event_jButton2ActionPerformed
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnNuevoActionPerformed
+    {//GEN-HEADEREND:event_btnNuevoActionPerformed
         new NuevoCompaniero(this, true, total).setVisible(true);
         this.setVisible(false);
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSalirActionPerformed
+    {//GEN-HEADEREND:event_btnSalirActionPerformed
+        new Opciones().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnGuardarActionPerformed
+    {//GEN-HEADEREND:event_btnGuardarActionPerformed
+
+        /**
+         * Recorro toda la tabla para encontrar cambios e ir haciendo las
+         * modificaciones conforme los vaya encontrando y optimizar el programa
+         */
+        for (int i = 0; i < jTable1.getRowCount(); i++)
+        {
+            int id = (int) jTable1.getValueAt(i, 0);
+            String nombre = (String) jTable1.getValueAt(i, 1);
+            String email = (String) jTable1.getValueAt(i, 2);
+            
+            if (!Verificar(email))//Verificamos que el correo electronico tenga el formato
+            {
+                jTable1.setValueAt(compa.get(i).getEmail(), i, 2);
+            }
+            
+            boolean estatus = (boolean) jTable1.getValueAt(i, 3);
+
+            if (id != compa.get(i).getId()
+                    || (nombre.compareTo(compa.get(i).getNombre()) != 0)
+                    || (email.compareTo(compa.get(i).getEmail()) != 0)
+                    || estatus != compa.get(i).isEstatus())
+            {
+                ManipulaBD.ModificarCompanieros(id, "nombre,email,estatus", "'" + nombre + "','" + email + "','" + estatus + "'");
+            }
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    public static boolean Verificar(String cadena)
+    {
+        String exrex = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+                + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Pattern pattern = Pattern.compile(exrex);
+        Matcher mather = pattern.matcher(cadena);
+        if (mather.find())
+        {
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -255,9 +320,9 @@ public class Companieros extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

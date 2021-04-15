@@ -9,16 +9,18 @@ public class CompanierosObj
     private int id;
     private String nombre;
     private String email;
+    private boolean estatus;
 
     public CompanierosObj()
     {
     }
 
-    public CompanierosObj(int id, String nombre, String email)
+    public CompanierosObj(int id, String nombre, String email, boolean estatus)
     {
         this.id = id;
         this.nombre = nombre;
         this.email = email;
+        this.estatus = estatus;
     }
 
     /**
@@ -67,6 +69,22 @@ public class CompanierosObj
     public void setEmail(String email)
     {
         this.email = email;
+    }
+
+    /**
+     * @return the estatus
+     */
+    public boolean isEstatus()
+    {
+        return estatus;
+    }
+
+    /**
+     * @param estatus the estatus to set
+     */
+    public void setEstatus(boolean estatus)
+    {
+        this.estatus = estatus;
     }
     
     

@@ -200,6 +200,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jTableHorarios = new javax.swing.JTable();
         jLabel9 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        btnSalir1 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
         jLabel56 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
@@ -642,6 +643,15 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField1.setText("17/07/2021");
 
+        btnSalir1.setText("Salir");
+        btnSalir1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnSalir1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -653,9 +663,12 @@ public class Horario extends javax.swing.JFrame implements Runnable
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
                         .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                         .addComponent(jButton4))
-                    .addComponent(jLabel58, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(btnSalir1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel58, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -668,14 +681,16 @@ public class Horario extends javax.swing.JFrame implements Runnable
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel58)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel58)
+                    .addComponent(btnSalir1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 385, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
@@ -809,6 +824,12 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSalir1ActionPerformed
+    {//GEN-HEADEREND:event_btnSalir1ActionPerformed
+        new Opciones().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnSalir1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -856,6 +877,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalir;
+    private javax.swing.JButton btnSalir1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

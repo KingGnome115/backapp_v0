@@ -133,7 +133,7 @@ public class NuevoCompaniero extends javax.swing.JDialog
 
         if (Verificar(email))
         {
-            ManipulaBD.AltaCompanieros(total++, nombre, email);
+            ManipulaBD.AltaCompanieros(total++, nombre, email, true);
             new Companieros().setVisible(true);
             this.dispose();
         } else

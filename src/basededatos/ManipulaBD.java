@@ -37,7 +37,7 @@ public class ManipulaBD
         ArrayList<CompanierosObj> v = new ArrayList<>();
         try
         {
-            for (int i = 0; i < reg.size(); i += 3)
+            for (int i = 0; i < reg.size(); i += 4)
             {
                 String idS = "";
                 idS = (String) reg.get(i);
@@ -47,7 +47,9 @@ public class ManipulaBD
                     int id = Integer.parseInt(idS.trim());
                     String nombre = ((String) reg.get(i + 1)).trim();
                     String email = ((String) reg.get(i + 2)).trim();
-                    CompanierosObj obj = new CompanierosObj(id, nombre, email);
+                    String es = ((String) reg.get(i + 3)).trim();
+                    boolean estatus = Boolean.parseBoolean(es);
+                    CompanierosObj obj = new CompanierosObj(id, nombre, email, estatus);
                     v.add(obj);
                 }
             }
@@ -71,16 +73,18 @@ public class ManipulaBD
      * @param nombre Nombre de la persona
      * @param email Correo electronico de la persona
      */
-    public static void AltaCompanieros(int id, String nombre, String email)
+    public static void AltaCompanieros(int id, String nombre, String email, boolean estatus)
     {
         Connection con = ManipulaBD.conecta();
+        String estatusS = String.valueOf(estatus);
         if (con != null)
         {
             Querys sql = new Querys();
             sql.Insertar(con, "companieros",
                     "" + id + ",'"
                     + nombre + "','"
-                    + email + "'"
+                    + email + "','"
+                    + estatusS + "'"
             );
         }
         desconecta(con);
@@ -143,6 +147,7 @@ public class ManipulaBD
             {
                 sql.Modificar(con, "companieros", campos, datos, "id=" + id + "");
                 desconecta(con);
+                System.out.println("Modificado");
             }
         }
     }
