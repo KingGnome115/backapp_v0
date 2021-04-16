@@ -3,6 +3,7 @@ package backapp.configuracion;
 import backapp.Opciones;
 import basededatos.ManipulaBD;
 import clases.CompanierosObj;
+import java.awt.event.ItemEvent;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,7 +29,7 @@ public class Companieros extends javax.swing.JFrame
         if (compa != null) //Por si la bd esta vacia
         {
             tam = compa.size(); //cuantos datos existen en la bd
-            ActualizarTabla(); //método para generar e ir actualizando la tabla
+            ActualizarTabla(compa, tam); //método para generar e ir actualizando la tabla
             try
             {
                 if (!compa.isEmpty())
@@ -45,15 +46,15 @@ public class Companieros extends javax.swing.JFrame
         }
     }
 
-    public void ActualizarTabla()
+    public void ActualizarTabla(ArrayList<CompanierosObj> arreglo, int tama)
     {
-        Object matriz[][] = new Object[tam][4]; //Creo una matriz de objetos para mantener los types de las propiedades
-        for (int i = 0; i < compa.size(); i++)
+        Object matriz[][] = new Object[tama][4]; //Creo una matriz de objetos para mantener los types de las propiedades
+        for (int i = 0; i < arreglo.size(); i++)
         {
-            matriz[i][0] = compa.get(i).getId();
-            matriz[i][1] = compa.get(i).getNombre();
-            matriz[i][2] = compa.get(i).getEmail();
-            matriz[i][3] = compa.get(i).isEstatus();
+            matriz[i][0] = arreglo.get(i).getId();
+            matriz[i][1] = arreglo.get(i).getNombre();
+            matriz[i][2] = arreglo.get(i).getEmail();
+            matriz[i][3] = arreglo.get(i).isEstatus();
         }
 
         /*
@@ -112,6 +113,7 @@ public class Companieros extends javax.swing.JFrame
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         btnSalir = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Compañeros");
@@ -165,6 +167,15 @@ public class Companieros extends javax.swing.JFrame
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Todos", "Activos", "Inactivos" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener()
+        {
+            public void itemStateChanged(java.awt.event.ItemEvent evt)
+            {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -178,6 +189,8 @@ public class Companieros extends javax.swing.JFrame
                         .addComponent(btnNuevo)
                         .addGap(18, 18, 18)
                         .addComponent(btnSalir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnGuardar)))
                 .addContainerGap())
@@ -188,10 +201,12 @@ public class Companieros extends javax.swing.JFrame
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnNuevo)
-                    .addComponent(btnGuardar)
-                    .addComponent(btnSalir))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnNuevo)
+                        .addComponent(btnGuardar)
+                        .addComponent(btnSalir))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -238,12 +253,12 @@ public class Companieros extends javax.swing.JFrame
             int id = (int) jTable1.getValueAt(i, 0);
             String nombre = (String) jTable1.getValueAt(i, 1);
             String email = (String) jTable1.getValueAt(i, 2);
-            
+
             if (!Verificar(email))//Verificamos que el correo electronico tenga el formato
             {
                 jTable1.setValueAt(compa.get(i).getEmail(), i, 2);
             }
-            
+
             boolean estatus = (boolean) jTable1.getValueAt(i, 3);
 
             if (id != compa.get(i).getId()
@@ -255,6 +270,49 @@ public class Companieros extends javax.swing.JFrame
             }
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_jComboBox1ItemStateChanged
+    {//GEN-HEADEREND:event_jComboBox1ItemStateChanged
+        /*
+            Método para mostar solo en la tabla los datos activos, inactivos o todos
+         */
+        if (evt.getStateChange() == ItemEvent.SELECTED)
+        {
+            ArrayList<CompanierosObj> tmp = new ArrayList<>();
+            String opc = (String) jComboBox1.getSelectedItem();
+            switch (opc)
+            {
+                case "Todos":
+                    compa = ManipulaBD.ConsultaCompanieros("id!=", "-1");
+                    ActualizarTabla(compa, tam);
+                    break;
+                case "Activos":
+                    for (int i = 0; i < compa.size(); i++)
+                    {
+                        if (compa.get(i).isEstatus())
+                        {
+                            tmp.add(compa.get(i));
+                        }
+                    }
+                    ActualizarTabla(tmp, tmp.size());
+                    break;
+                case "Inactivos":
+                    for (int i = 0; i < compa.size(); i++)
+                    {
+                        if (!compa.get(i).isEstatus())
+                        {
+                            tmp.add(compa.get(i));
+                        }
+                    }
+                    ActualizarTabla(tmp, tmp.size());
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
 
     public static boolean Verificar(String cadena)
     {
@@ -323,6 +381,7 @@ public class Companieros extends javax.swing.JFrame
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
