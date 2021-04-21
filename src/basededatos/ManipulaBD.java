@@ -1,6 +1,7 @@
 package basededatos;
 
 import clases.CompanierosObj;
+import clases.Materias;
 import java.sql.Connection;
 import java.util.ArrayList;
 import poo.bd.Conexion;
@@ -150,5 +151,44 @@ public class ManipulaBD
                 System.out.println("Modificado");
             }
         }
+    }
+
+    public static ArrayList<Materias> cargarMaterias(ArrayList<Object> reg)
+    {
+        ArrayList<Materias> v = new ArrayList<>();
+        try
+        {
+            for (int i = 0; i < reg.size(); i += 5)
+            {
+                String idS = "";
+                idS = (String) reg.get(i);
+                idS = idS.trim();
+                if (idS != "" && idS != " ")
+                {
+                    int id = Integer.parseInt(idS.trim());
+                    String libretaS = ((String) reg.get(i + 1)).trim();
+                    int libreta = Integer.parseInt(libretaS);
+                    String semestreS = ((String) reg.get(i + 2)).trim();
+                    int semestre = Integer.parseInt(semestreS);
+                    String nombreMaestro = ((String) reg.get(i + 3)).trim();
+                    String nombreMateria = ((String) reg.get(i + 4)).trim();
+                    Materias obj = new Materias(id, libreta, semestre, nombreMaestro, nombreMateria);
+                    v.add(obj);
+                }
+            }
+            return v;
+        } catch (Exception e)
+        {
+            System.out.println("Error al crear objetos");
+            if (v != null)
+            {
+                return v;
+            } else
+            {
+                return null;
+            }
+        }
+        
+        
     }
 }
