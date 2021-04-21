@@ -116,7 +116,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
              */
             boolean[] canEdit = new boolean[]
             {
-                false, true, true, true, true
+                false, false, true, true, true
             };
 
             @Override
@@ -221,6 +221,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jTextField1 = new javax.swing.JTextField();
         btnSalir1 = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
+        jComboMaterias = new javax.swing.JComboBox<>();
         jPanel9 = new javax.swing.JPanel();
         jLabel56 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
@@ -647,14 +648,17 @@ public class Horario extends javax.swing.JFrame implements Runnable
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addComponent(btnSalir1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel58, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE))
+                        .addComponent(jLabel58, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel8Layout.createSequentialGroup()
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel10))
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(69, 69, 69)
+                                .addComponent(jComboMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -665,9 +669,11 @@ public class Horario extends javax.swing.JFrame implements Runnable
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel58)
                     .addComponent(btnSalir1))
-                .addGap(36, 36, 36)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 410, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(jComboMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 405, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -694,6 +700,13 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
         jButton6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton6.setText("Guardar cambios");
+        jButton6.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jTablaMaterias.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTablaMaterias.setModel(new javax.swing.table.DefaultTableModel(
@@ -775,8 +788,8 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton3ActionPerformed
     {//GEN-HEADEREND:event_jButton3ActionPerformed
-       new NuevaMateria(this, true, totalMate).setVisible(true);
-       this.setVisible(false);
+        new NuevaMateria(this, true, totalMate).setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSalir1ActionPerformed
@@ -784,6 +797,28 @@ public class Horario extends javax.swing.JFrame implements Runnable
         new Opciones().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalir1ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton6ActionPerformed
+    {//GEN-HEADEREND:event_jButton6ActionPerformed
+
+        for (int i = 0; i < jTablaMaterias.getRowCount(); i++)
+        {
+            int id = (int) jTablaMaterias.getValueAt(i, 0);
+            int semestre = (int) jTablaMaterias.getValueAt(i, 2);
+            String nombreMateria = (String) jTablaMaterias.getValueAt(i, 3);
+            String nombreMaestro = (String) jTablaMaterias.getValueAt(i, 4);
+
+            if (id != mate.get(i).getId()
+                    || semestre != mate.get(i).getSemestre()
+                    || (nombreMateria.compareTo(mate.get(i).getNombreMateria()) != 0)
+                    || (nombreMaestro.compareTo(mate.get(i).getNombreMaestro()) != 0))
+            {
+                ManipulaBD.ModificarMaterias(id, "semestre,nombreMaestro,nombreMateria", 
+                        "" + id + ",'" + nombreMaestro + "','" + nombreMateria + "'");
+            }
+        }
+
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -835,6 +870,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
     private javax.swing.JButton btnSalir1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
+    private javax.swing.JComboBox<String> jComboMaterias;
     private javax.swing.JLabel jLFecha;
     private javax.swing.JLabel jLHora;
     private javax.swing.JLabel jLabel1;
