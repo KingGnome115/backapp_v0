@@ -188,7 +188,63 @@ public class ManipulaBD
                 return null;
             }
         }
-        
-        
     }
+
+    public static void AltaMaterias(int id, int libreta, int semestre, String nombreMaestro, String nombreMateria)
+    {
+        Connection con = ManipulaBD.conecta();
+        if (con != null)
+        {
+            Querys sql = new Querys();
+            sql.Insertar(con, "materias",
+                    "" + id + ","
+                    + libreta + ","
+                    + semestre + ",'"
+                    + nombreMaestro + "'"
+                    + nombreMateria + "'"
+            );
+        }
+        desconecta(con);
+    }
+
+    public static void BajasMaterias(int id)
+    {
+        Connection con = ManipulaBD.conecta();
+        if (con != null)
+        {
+            Querys sql = new Querys();
+            sql.Delete(con, "materias", "id", "" + id + "");
+        }
+        desconecta(con);
+    }
+
+    public static ArrayList<Materias> ConsultaMaterias(String variable, String condicion)
+    {
+        Connection con = ManipulaBD.conecta();
+        ArrayList<Materias> ap = null;
+        if (con != null)
+        {
+            Querys sql = new Querys();
+            ap = ManipulaBD.cargarMaterias(sql.Seleccion(con, "*", "materias", variable + condicion));
+            desconecta(con);
+        }
+        return ap;
+    }
+    
+    public static void ModificarMaterias(int id, String campos, String datos)
+    {
+        Connection con = ManipulaBD.conecta();
+        if (con != null)
+        {
+            Querys sql = new Querys();
+            ArrayList<Materias> ap = ManipulaBD.cargarMaterias(sql.Seleccion(con, "*", "materias", "id=" + id + ""));
+            if (ap != null)
+            {
+                sql.Modificar(con, "materias", campos, datos, "id=" + id + "");
+                desconecta(con);
+                System.out.println("Modificado");
+            }
+        }
+    }
+
 }
