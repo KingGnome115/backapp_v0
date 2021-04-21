@@ -684,6 +684,13 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton3.setText("Nueva fila");
+        jButton3.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton6.setText("Guardar cambios");
@@ -765,6 +772,12 @@ public class Horario extends javax.swing.JFrame implements Runnable
         new Opciones().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton3ActionPerformed
+    {//GEN-HEADEREND:event_jButton3ActionPerformed
+       new NuevaMateria(this, true, totalMate).setVisible(true);
+       this.setVisible(false);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSalir1ActionPerformed
     {//GEN-HEADEREND:event_btnSalir1ActionPerformed

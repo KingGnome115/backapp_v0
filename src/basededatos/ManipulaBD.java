@@ -200,7 +200,7 @@ public class ManipulaBD
                     "" + id + ","
                     + libreta + ","
                     + semestre + ",'"
-                    + nombreMaestro + "'"
+                    + nombreMaestro + "','"
                     + nombreMateria + "'"
             );
         }
