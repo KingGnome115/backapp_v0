@@ -4,12 +4,14 @@ import backapp.Opciones;
 import basededatos.ManipulaBD;
 import clases.Horarios;
 import clases.Materias;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import javax.swing.JLabel;
 
 /**
  *
@@ -51,6 +53,10 @@ public class Horario extends javax.swing.JFrame implements Runnable
                 if (!mate.isEmpty())
                 {
                     totalMate = mate.get(mate.size() - 1).getId() + 1;
+                    for (int i = 0; i < mate.size(); i++)
+                    {
+                        jComboMaterias.addItem(mate.get(i).getId() + ": " + mate.get(i).getNombreMateria());
+                    }
                 } else
                 {
                     totalMate = 0;
@@ -132,7 +138,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
             }
         });
     }
-
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -145,11 +151,6 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel55 = new javax.swing.JLabel();
-        jLabel54 = new javax.swing.JLabel();
         jLFecha = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel5 = new javax.swing.JPanel();
@@ -213,6 +214,9 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jLabel19 = new javax.swing.JLabel();
         jLHora = new javax.swing.JLabel();
         btnSalir = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanelLista = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel8 = new javax.swing.JPanel();
@@ -237,31 +241,6 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jTabbedPane1.setOpaque(true);
 
         jPanel1.setBackground(new java.awt.Color(234, 239, 210));
-
-        jPanel2.setBackground(new java.awt.Color(234, 239, 210));
-        jPanel2.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Materias");
-        jLabel7.setPreferredSize(new java.awt.Dimension(300, 20));
-        jPanel2.add(jLabel7);
-
-        jPanel3.setBackground(new java.awt.Color(234, 239, 210));
-        jPanel3.setPreferredSize(new java.awt.Dimension(300, 40));
-        jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        jLabel55.setBackground(new java.awt.Color(0, 255, 204));
-        jLabel55.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel55.setOpaque(true);
-        jLabel55.setPreferredSize(new java.awt.Dimension(60, 30));
-        jPanel3.add(jLabel55);
-
-        jLabel54.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel54.setText("Teoria de Lenguaje de programacion");
-        jPanel3.add(jLabel54);
-
-        jPanel2.add(jPanel3);
 
         jLFecha.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -566,6 +545,18 @@ public class Horario extends javax.swing.JFrame implements Runnable
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("Nuevo Horario");
+        jLabel7.setPreferredSize(new java.awt.Dimension(300, 20));
+
+        jScrollPane1.setBackground(new java.awt.Color(234, 239, 210));
+
+        jPanelLista.setBackground(new java.awt.Color(234, 239, 210));
+        jPanelLista.setToolTipText("");
+        jPanelLista.setLayout(new java.awt.GridLayout(1, 2));
+        jScrollPane1.setViewportView(jPanelLista);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -582,10 +573,15 @@ public class Horario extends javax.swing.JFrame implements Runnable
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 555, Short.MAX_VALUE))
-                .addGap(30, 30, 30)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -596,14 +592,18 @@ public class Horario extends javax.swing.JFrame implements Runnable
                     .addComponent(jLHora, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
                     .addComponent(btnSalir))
                 .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane3))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 409, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(30, 30, 30))
         );
 
@@ -700,13 +700,6 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
         jButton6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton6.setText("Guardar cambios");
-        jButton6.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jButton6ActionPerformed(evt);
-            }
-        });
 
         jTablaMaterias.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTablaMaterias.setModel(new javax.swing.table.DefaultTableModel(
@@ -797,28 +790,6 @@ public class Horario extends javax.swing.JFrame implements Runnable
         new Opciones().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalir1ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton6ActionPerformed
-    {//GEN-HEADEREND:event_jButton6ActionPerformed
-
-        for (int i = 0; i < jTablaMaterias.getRowCount(); i++)
-        {
-            int id = (int) jTablaMaterias.getValueAt(i, 0);
-            int semestre = (int) jTablaMaterias.getValueAt(i, 2);
-            String nombreMateria = (String) jTablaMaterias.getValueAt(i, 3);
-            String nombreMaestro = (String) jTablaMaterias.getValueAt(i, 4);
-
-            if (id != mate.get(i).getId()
-                    || semestre != mate.get(i).getSemestre()
-                    || (nombreMateria.compareTo(mate.get(i).getNombreMateria()) != 0)
-                    || (nombreMaestro.compareTo(mate.get(i).getNombreMaestro()) != 0))
-            {
-                ManipulaBD.ModificarMaterias(id, "semestre,nombreMaestro,nombreMateria", 
-                        "" + id + ",'" + nombreMaestro + "','" + nombreMateria + "'");
-            }
-        }
-
-    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -916,8 +887,6 @@ public class Horario extends javax.swing.JFrame implements Runnable
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
-    private javax.swing.JLabel jLabel54;
-    private javax.swing.JLabel jLabel55;
     private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
@@ -938,13 +907,13 @@ public class Horario extends javax.swing.JFrame implements Runnable
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPanel jPanelLista;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSplitPane jSplitPane1;
