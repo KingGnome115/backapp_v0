@@ -4,13 +4,15 @@ import backapp.Opciones;
 import basededatos.ManipulaBD;
 import clases.Horarios;
 import clases.Materias;
-import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 
 /**
@@ -20,18 +22,22 @@ import javax.swing.JLabel;
 public class Horario extends javax.swing.JFrame implements Runnable
 {
 
+    boolean in = false;
+
     private String hora, minuto;
     private Thread hilo;
 
     SimpleDateFormat formato = new SimpleDateFormat("EEEE d MMMM");
     Date fecha = new Date();
 
-    ArrayList<Horarios> horarios = new ArrayList<>();
-    private int tam = horarios.size();
+    ArrayList<Horarios> horari = new ArrayList<>();
+    private int totalHor;
 
     ArrayList<Materias> mate = new ArrayList<>();
     private int tamMate;
     private int totalMate;
+
+    ArrayList<Object> ids = new ArrayList<>();
 
     /**
      * Creates new form Horario
@@ -57,6 +63,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
                     for (int i = 0; i < mate.size(); i++)
                     {
                         jComboMaterias.addItem(mate.get(i).getId() + ": " + mate.get(i).getNombreMateria());
+                        ids.add(mate.get(i).getId());
                     }
                 } else
                 {
@@ -67,6 +74,25 @@ public class Horario extends javax.swing.JFrame implements Runnable
                 totalMate = 0;
             }
         }
+
+        horari = ManipulaBD.ConsultaHorarios("id!=", "-1");
+        if (horari != null)
+        {
+            try
+            {
+                if (!horari.isEmpty())
+                {
+                    totalHor = horari.get(horari.size() - 1).getId() + 1;
+                } else
+                {
+                    totalHor = 0;
+                }
+            } catch (Exception e)
+            {
+                totalMate = 0;
+            }
+        }
+
         btnSalir.setMnemonic(KeyEvent.VK_ESCAPE);
     }
 
@@ -162,48 +188,56 @@ public class Horario extends javax.swing.JFrame implements Runnable
             hora.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
             jPanel5.add(hora);
 
-            JLabel dias1 = new JLabel();
-            dias1.setBackground(new java.awt.Color(0, 255, 204));
-            dias1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            dias1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-            dias1.setOpaque(true);
+            for (int j = 0; j < 6; j++)
+            {
+                JButton dias1 = new JButton();
+                dias1.setBackground(new java.awt.Color(0, 255, 204));
+                dias1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                dias1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+                dias1.setOpaque(true);
+                int di = j;
+                dias1.addActionListener(new ActionListener()
+                {
+                    @Override
+                    public void actionPerformed(ActionEvent e)
+                    {
+                        switch (di)
+                        {
+                            case 0:
+                                jLabelDia.setText("Lunes");
+                                break;
+                            case 1:
+                                jLabelDia.setText("Martes");
+                                break;
+                            case 2:
+                                jLabelDia.setText("Miercoles");
+                                break;
+                            case 3:
+                                jLabelDia.setText("Jueves");
+                                break;
+                            case 4:
+                                jLabelDia.setText("Viernes");
+                                break;
+                            case 5:
+                                jLabelDia.setText("Sabado");
+                                break;
+                        }
 
-            JLabel dias2 = new JLabel();
-            dias2.setBackground(new java.awt.Color(0, 255, 204));
-            dias2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            dias2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-            dias2.setOpaque(true);
+                        if (in)
+                        {
+                            jLHoraFinal.setText(hora.getText());
+                            in = false;
+                        } else
+                        {
+                            jLHoraInicio.setText(hora.getText());
+                            in = true;
+                        }
+                    }
 
-            JLabel dias3 = new JLabel();
-            dias3.setBackground(new java.awt.Color(0, 255, 204));
-            dias3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            dias3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-            dias3.setOpaque(true);
+                });
 
-            JLabel dias4 = new JLabel();
-            dias4.setBackground(new java.awt.Color(0, 255, 204));
-            dias4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            dias4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-            dias4.setOpaque(true);
-
-            JLabel dias5 = new JLabel();
-            dias5.setBackground(new java.awt.Color(0, 255, 204));
-            dias5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            dias5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-            dias5.setOpaque(true);
-
-            JLabel dias6 = new JLabel();
-            dias6.setBackground(new java.awt.Color(0, 255, 204));
-            dias6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-            dias6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-            dias6.setOpaque(true);
-
-            jPanel5.add(dias1);
-            jPanel5.add(dias2);
-            jPanel5.add(dias3);
-            jPanel5.add(dias4);
-            jPanel5.add(dias5);
-            jPanel5.add(dias6);
+                jPanel5.add(dias1);
+            }
         }
         jPanel5.updateUI();
     }
@@ -237,9 +271,15 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jLabel7 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboMaterias = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        jLabel10 = new javax.swing.JLabel();
+        jLHoraInicio = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLHoraFinal = new javax.swing.JLabel();
+        jCheckNotificar = new javax.swing.JCheckBox();
+        jLabelDia = new javax.swing.JLabel();
+        btnGuardar = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jSplitPane1 = new javax.swing.JSplitPane();
         jPanel8 = new javax.swing.JPanel();
@@ -247,8 +287,6 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jLabel9 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         btnSalir1 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
-        jComboMaterias = new javax.swing.JComboBox<>();
         jPanel9 = new javax.swing.JPanel();
         jLabel56 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
@@ -349,7 +387,26 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
         jLabel12.setText("Dia");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado" }));
+        jLabel10.setText("Hora Inicio");
+
+        jLHoraInicio.setText("HH:mm");
+
+        jLabel14.setText("Hora Final");
+
+        jLHoraFinal.setText("HH:mm");
+
+        jCheckNotificar.setText("Notificar");
+
+        jLabelDia.setText("DDDDDDD");
+
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -358,13 +415,24 @@ public class Horario extends javax.swing.JFrame implements Runnable
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12))
-                .addGap(51, 51, 51)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel14))
+                        .addGap(34, 34, 34)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jComboMaterias, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLHoraInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLHoraFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabelDia, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jCheckNotificar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                        .addComponent(btnGuardar)
+                        .addGap(14, 14, 14))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -372,12 +440,24 @@ public class Horario extends javax.swing.JFrame implements Runnable
                 .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabelDia, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(316, Short.MAX_VALUE))
+                    .addComponent(jLabel10)
+                    .addComponent(jLHoraInicio))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(jLHoraFinal))
+                .addGap(22, 22, 22)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jCheckNotificar)
+                    .addComponent(btnGuardar))
+                .addContainerGap(208, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -456,8 +536,6 @@ public class Horario extends javax.swing.JFrame implements Runnable
             }
         });
 
-        jLabel10.setText("Materia");
-
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -470,16 +548,10 @@ public class Horario extends javax.swing.JFrame implements Runnable
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel58, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE))
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel8Layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addGap(69, 69, 69)
-                                .addComponent(jComboMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 134, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -489,11 +561,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel58)
                     .addComponent(btnSalir1))
-                .addGap(31, 31, 31)
-                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(jComboMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 425, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 494, Short.MAX_VALUE)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -559,7 +627,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
                     .addComponent(jButton3)
                     .addComponent(jButton6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -611,6 +679,20 @@ public class Horario extends javax.swing.JFrame implements Runnable
         this.dispose();
     }//GEN-LAST:event_btnSalir1ActionPerformed
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnGuardarActionPerformed
+    {//GEN-HEADEREND:event_btnGuardarActionPerformed
+
+        int id = totalHor++;
+        int materia = (int) ids.get(jComboMaterias.getSelectedIndex());
+        String dia = jLabelDia.getText();
+        String horaInicio = jLHoraInicio.getText();
+        String horaFinal = jLHoraFinal.getText();
+        boolean notificar = jCheckNotificar.isSelected();
+        
+        ManipulaBD.AltaHorarios(id, materia, dia, horaInicio, horaFinal, notificar);
+        
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -657,19 +739,22 @@ public class Horario extends javax.swing.JFrame implements Runnable
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnSalir1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JCheckBox jCheckNotificar;
     private javax.swing.JComboBox<String> jComboMaterias;
     private javax.swing.JLabel jLFecha;
     private javax.swing.JLabel jLHora;
+    private javax.swing.JLabel jLHoraFinal;
+    private javax.swing.JLabel jLHoraInicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -681,6 +766,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelDia;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;

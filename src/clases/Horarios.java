@@ -6,6 +6,7 @@ package clases;
  */
 public class Horarios
 {
+    private int id;
     private int materia;
     private String dia;
     private String horaInicio;
@@ -16,13 +17,14 @@ public class Horarios
     {
     }
 
-    public Horarios(int materia, String dia, String horaInicio, String horaFinal, boolean notificar)
+    public Horarios(int id, int materia, String dia, String horaInicio, String horaFinal, boolean notificar)
     {
+        this.id = id;
         this.materia = materia;
         this.dia = dia;
         this.horaInicio = horaInicio;
         this.horaFinal = horaFinal;
-        this.notificar = notificar;
+        this.notificar=notificar;
     }
 
     /**
@@ -103,6 +105,22 @@ public class Horarios
     public void setNotificar(boolean notificar)
     {
         this.notificar = notificar;
+    }
+
+    /**
+     * @return the id
+     */
+    public int getId()
+    {
+        return id;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id)
+    {
+        this.id = id;
     }
     
     

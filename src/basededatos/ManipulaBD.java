@@ -1,6 +1,7 @@
 package basededatos;
 
 import clases.CompanierosObj;
+import clases.Horarios;
 import clases.Materias;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -230,7 +231,7 @@ public class ManipulaBD
         }
         return ap;
     }
-    
+
     public static void ModificarMaterias(int id, String campos, String datos)
     {
         Connection con = ManipulaBD.conecta();
@@ -241,6 +242,102 @@ public class ManipulaBD
             if (ap != null)
             {
                 sql.Modificar(con, "materias", campos, datos, "id=" + id + "");
+                desconecta(con);
+                System.out.println("Modificado");
+            }
+        }
+    }
+
+    public static ArrayList<Horarios> cargarHorarios(ArrayList<Object> reg)
+    {
+        ArrayList<Horarios> v = new ArrayList<>();
+        try
+        {
+            for (int i = 0; i < reg.size(); i += 6)
+            {
+                String idS = "";
+                idS = (String) reg.get(i);
+                idS = idS.trim();
+                if (idS != "" && idS != " ")
+                {
+                    int id = Integer.parseInt(idS.trim());
+                    String materiaS = ((String) reg.get(i + 1)).trim();
+                    int materia = Integer.parseInt(materiaS);
+                    String dia = ((String) reg.get(i + 2)).trim();
+                    String horaInicio = ((String) reg.get(i + 3)).trim();
+                    String horaFinal = ((String) reg.get(i + 4)).trim();
+                    String notificarS = ((String) reg.get(i + 5)).trim();
+                    boolean notificar = Boolean.parseBoolean(notificarS);
+                    Horarios obj = new Horarios(id, materia, dia, horaInicio, horaFinal, notificar);
+                    v.add(obj);
+                }
+            }
+            return v;
+        } catch (Exception e)
+        {
+            System.out.println("Error al crear objetos");
+            if (v != null)
+            {
+                return v;
+            } else
+            {
+                return null;
+            }
+        }
+    }
+
+    public static void AltaHorarios(int id, int materia, String dia, String horaInicio, String horaFinal, boolean notificar)
+    {
+        Connection con = ManipulaBD.conecta();
+        if (con != null)
+        {
+            Querys sql = new Querys();
+            sql.Insertar(con, "horarios",
+                    "" + id + ","
+                    + materia + ",'"
+                    + dia + "','"
+                    + horaInicio + "','"
+                    + horaFinal + "','"
+                    + notificar + "'"
+            );
+        }
+        desconecta(con);
+    }
+
+    public static void BajasHorarios(int id)
+    {
+        Connection con = ManipulaBD.conecta();
+        if (con != null)
+        {
+            Querys sql = new Querys();
+            sql.Delete(con, "horarios", "id", "" + id + "");
+        }
+        desconecta(con);
+    }
+
+    public static ArrayList<Horarios> ConsultaHorarios(String variable, String condicion)
+    {
+        Connection con = ManipulaBD.conecta();
+        ArrayList<Horarios> ap = null;
+        if (con != null)
+        {
+            Querys sql = new Querys();
+            ap = ManipulaBD.cargarHorarios(sql.Seleccion(con, "*", "horarios", variable + condicion));
+            desconecta(con);
+        }
+        return ap;
+    }
+
+    public static void ModificarHorarios(int id, String campos, String datos)
+    {
+        Connection con = ManipulaBD.conecta();
+        if (con != null)
+        {
+            Querys sql = new Querys();
+            ArrayList<Horarios> ap = ManipulaBD.cargarHorarios(sql.Seleccion(con, "*", "horarios", "id=" + id + ""));
+            if (ap != null)
+            {
+                sql.Modificar(con, "horarios", campos, datos, "id=" + id + "");
                 desconecta(con);
                 System.out.println("Modificado");
             }
