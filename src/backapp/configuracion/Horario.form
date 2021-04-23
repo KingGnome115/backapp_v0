@@ -167,7 +167,7 @@
                     <Property name="verticalGap" type="int" value="2"/>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="jLabel13">
+                    <Component class="javax.swing.JLabel" name="jLHoraI">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI" size="14" style="0"/>
@@ -178,7 +178,7 @@
                         <Property name="verticalTextPosition" type="int" value="3"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel14">
+                    <Component class="javax.swing.JLabel" name="jL00">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="cc" green="ff" red="0" type="rgb"/>
@@ -260,7 +260,7 @@
                           <Font name="Segoe UI" size="14" style="0"/>
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="07:30"/>
+                        <Property name="text" type="java.lang.String" value="08:00"/>
                         <Property name="verticalAlignment" type="int" value="1"/>
                         <Property name="verticalTextPosition" type="int" value="3"/>
                       </Properties>
@@ -339,7 +339,7 @@
                           <Font name="Segoe UI" size="14" style="0"/>
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="08:00"/>
+                        <Property name="text" type="java.lang.String" value="09:00"/>
                         <Property name="verticalAlignment" type="int" value="1"/>
                         <Property name="verticalTextPosition" type="int" value="3"/>
                       </Properties>
@@ -418,7 +418,7 @@
                           <Font name="Segoe UI" size="14" style="0"/>
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="08:30"/>
+                        <Property name="text" type="java.lang.String" value="10:00"/>
                         <Property name="verticalAlignment" type="int" value="1"/>
                         <Property name="verticalTextPosition" type="int" value="3"/>
                       </Properties>
@@ -489,7 +489,7 @@
                           <Font name="Segoe UI" size="14" style="0"/>
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="09:00"/>
+                        <Property name="text" type="java.lang.String" value="11:00"/>
                         <Property name="verticalAlignment" type="int" value="1"/>
                         <Property name="verticalTextPosition" type="int" value="3"/>
                       </Properties>
@@ -560,7 +560,7 @@
                           <Font name="Segoe UI" size="14" style="0"/>
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="09:30"/>
+                        <Property name="text" type="java.lang.String" value="12:00"/>
                         <Property name="verticalAlignment" type="int" value="1"/>
                         <Property name="verticalTextPosition" type="int" value="3"/>
                       </Properties>
@@ -631,7 +631,7 @@
                           <Font name="Segoe UI" size="14" style="0"/>
                         </Property>
                         <Property name="horizontalAlignment" type="int" value="0"/>
-                        <Property name="text" type="java.lang.String" value="10:00"/>
+                        <Property name="text" type="java.lang.String" value="13:00"/>
                         <Property name="verticalAlignment" type="int" value="1"/>
                         <Property name="verticalTextPosition" type="int" value="3"/>
                       </Properties>
@@ -687,6 +687,77 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel71">
+                      <Properties>
+                        <Property name="horizontalAlignment" type="int" value="0"/>
+                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                            <LineBorder roundedCorners="true"/>
+                          </Border>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel72">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Segoe UI" size="14" style="0"/>
+                        </Property>
+                        <Property name="horizontalAlignment" type="int" value="0"/>
+                        <Property name="text" type="java.lang.String" value="14:00"/>
+                        <Property name="verticalAlignment" type="int" value="1"/>
+                        <Property name="verticalTextPosition" type="int" value="3"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel73">
+                      <Properties>
+                        <Property name="horizontalAlignment" type="int" value="0"/>
+                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                            <LineBorder roundedCorners="true"/>
+                          </Border>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel74">
+                      <Properties>
+                        <Property name="horizontalAlignment" type="int" value="0"/>
+                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                            <LineBorder roundedCorners="true"/>
+                          </Border>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel75">
+                      <Properties>
+                        <Property name="horizontalAlignment" type="int" value="0"/>
+                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                            <LineBorder roundedCorners="true"/>
+                          </Border>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel76">
+                      <Properties>
+                        <Property name="horizontalAlignment" type="int" value="0"/>
+                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                            <LineBorder roundedCorners="true"/>
+                          </Border>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel77">
+                      <Properties>
+                        <Property name="horizontalAlignment" type="int" value="0"/>
+                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                            <LineBorder roundedCorners="true"/>
+                          </Border>
+                        </Property>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel78">
                       <Properties>
                         <Property name="horizontalAlignment" type="int" value="0"/>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

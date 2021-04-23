@@ -154,8 +154,8 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jLFecha = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel5 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        jLHoraI = new javax.swing.JLabel();
+        jL00 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -203,6 +203,13 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jLabel69 = new javax.swing.JLabel();
         jLabel70 = new javax.swing.JLabel();
         jLabel71 = new javax.swing.JLabel();
+        jLabel72 = new javax.swing.JLabel();
+        jLabel73 = new javax.swing.JLabel();
+        jLabel74 = new javax.swing.JLabel();
+        jLabel75 = new javax.swing.JLabel();
+        jLabel76 = new javax.swing.JLabel();
+        jLabel77 = new javax.swing.JLabel();
+        jLabel78 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -255,18 +262,18 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jPanel5.setPreferredSize(new java.awt.Dimension(178, 178));
         jPanel5.setLayout(new java.awt.GridLayout(0, 7, 2, 2));
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("07:00");
-        jLabel13.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabel13.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jPanel5.add(jLabel13);
+        jLHoraI.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLHoraI.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLHoraI.setText("07:00");
+        jLHoraI.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLHoraI.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jPanel5.add(jLHoraI);
 
-        jLabel14.setBackground(new java.awt.Color(0, 255, 204));
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jLabel14.setOpaque(true);
-        jPanel5.add(jLabel14);
+        jL00.setBackground(new java.awt.Color(0, 255, 204));
+        jL00.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jL00.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jL00.setOpaque(true);
+        jPanel5.add(jL00);
 
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -294,7 +301,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jLabel20.setBackground(new java.awt.Color(0, 255, 204));
         jLabel20.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("07:30");
+        jLabel20.setText("08:00");
         jLabel20.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel20.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jPanel5.add(jLabel20);
@@ -329,7 +336,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
         jLabel27.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel27.setText("08:00");
+        jLabel27.setText("09:00");
         jLabel27.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel27.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jPanel5.add(jLabel27);
@@ -364,7 +371,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
         jLabel37.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel37.setText("08:30");
+        jLabel37.setText("10:00");
         jLabel37.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel37.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jPanel5.add(jLabel37);
@@ -395,7 +402,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
         jLabel46.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel46.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel46.setText("09:00");
+        jLabel46.setText("11:00");
         jLabel46.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel46.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jPanel5.add(jLabel46);
@@ -426,7 +433,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
         jLabel51.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel51.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel51.setText("09:30");
+        jLabel51.setText("12:00");
         jLabel51.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel51.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jPanel5.add(jLabel51);
@@ -457,7 +464,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
         jLabel65.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel65.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel65.setText("10:00");
+        jLabel65.setText("13:00");
         jLabel65.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabel65.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jPanel5.add(jLabel65);
@@ -485,6 +492,37 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jLabel71.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel71.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jPanel5.add(jLabel71);
+
+        jLabel72.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel72.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel72.setText("14:00");
+        jLabel72.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel72.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jPanel5.add(jLabel72);
+
+        jLabel73.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel73.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel5.add(jLabel73);
+
+        jLabel74.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel74.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel5.add(jLabel74);
+
+        jLabel75.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel75.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel5.add(jLabel75);
+
+        jLabel76.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel76.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel5.add(jLabel76);
+
+        jLabel77.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel77.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel5.add(jLabel77);
+
+        jLabel78.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel78.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel5.add(jLabel78);
 
         jScrollPane3.setViewportView(jPanel5);
 
@@ -842,12 +880,12 @@ public class Horario extends javax.swing.JFrame implements Runnable
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton6;
     private javax.swing.JComboBox<String> jComboMaterias;
+    private javax.swing.JLabel jL00;
     private javax.swing.JLabel jLFecha;
     private javax.swing.JLabel jLHora;
+    private javax.swing.JLabel jLHoraI;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -904,6 +942,13 @@ public class Horario extends javax.swing.JFrame implements Runnable
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel70;
     private javax.swing.JLabel jLabel71;
+    private javax.swing.JLabel jLabel72;
+    private javax.swing.JLabel jLabel73;
+    private javax.swing.JLabel jLabel74;
+    private javax.swing.JLabel jLabel75;
+    private javax.swing.JLabel jLabel76;
+    private javax.swing.JLabel jLabel77;
+    private javax.swing.JLabel jLabel78;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
