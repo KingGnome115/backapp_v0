@@ -6,7 +6,7 @@ package clases;
  */
 public class Horarios
 {
-    private String materia;
+    private int materia;
     private String dia;
     private String horaInicio;
     private String horaFinal;
@@ -16,7 +16,7 @@ public class Horarios
     {
     }
 
-    public Horarios(String materia, String dia, String horaInicio, String horaFinal, boolean notificar)
+    public Horarios(int materia, String dia, String horaInicio, String horaFinal, boolean notificar)
     {
         this.materia = materia;
         this.dia = dia;
@@ -28,7 +28,7 @@ public class Horarios
     /**
      * @return the materia
      */
-    public String getMateria()
+    public int getMateria()
     {
         return materia;
     }
@@ -36,7 +36,7 @@ public class Horarios
     /**
      * @param materia the materia to set
      */
-    public void setMateria(String materia)
+    public void setMateria(int materia)
     {
         this.materia = materia;
     }
