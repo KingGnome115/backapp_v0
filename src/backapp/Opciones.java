@@ -10,6 +10,9 @@ import backapp.libretas.Importar;
 import backapp.libretas.Libreta;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileFilter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -20,9 +23,15 @@ import java.util.GregorianCalendar;
  */
 public class Opciones extends javax.swing.JFrame implements Runnable
 {
-    
+
     private String hora, minuto;
     private Thread hilo;
+
+    private String user = System.getProperty("user.name");
+    private String dir = "C:\\Users\\" + user + "\\Documents\\Mochila";
+    public static String directorio;
+
+    public static File[] lista = null;
 
     /**
      * Creates new form Opciones
@@ -33,15 +42,34 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         initComponents();
         hilo = new Thread(this);
         hilo.start();
+
+        File carpeta = new File(dir);
+        if (!carpeta.exists())
+        {
+            carpeta.mkdir();
+        } else
+        {
+            FileFilter filtro = new FileFilter()
+            {
+                @Override
+                public boolean accept(File fil)
+                {
+                    return fil.isDirectory();
+                }
+            };
+            lista = carpeta.listFiles(filtro);
+        }
+        directorio = carpeta.getAbsolutePath();
+
     }
-    
+
     @Override
     public Image getIconImage()
     {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("iconos/mochila.png"));
         return retValue;
     }
-    
+
     @Override
     public void run()
     {
@@ -52,7 +80,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
             jLHora.setText(hora + ":" + minuto);
         }
     }
-    
+
     public void hora()
     {
         Calendar calendario = new GregorianCalendar();
@@ -394,7 +422,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
 
     private void jMSalirActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMSalirActionPerformed
     {//GEN-HEADEREND:event_jMSalirActionPerformed
-        
+
     }//GEN-LAST:event_jMSalirActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem1ActionPerformed
