@@ -30,7 +30,7 @@ public class Creacion extends javax.swing.JFrame
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        jLMensaje = new javax.swing.JLabel();
         btnCrear = new javax.swing.JButton();
         txtNombreLibreta = new javax.swing.JTextField();
 
@@ -44,10 +44,10 @@ public class Creacion extends javax.swing.JFrame
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Escriba el nombre de la libreta:");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/check.png"))); // NOI18N
-        jLabel2.setText("nombre disponible");
+        jLMensaje.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLMensaje.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLMensaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/check.png"))); // NOI18N
+        jLMensaje.setText("nombre disponible");
 
         btnCrear.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnCrear.setText("Crear");
@@ -80,7 +80,7 @@ public class Creacion extends javax.swing.JFrame
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -91,7 +91,7 @@ public class Creacion extends javax.swing.JFrame
                 .addGap(25, 25, 25)
                 .addComponent(txtNombreLibreta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(jLMensaje)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addComponent(btnCrear)
                 .addGap(25, 25, 25))
@@ -123,8 +123,15 @@ public class Creacion extends javax.swing.JFrame
         if (!libreta.exists())
         {
             libreta.mkdir();
+            jLMensaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/check.png"))); // NOI18N
+            jLMensaje.setText("nombre disponible");
+        } else
+        {
+            jLMensaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/denegado.png"))); // NOI18N
+            jLMensaje.setText("nombre no disponible");
         }
-        
+        txtNombreLibreta.setText("");
+
 
     }//GEN-LAST:event_btnCrearActionPerformed
 
@@ -182,8 +189,8 @@ public class Creacion extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrear;
+    private javax.swing.JLabel jLMensaje;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtNombreLibreta;
     // End of variables declaration//GEN-END:variables
