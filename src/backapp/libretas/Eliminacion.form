@@ -61,7 +61,7 @@
                   <EmptySpace min="60" pref="60" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jButton1" alignment="0" min="-2" pref="285" max="-2" attributes="0"/>
-                      <Component id="jComboBox1" alignment="0" min="-2" pref="288" max="-2" attributes="0"/>
+                      <Component id="jCListaLibretas" alignment="0" min="-2" pref="288" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="62" max="32767" attributes="0"/>
               </Group>
@@ -73,7 +73,7 @@
                   <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="34" max="32767" attributes="0"/>
-                  <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jCListaLibretas" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -95,19 +95,18 @@
             <Property name="text" type="java.lang.String" value="Seleccione la libreta que desea eliminar:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="jCListaLibretas">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="16" style="0"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
-                <StringItem index="0" value="Administracion"/>
-                <StringItem index="1" value="Bases de datos"/>
-                <StringItem index="2" value="Teoria de lenguajes de programacion"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCListaLibretasItemStateChanged"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>

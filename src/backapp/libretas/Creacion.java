@@ -1,7 +1,9 @@
 package backapp.libretas;
 
 import backapp.Opciones;
+import static backapp.Opciones.lista;
 import java.io.File;
+import java.io.FileFilter;
 
 /**
  *
@@ -125,6 +127,24 @@ public class Creacion extends javax.swing.JFrame
             libreta.mkdir();
             jLMensaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/check.png"))); // NOI18N
             jLMensaje.setText("nombre disponible");
+
+            File carpeta = new File(Opciones.directorio);
+            if (!carpeta.exists())
+            {
+                carpeta.mkdir();
+            } else
+            {
+                FileFilter filtro = new FileFilter()
+                {
+                    @Override
+                    public boolean accept(File fil)
+                    {
+                        return fil.isDirectory();
+                    }
+                };
+                Opciones.lista = carpeta.listFiles(filtro);
+            }
+
         } else
         {
             jLMensaje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/denegado.png"))); // NOI18N

@@ -1,9 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package backapp.libretas;
+
+import backapp.Opciones;
 
 /**
  *
@@ -12,12 +9,20 @@ package backapp.libretas;
 public class Eliminacion extends javax.swing.JFrame
 {
 
+    private int index;
+
     /**
      * Creates new form Eliminar
      */
     public Eliminacion()
     {
         initComponents();
+
+        for (int i = 0; i < Opciones.lista.length; i++)
+        {
+            jCListaLibretas.addItem(i + ": " + Opciones.lista[i].getName());
+        }
+
     }
 
     /**
@@ -32,7 +37,7 @@ public class Eliminacion extends javax.swing.JFrame
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jCListaLibretas = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -47,8 +52,14 @@ public class Eliminacion extends javax.swing.JFrame
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Seleccione la libreta que desea eliminar:");
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administracion", "Bases de datos", "Teoria de lenguajes de programacion" }));
+        jCListaLibretas.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jCListaLibretas.addItemListener(new java.awt.event.ItemListener()
+        {
+            public void itemStateChanged(java.awt.event.ItemEvent evt)
+            {
+                jCListaLibretasItemStateChanged(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -76,7 +87,7 @@ public class Eliminacion extends javax.swing.JFrame
                 .addGap(60, 60, 60)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jCListaLibretas, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(62, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -85,7 +96,7 @@ public class Eliminacion extends javax.swing.JFrame
                 .addGap(25, 25, 25)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jCListaLibretas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -111,6 +122,11 @@ public class Eliminacion extends javax.swing.JFrame
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jCListaLibretasItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_jCListaLibretasItemStateChanged
+    {//GEN-HEADEREND:event_jCListaLibretasItemStateChanged
+        index = jCListaLibretas.getSelectedIndex();
+    }//GEN-LAST:event_jCListaLibretasItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -160,7 +176,7 @@ public class Eliminacion extends javax.swing.JFrame
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jCListaLibretas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
