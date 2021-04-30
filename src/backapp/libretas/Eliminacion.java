@@ -1,6 +1,10 @@
 package backapp.libretas;
 
 import backapp.Opciones;
+import static backapp.Opciones.directorio;
+import static backapp.Opciones.lista;
+import java.io.File;
+import java.io.FileFilter;
 
 /**
  *
@@ -40,7 +44,7 @@ public class Eliminacion extends javax.swing.JFrame
         jCListaLibretas = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnEliminacion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Eliminar libreta");
@@ -69,8 +73,15 @@ public class Eliminacion extends javax.swing.JFrame
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Ni se podra recuperar la libreta");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButton1.setText("Confirmar eliminacion");
+        btnEliminacion.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnEliminacion.setText("Confirmar eliminacion");
+        btnEliminacion.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnEliminacionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -86,7 +97,7 @@ public class Eliminacion extends javax.swing.JFrame
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(60, 60, 60)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminacion, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCListaLibretas, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(62, Short.MAX_VALUE))
         );
@@ -102,7 +113,7 @@ public class Eliminacion extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
                 .addGap(34, 34, 34)
-                .addComponent(jButton1)
+                .addComponent(btnEliminacion)
                 .addGap(25, 25, 25))
         );
 
@@ -127,6 +138,38 @@ public class Eliminacion extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jCListaLibretasItemStateChanged
         index = jCListaLibretas.getSelectedIndex();
     }//GEN-LAST:event_jCListaLibretasItemStateChanged
+
+    private void btnEliminacionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminacionActionPerformed
+    {//GEN-HEADEREND:event_btnEliminacionActionPerformed
+
+        File libreta = new File(Opciones.lista[index].getAbsolutePath());
+        if (libreta.delete())
+        {
+            File carpeta = new File(Opciones.directorio);
+            if (!carpeta.exists())
+            {
+                carpeta.mkdir();
+            } else
+            {
+                FileFilter filtro = new FileFilter()
+                {
+                    @Override
+                    public boolean accept(File fil)
+                    {
+                        return fil.isDirectory();
+                    }
+                };
+                Opciones.lista = carpeta.listFiles(filtro);
+            }
+            
+            jCListaLibretas.removeAllItems();
+            for (int i = 0; i < Opciones.lista.length; i++)
+            {
+                jCListaLibretas.addItem(i + ": " + Opciones.lista[i].getName());
+            }
+        }
+
+    }//GEN-LAST:event_btnEliminacionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,7 +218,7 @@ public class Eliminacion extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnEliminacion;
     private javax.swing.JComboBox<String> jCListaLibretas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
