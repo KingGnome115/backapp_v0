@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package backapp.libretas;
 
 import java.awt.Image;
 import java.awt.Toolkit;
-
+import java.io.File;
 
 /**
  *
@@ -16,16 +11,31 @@ import java.awt.Toolkit;
 public class Libreta extends javax.swing.JFrame
 {
 
+    public static String libreta = "";
+
     /**
      * Creates new form Libreta
      */
     public Libreta()
     {
         initComponents();
-        jTabbedPane1.addTab("Hoja 1", new Hoja());
+        CrearHojas();
         this.pack();
     }
-  @Override
+
+    public void CrearHojas()
+    {
+        File carpeta = new File(libreta);
+        this.setTitle(carpeta.getName());
+        File[] hojas = carpeta.listFiles();
+        for (int i = 0; i < hojas.length; i++)
+        {
+            jTabbedPane1.addTab("Hoja 1", new Hoja(hojas[i]));
+        }
+
+    }
+
+    @Override
     public Image getIconImage()
     {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("iconos/libro.png"));

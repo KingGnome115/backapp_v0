@@ -1,12 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package backapp.libretas;
 
+import clases.HojaLibreta;
 import java.awt.Image;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
@@ -15,18 +18,81 @@ import javax.swing.ImageIcon;
 public class Hoja extends javax.swing.JPanel
 {
 
+    public HojaLibreta texto;
+    private File[] imagenes;
+    
+    protected ArrayList<String> label = new ArrayList<>();
+
     /**
      * Creates new form Hoja
      */
-    public Hoja()
+    public Hoja(File hoja)
     {
         initComponents();
-        jLabel9.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/capturas/1.PNG"))
-                .getImage().getScaledInstance(200, 150, Image.SCALE_AREA_AVERAGING)));
-        jLabel10.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/capturas/2.PNG"))
-                .getImage().getScaledInstance(200, 150, Image.SCALE_AREA_AVERAGING)));
-        jLabel8.setIcon(new ImageIcon(new ImageIcon(getClass().getResource("/capturas/3.PNG"))
-                .getImage().getScaledInstance(200, 150, Image.SCALE_AREA_AVERAGING)));
+
+        try
+        {
+            ObjectInputStream file = new ObjectInputStream(new FileInputStream(hoja.getAbsolutePath() + "\\Text.dat"));
+            texto = (HojaLibreta) file.readObject();
+            file.close();
+        } catch (ClassNotFoundException ex)
+        {
+            System.out.println("La clase no existe o diferente");
+        } catch (IOException e)
+        {
+        }
+        txtTitulo.setText(texto.getTitulo());
+        txtArcTexto.setText(texto.getTexto());
+
+        imagenes = hoja.listFiles();
+        SepararFormatos();
+        Actualizar();
+
+    }
+
+    private void SepararFormatos()
+    {
+        ArrayList<File> tmp = new ArrayList<>();
+        for (int i = 0; i < imagenes.length; i++)
+        {
+            String extencion = FilenameUtils.getExtension(imagenes[i].getName());
+            if ((extencion.compareTo("webp") == 0) || (extencion.compareTo("mp4") == 0) || (extencion.compareTo("webm") == 0)
+                    || (extencion.compareTo("gif") == 0) || (extencion.compareTo("dat") == 0))
+            {
+            } else
+            {
+                tmp.add(imagenes[i]);
+            }
+        }
+
+        imagenes = new File[tmp.size()];
+        for (int i = 0; i < tmp.size(); i++)
+        {
+            imagenes[i] = tmp.get(i);
+        }
+    }
+    
+    public void Actualizar()
+    {
+        jPanelImagenes.removeAll();
+        label.clear();
+        if (imagenes != null)
+        {
+            for (int i = 0; i < imagenes.length; i++)
+            {
+                if (!imagenes[i].isDirectory())
+                {
+                    ImageIcon icono = new ImageIcon(imagenes[i].getAbsolutePath());
+                    JLabel imagen = new JLabel();
+                    imagen.setIcon(new ImageIcon(icono.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+                    imagen.setText(imagenes[i].getName());
+                    imagen.setHorizontalTextPosition(JLabel.CENTER);
+                    imagen.setVerticalTextPosition(JLabel.BOTTOM);
+                    jPanelImagenes.add(imagen);
+                }
+            }
+            jPanelImagenes.updateUI();
+        }
     }
 
     /**
@@ -41,14 +107,11 @@ public class Hoja extends javax.swing.JPanel
 
         jSplitPane1 = new javax.swing.JSplitPane();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtArcTexto = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        jPanelImagenes = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtTitulo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
@@ -56,36 +119,31 @@ public class Hoja extends javax.swing.JPanel
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(234, 239, 210));
 
         jSplitPane1.setBackground(new java.awt.Color(234, 239, 210));
         jSplitPane1.setDividerLocation(225);
-        jSplitPane1.setDividerSize(10);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextArea1.setRows(5);
-        jTextArea1.setText("La ingenieria es una profesión en la que los conocimientos científicos \ny empíricos se aplican para la conversión óptima de los materiales y \nfuerzas de la naturaleza en usos prácticos para la humanidad, así como,\n la invención, perfeccionamiento y utilización de la técnica industrial,\n y a la resolución de problemas técnicos-sociales. Esta disciplina también \nes considerada como un arte, debido a que la capacidad imaginativa y de\n creación del ser humano sobresale para concebir cosas que aún no existen,\n y es por medio de la aplicación de sus conocimientos científicos que \ntransforma esas ideas en acción o en una realidad.");
-        jScrollPane1.setViewportView(jTextArea1);
+        txtArcTexto.setColumns(20);
+        txtArcTexto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtArcTexto.setRows(5);
+        jScrollPane1.setViewportView(txtArcTexto);
 
         jSplitPane1.setRightComponent(jScrollPane1);
 
-        jPanel3.setBackground(new java.awt.Color(234, 239, 210));
-        jPanel3.setLayout(new java.awt.GridLayout(0, 1, 0, 10));
-        jPanel3.add(jLabel10);
-        jPanel3.add(jLabel9);
-        jPanel3.add(jLabel8);
-
-        jScrollPane2.setViewportView(jPanel3);
+        jPanelImagenes.setBackground(new java.awt.Color(234, 239, 210));
+        jPanelImagenes.setLayout(new java.awt.GridLayout(0, 1, 50, 30));
+        jScrollPane2.setViewportView(jPanelImagenes);
 
         jSplitPane1.setLeftComponent(jScrollPane2);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Titulo:");
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField1.setText("Hoja 1");
+        txtTitulo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtTitulo.setText("Hoja 1");
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Tipo de letra");
@@ -109,6 +167,8 @@ public class Hoja extends javax.swing.JPanel
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton2.setText("portapapeles");
 
+        btnGuardar.setText("Guardar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -119,8 +179,10 @@ public class Hoja extends javax.swing.JPanel
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
+                        .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(btnGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -144,12 +206,13 @@ public class Hoja extends javax.swing.JPanel
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGuardar))
+                .addGap(12, 12, 12)
                 .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -162,22 +225,20 @@ public class Hoja extends javax.swing.JPanel
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanelImagenes;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextArea txtArcTexto;
+    private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 }

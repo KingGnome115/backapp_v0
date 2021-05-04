@@ -6,16 +6,19 @@ import backapp.libretas.Creacion;
 import backapp.libretas.Eliminacion;
 import backapp.libretas.Exportar;
 import backapp.configuracion.Horario;
+import backapp.libretas.Hoja;
 import backapp.libretas.Importar;
 import backapp.libretas.Libreta;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import javax.swing.JMenuItem;
 
 /**
  *
@@ -58,9 +61,35 @@ public class Opciones extends javax.swing.JFrame implements Runnable
                 }
             };
             lista = carpeta.listFiles(filtro);
+            MostrarLibretas();
         }
         directorio = carpeta.getAbsolutePath();
 
+    }
+
+    public void MostrarLibretas()
+    {
+        for (int i = 0; i < lista.length; i++)
+        {
+            JMenuItem jLibreta = new JMenuItem();
+            jLibreta.setFont(new java.awt.Font("Segoe UI", 0, 16));
+            jLibreta.setText(lista[i].getName());
+
+            String dir = lista[i].getAbsolutePath();
+            
+
+            jLibreta.addActionListener(new java.awt.event.ActionListener()
+            {
+                public void actionPerformed(java.awt.event.ActionEvent evt)
+                {
+                    Libreta.libreta = dir;
+                    new Libreta().setVisible(true);
+                }
+            });
+
+            jMenuLibretas.add(jLibreta);
+
+        }
     }
 
     @Override
@@ -118,15 +147,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jMenuItem15 = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
         jMenuItem18 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu6 = new javax.swing.JMenu();
-        jMenuItem14 = new javax.swing.JMenuItem();
-        jSeparator5 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jSeparator6 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem16 = new javax.swing.JMenuItem();
-        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenuLibretas = new javax.swing.JMenu();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -239,43 +260,9 @@ public class Opciones extends javax.swing.JFrame implements Runnable
 
         jMenuBar2.add(jMenu5);
 
-        jMenu2.setText("Libretas");
-        jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-
-        jMenu6.setText("Administracion");
-        jMenu6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-
-        jMenuItem14.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jMenuItem14.setText("Abrir");
-        jMenuItem14.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jMenuItem14ActionPerformed(evt);
-            }
-        });
-        jMenu6.add(jMenuItem14);
-        jMenu6.add(jSeparator5);
-
-        jMenuItem6.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jMenuItem6.setText("Hoja 1");
-        jMenu6.add(jMenuItem6);
-
-        jMenuItem7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jMenuItem7.setText("Hoja 2");
-        jMenu6.add(jMenuItem7);
-        jMenu6.add(jSeparator6);
-
-        jMenuItem16.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jMenuItem16.setText("Nueva hoja");
-        jMenu6.add(jMenuItem16);
-
-        jMenuItem17.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jMenuItem17.setText("Eliminar hoja");
-        jMenu6.add(jMenuItem17);
-
-        jMenu2.add(jMenu6);
-        jMenu2.add(jSeparator1);
+        jMenuLibretas.setText("Libretas");
+        jMenuLibretas.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jMenuLibretas.add(jSeparator1);
 
         jMenuItem5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem5.setText("Compartir ");
@@ -286,7 +273,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
                 jMenuItem5ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem5);
+        jMenuLibretas.add(jMenuItem5);
 
         jMenuItem8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem8.setText("Crear ");
@@ -297,7 +284,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
                 jMenuItem8ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem8);
+        jMenuLibretas.add(jMenuItem8);
 
         jMenuItem9.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem9.setText("Eliminar ");
@@ -308,8 +295,8 @@ public class Opciones extends javax.swing.JFrame implements Runnable
                 jMenuItem9ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem9);
-        jMenu2.add(jSeparator3);
+        jMenuLibretas.add(jMenuItem9);
+        jMenuLibretas.add(jSeparator3);
 
         jMenuItem3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem3.setText("Importar");
@@ -320,7 +307,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
                 jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem3);
+        jMenuLibretas.add(jMenuItem3);
 
         jMenuItem4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem4.setText("Exportar");
@@ -331,9 +318,9 @@ public class Opciones extends javax.swing.JFrame implements Runnable
                 jMenuItem4ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem4);
+        jMenuLibretas.add(jMenuItem4);
 
-        jMenuBar2.add(jMenu2);
+        jMenuBar2.add(jMenuLibretas);
 
         jMSalir.setText("Salir");
         jMSalir.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -374,11 +361,6 @@ public class Opciones extends javax.swing.JFrame implements Runnable
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuItem14ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem14ActionPerformed
-    {//GEN-HEADEREND:event_jMenuItem14ActionPerformed
-        new Libreta().setVisible(true);
-    }//GEN-LAST:event_jMenuItem14ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem2ActionPerformed
     {//GEN-HEADEREND:event_jMenuItem2ActionPerformed
@@ -486,32 +468,24 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMSalir;
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem16;
-    private javax.swing.JMenuItem jMenuItem17;
     private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenu jMenuLibretas;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
-    private javax.swing.JPopupMenu.Separator jSeparator5;
-    private javax.swing.JPopupMenu.Separator jSeparator6;
     private javax.swing.JPopupMenu.Separator jSeparator7;
     // End of variables declaration//GEN-END:variables
 }

@@ -2,8 +2,12 @@ package backapp.libretas;
 
 import backapp.Opciones;
 import static backapp.Opciones.lista;
+import clases.HojaLibreta;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 /**
  *
@@ -143,6 +147,21 @@ public class Creacion extends javax.swing.JFrame
                     }
                 };
                 Opciones.lista = carpeta.listFiles(filtro);
+            }
+
+            directorio += "\\00";
+            File hoja1 = new File(directorio);
+            hoja1.mkdir();
+
+            try
+            {
+                ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream(directorio+ "\\Text.dat"));
+                HojaLibreta obj = new HojaLibreta();
+                file.writeObject(obj);
+                file.close();
+            } catch (IOException ex)
+            {
+                System.out.println("No se encontro archivo");
             }
 
         } else
