@@ -4,11 +4,20 @@ import clases.HojaLibreta;
 import java.awt.Image;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.commons.io.FilenameUtils;
 
 /**
@@ -20,8 +29,11 @@ public class Hoja extends javax.swing.JPanel
 
     public HojaLibreta texto;
     private File[] imagenes;
-    
+    public String path;
+    private File libreta;
+
     protected ArrayList<String> label = new ArrayList<>();
+    protected ArrayList<File> ImagenesNuevas = new ArrayList<>();
 
     /**
      * Creates new form Hoja
@@ -29,10 +41,11 @@ public class Hoja extends javax.swing.JPanel
     public Hoja(File hoja)
     {
         initComponents();
-
+        this.libreta = hoja;
+        path = hoja.getAbsolutePath() + "\\Text.dat";
         try
         {
-            ObjectInputStream file = new ObjectInputStream(new FileInputStream(hoja.getAbsolutePath() + "\\Text.dat"));
+            ObjectInputStream file = new ObjectInputStream(new FileInputStream(path));
             texto = (HojaLibreta) file.readObject();
             file.close();
         } catch (ClassNotFoundException ex)
@@ -47,7 +60,39 @@ public class Hoja extends javax.swing.JPanel
         imagenes = hoja.listFiles();
         SepararFormatos();
         Actualizar();
+    }
 
+    protected void RenombrarImagenes()
+    {
+        String s = "";
+        for (int i = 0; i < imagenes.length; i++)
+        {
+
+            if (!imagenes[i].isDirectory())
+            {
+                File tmp;
+                s = imagenes[i].getParent() + "\\";
+                String tam = String.valueOf(imagenes.length);
+                String ii = String.valueOf(i);
+                String ceros = "";
+                int t = tam.length() - ii.length();
+                if (t == 0 && ii.length() == 1)
+                {
+                    t = 1;
+                }
+                for (int j = 0; j < t; j++)
+                {
+                    ceros += "0";
+                }
+                s += ceros + i;
+                String extencion = FilenameUtils.getExtension(imagenes[i].getName());
+                s += "." + extencion;
+                tmp = new File(s);
+                imagenes[i].renameTo(tmp);
+            }
+        }
+        imagenes = libreta.listFiles();
+        SepararFormatos();
     }
 
     private void SepararFormatos()
@@ -56,10 +101,7 @@ public class Hoja extends javax.swing.JPanel
         for (int i = 0; i < imagenes.length; i++)
         {
             String extencion = FilenameUtils.getExtension(imagenes[i].getName());
-            if ((extencion.compareTo("webp") == 0) || (extencion.compareTo("mp4") == 0) || (extencion.compareTo("webm") == 0)
-                    || (extencion.compareTo("gif") == 0) || (extencion.compareTo("dat") == 0))
-            {
-            } else
+            if ((extencion.compareTo("jpg") == 0) || (extencion.compareTo("jpeg") == 0) || (extencion.compareTo("png") == 0))
             {
                 tmp.add(imagenes[i]);
             }
@@ -71,7 +113,7 @@ public class Hoja extends javax.swing.JPanel
             imagenes[i] = tmp.get(i);
         }
     }
-    
+
     public void Actualizar()
     {
         jPanelImagenes.removeAll();
@@ -82,10 +124,11 @@ public class Hoja extends javax.swing.JPanel
             {
                 if (!imagenes[i].isDirectory())
                 {
+                    String tex = RecortarNombre(imagenes[i].getName());
                     ImageIcon icono = new ImageIcon(imagenes[i].getAbsolutePath());
                     JLabel imagen = new JLabel();
-                    imagen.setIcon(new ImageIcon(icono.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
-                    imagen.setText(imagenes[i].getName());
+                    imagen.setIcon(new ImageIcon(icono.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+                    imagen.setText(tex);
                     imagen.setHorizontalTextPosition(JLabel.CENTER);
                     imagen.setVerticalTextPosition(JLabel.BOTTOM);
                     jPanelImagenes.add(imagen);
@@ -93,6 +136,22 @@ public class Hoja extends javax.swing.JPanel
             }
             jPanelImagenes.updateUI();
         }
+    }
+    
+    private String RecortarNombre(String nombre)
+    {
+        String s = "";
+
+        if (nombre.length() > 15)
+        {
+            int n = nombre.length() - FilenameUtils.getExtension(nombre).length() - 1;
+            s = nombre.substring(0, 4) + "..." + nombre.substring(n - 2, n) + "." + FilenameUtils.getExtension(nombre);
+        } else
+        {
+            s = nombre;
+        }
+
+        return s;
     }
 
     /**
@@ -117,7 +176,7 @@ public class Hoja extends javax.swing.JPanel
         jLabel3 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnNuevaImagen = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
 
@@ -161,13 +220,27 @@ public class Hoja extends javax.swing.JPanel
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Agregar imagen:");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton1.setText("seleccionar archivo");
+        btnNuevaImagen.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnNuevaImagen.setText("seleccionar archivo");
+        btnNuevaImagen.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnNuevaImagenActionPerformed(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton2.setText("portapapeles");
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -193,7 +266,7 @@ public class Hoja extends javax.swing.JPanel
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
+                        .addComponent(btnNuevaImagen)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -217,16 +290,86 @@ public class Hoja extends javax.swing.JPanel
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jButton1)
+                    .addComponent(btnNuevaImagen)
                     .addComponent(jButton2))
                 .addGap(15, 15, 15))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnGuardarActionPerformed
+    {//GEN-HEADEREND:event_btnGuardarActionPerformed
+
+        texto.setTitulo(txtTitulo.getText());
+        texto.setTexto(txtArcTexto.getText());
+
+        for (int i = 0; i < ImagenesNuevas.size(); i++)
+        {
+            try
+            {
+                //Definimos el destino del archivo, que será la carpeta Imágenes
+                String dest = libreta.getAbsolutePath() + "\\" + ImagenesNuevas.get(i).getName();
+                Path destino = Paths.get(dest);
+                //Definimos el origen, que será el archivo seleccionado
+                String orig = ImagenesNuevas.get(i).getPath();
+                Path origen = Paths.get(orig);
+                //Copiamos el nuevo archivo con la clase Files, reemplazamos si ya existe uno igual.
+                Files.copy(origen, destino, REPLACE_EXISTING);
+                //Mostramos mensaje de confirmación de la copia
+                System.out.println("si");
+            } catch (IOException ex)
+            {
+                System.out.println("no");
+            }
+        }
+
+        imagenes = libreta.listFiles();
+        SepararFormatos();
+        RenombrarImagenes();
+
+        try
+        {
+            ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream(path));
+            file.writeObject(texto);
+            file.close();
+        } catch (IOException ex)
+        {
+            System.out.println("No se encontro archivo");
+        }
+
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnNuevaImagenActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnNuevaImagenActionPerformed
+    {//GEN-HEADEREND:event_btnNuevaImagenActionPerformed
+
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo de imagen", "png", "jpg", "jpeg");
+        JFileChooser elegir = new JFileChooser();
+        elegir.setDialogTitle("Seleccione una imagen");
+        elegir.setFileFilter(filtro);
+        elegir.showOpenDialog(this);
+        File imagenNueva = elegir.getSelectedFile();
+
+        if (imagenNueva != null)
+        {
+            ImagenesNuevas.add(imagenNueva);
+            ImageIcon icono = new ImageIcon(imagenNueva.getAbsolutePath());
+            JLabel imagen = new JLabel();
+            imagen.setIcon(new ImageIcon(icono.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+            imagen.setText(imagenNueva.getName());
+            imagen.setHorizontalTextPosition(JLabel.CENTER);
+            imagen.setVerticalTextPosition(JLabel.BOTTOM);
+            jPanelImagenes.add(imagen);
+            jPanelImagenes.updateUI();
+        } else
+        {
+            JOptionPane.showMessageDialog(null, "Por favor eliga una imagen");
+        }
+
+    }//GEN-LAST:event_btnNuevaImagenActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnNuevaImagen;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
