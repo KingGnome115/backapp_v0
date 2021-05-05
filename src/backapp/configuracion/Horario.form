@@ -364,8 +364,9 @@
                                 </Property>
                               </Properties>
 
-                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout">
-                                <Property name="axis" type="int" value="1"/>
+                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+                                <Property name="columns" type="int" value="1"/>
+                                <Property name="rows" type="int" value="0"/>
                               </Layout>
                             </Container>
                           </SubComponents>
@@ -385,8 +386,9 @@
                                 </Property>
                               </Properties>
 
-                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout">
-                                <Property name="axis" type="int" value="1"/>
+                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+                                <Property name="columns" type="int" value="1"/>
+                                <Property name="rows" type="int" value="0"/>
                               </Layout>
                             </Container>
                           </SubComponents>
@@ -406,8 +408,9 @@
                                 </Property>
                               </Properties>
 
-                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout">
-                                <Property name="axis" type="int" value="1"/>
+                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+                                <Property name="columns" type="int" value="1"/>
+                                <Property name="rows" type="int" value="0"/>
                               </Layout>
                             </Container>
                           </SubComponents>
@@ -427,8 +430,9 @@
                                 </Property>
                               </Properties>
 
-                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout">
-                                <Property name="axis" type="int" value="1"/>
+                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+                                <Property name="columns" type="int" value="1"/>
+                                <Property name="rows" type="int" value="0"/>
                               </Layout>
                             </Container>
                           </SubComponents>
@@ -448,8 +452,9 @@
                                 </Property>
                               </Properties>
 
-                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout">
-                                <Property name="axis" type="int" value="1"/>
+                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+                                <Property name="columns" type="int" value="1"/>
+                                <Property name="rows" type="int" value="0"/>
                               </Layout>
                             </Container>
                           </SubComponents>
@@ -469,8 +474,9 @@
                                 </Property>
                               </Properties>
 
-                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout">
-                                <Property name="axis" type="int" value="1"/>
+                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+                                <Property name="columns" type="int" value="1"/>
+                                <Property name="rows" type="int" value="0"/>
                               </Layout>
                             </Container>
                           </SubComponents>
@@ -490,8 +496,9 @@
                                 </Property>
                               </Properties>
 
-                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout">
-                                <Property name="axis" type="int" value="1"/>
+                              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+                                <Property name="columns" type="int" value="1"/>
+                                <Property name="rows" type="int" value="0"/>
                               </Layout>
                             </Container>
                           </SubComponents>
@@ -898,9 +905,9 @@
                                       </Group>
                                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jComboMaterias" min="-2" pref="56" max="-2" attributes="0"/>
                                           <Component id="ComboDias" max="32767" attributes="0"/>
                                           <Component id="ComboHora" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jComboMaterias" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>

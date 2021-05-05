@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  *
@@ -21,24 +22,24 @@ import javax.swing.JPanel;
  */
 public class Horario extends javax.swing.JFrame implements Runnable
 {
-
+    
     boolean in = false;
-
+    
     private String hora, minuto;
     private Thread hilo;
-
+    
     SimpleDateFormat formato = new SimpleDateFormat("EEEE d MMMM");
     Date fecha = new Date();
-
+    
     ArrayList<Horarios> horari = new ArrayList<>();
     private int totalHor;
-
+    
     ArrayList<Materias> mate = new ArrayList<>();
     private int tamMate;
     private int totalMate;
-
+    
     ArrayList<Object> ids = new ArrayList<>();
-
+    
     ArrayList<Horarios> lunes = new ArrayList<>();
     ArrayList<Horarios> martes = new ArrayList<>();
     ArrayList<Horarios> miercoles = new ArrayList<>();
@@ -82,7 +83,13 @@ public class Horario extends javax.swing.JFrame implements Runnable
                 totalMate = 0;
             }
         }
-
+        
+        Consultar();
+        btnSalir.setMnemonic(KeyEvent.VK_ESCAPE);
+    }
+    
+    public void Consultar()
+    {
         horari = ManipulaBD.ConsultaHorarios("id!=", "-1");
         if (horari != null)
         {
@@ -91,14 +98,6 @@ public class Horario extends javax.swing.JFrame implements Runnable
                 if (!horari.isEmpty())
                 {
                     totalHor = horari.get(horari.size() - 1).getId() + 1;
-                    CatalogarDias();
-                    ActualizarDias(lunes, PanelLunes);
-                    ActualizarDias(martes, PanelMartes);
-                    ActualizarDias(miercoles, PanelMiercoles);
-                    ActualizarDias(jueves, PanelJueves);
-                    ActualizarDias(viernes, PanelViernes);
-                    ActualizarDias(sabado, PanelSabado);
-                    ActualizarDias(domingo, PanelDomingo);
                 } else
                 {
                     totalHor = 0;
@@ -108,10 +107,50 @@ public class Horario extends javax.swing.JFrame implements Runnable
                 totalMate = 0;
             }
         }
-
-        btnSalir.setMnemonic(KeyEvent.VK_ESCAPE);
+        lunes = ManipulaBD.ConsultaHorarios("dia=", "'Lunes'");
+        if (lunes != null)
+        {
+            Collections.sort(lunes);
+            ActualizarDias(lunes, PanelLunes);
+        }
+        martes = ManipulaBD.ConsultaHorarios("dia=", "'Martes'");
+        if (martes != null)
+        {
+            Collections.sort(martes);
+            ActualizarDias(martes, PanelMartes);
+        }
+        miercoles = ManipulaBD.ConsultaHorarios("dia=", "'Miercoles'");
+        if (miercoles != null)
+        {
+            Collections.sort(miercoles);
+            ActualizarDias(miercoles, PanelMiercoles);
+        }
+        jueves = ManipulaBD.ConsultaHorarios("dia=", "'Jueves'");
+        if (jueves != null)
+        {
+            Collections.sort(jueves);
+            ActualizarDias(jueves, PanelJueves);
+        }
+        viernes = ManipulaBD.ConsultaHorarios("dia=", "'Viernes'");
+        if (viernes != null)
+        {
+            Collections.sort(viernes);
+            ActualizarDias(viernes, PanelViernes);
+        }
+        sabado = ManipulaBD.ConsultaHorarios("dia=", "'Sabado'");
+        if (sabado != null)
+        {
+            Collections.sort(sabado);
+            ActualizarDias(sabado, PanelSabado);
+        }
+        domingo = ManipulaBD.ConsultaHorarios("dia=", "'Domingo'");
+        if (domingo != null)
+        {
+            Collections.sort(domingo);
+            ActualizarDias(domingo, PanelDomingo);
+        }
     }
-
+    
     @Override
     public void run()
     {
@@ -122,7 +161,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
             jLHora.setText(hora + ":" + minuto);
         }
     }
-
+    
     public void hora()
     {
         Calendar calendario = new GregorianCalendar();
@@ -131,64 +170,28 @@ public class Horario extends javax.swing.JFrame implements Runnable
         hora = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY) : "0" + calendario.get(Calendar.HOUR_OF_DAY);
         minuto = calendario.get(Calendar.MINUTE) > 9 ? "" + calendario.get(Calendar.MINUTE) : "0" + calendario.get(Calendar.MINUTE);
     }
-
-    public void CatalogarDias()
-    {
-        for (int i = 0; i < horari.size(); i++)
-        {
-            switch (horari.get(i).getDia())
-            {
-                case "Lunes":
-                    lunes.add(horari.get(i));
-                    break;
-                case "Martes":
-                    martes.add(horari.get(i));
-                    break;
-                case "Miercoles":
-                    miercoles.add(horari.get(i));
-                    break;
-                case "Jueves":
-                    jueves.add(horari.get(i));
-                    break;
-                case "Viernes":
-                    viernes.add(horari.get(i));
-                    break;
-                case "Sabado":
-                    sabado.add(horari.get(i));
-                    break;
-                case "Domingo":
-                    domingo.add(horari.get(i));
-                    break;
-            }
-        }
-        Collections.sort(lunes);
-        Collections.sort(martes);
-        Collections.sort(miercoles);
-        Collections.sort(jueves);
-        Collections.sort(viernes);
-        Collections.sort(sabado);
-        Collections.sort(domingo);
-    }
-
+    
     public void ActualizarDias(ArrayList<Horarios> lista, JPanel dia)
     {
         dia.removeAll();
-
+        
         for (int i = 0; i < lista.size(); i++)
         {
             int id = lista.get(i).getMateria();
             ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + id + "");
-            String texto = materia.get(0).getNombreMateria() + " \n " + materia.get(0).getNombreMaestro() + " \n "
-                    + materia.get(0).getSemestre() + "   " + lista.get(i).getHoraInicio();
-            JLabel caja = new JLabel();
-            caja.setSize(50, 50);
+            String texto = lista.get(i).getHoraInicio() + " :" + materia.get(0).getNombreMateria();
+            JTextField caja = new JTextField();
+            caja.setSize(25, 25);
             caja.setText(texto);
+            caja.setToolTipText(
+                    "Profesor :"+materia.get(0).getNombreMaestro() +" \nSemestre:" +
+                    + materia.get(0).getSemestre());
+            caja.setEditable(false);
             dia.add(caja);
         }
-
         dia.updateUI();
     }
-
+    
     public void ActualizarTablaMaterias()
     {
         Object matriz[][] = new Object[tamMate][5];
@@ -224,13 +227,13 @@ public class Horario extends javax.swing.JFrame implements Runnable
             {
                 false, false, true, true, true
             };
-
+            
             @Override
             public Class getColumnClass(int columnIndex)
             {
                 return types[columnIndex];
             }
-
+            
             @Override
             public boolean isCellEditable(int rowIndex, int columnIndex)
             {
@@ -403,43 +406,43 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jPanel11.setLayout(new java.awt.GridLayout(1, 7, 5, 0));
 
         PanelLunes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
-        PanelLunes.setLayout(new javax.swing.BoxLayout(PanelLunes, javax.swing.BoxLayout.Y_AXIS));
+        PanelLunes.setLayout(new java.awt.GridLayout(0, 1));
         jScrollPane1.setViewportView(PanelLunes);
 
         jPanel11.add(jScrollPane1);
 
         PanelMartes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
-        PanelMartes.setLayout(new javax.swing.BoxLayout(PanelMartes, javax.swing.BoxLayout.Y_AXIS));
+        PanelMartes.setLayout(new java.awt.GridLayout(0, 1));
         jScrollPane3.setViewportView(PanelMartes);
 
         jPanel11.add(jScrollPane3);
 
         PanelMiercoles.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
-        PanelMiercoles.setLayout(new javax.swing.BoxLayout(PanelMiercoles, javax.swing.BoxLayout.Y_AXIS));
+        PanelMiercoles.setLayout(new java.awt.GridLayout(0, 1));
         jScrollPane4.setViewportView(PanelMiercoles);
 
         jPanel11.add(jScrollPane4);
 
         PanelJueves.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
-        PanelJueves.setLayout(new javax.swing.BoxLayout(PanelJueves, javax.swing.BoxLayout.Y_AXIS));
+        PanelJueves.setLayout(new java.awt.GridLayout(0, 1));
         jScrollPane5.setViewportView(PanelJueves);
 
         jPanel11.add(jScrollPane5);
 
         PanelViernes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
-        PanelViernes.setLayout(new javax.swing.BoxLayout(PanelViernes, javax.swing.BoxLayout.Y_AXIS));
+        PanelViernes.setLayout(new java.awt.GridLayout(0, 1));
         jScrollPane6.setViewportView(PanelViernes);
 
         jPanel11.add(jScrollPane6);
 
         PanelSabado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
-        PanelSabado.setLayout(new javax.swing.BoxLayout(PanelSabado, javax.swing.BoxLayout.Y_AXIS));
+        PanelSabado.setLayout(new java.awt.GridLayout(0, 1));
         jScrollPane7.setViewportView(PanelSabado);
 
         jPanel11.add(jScrollPane7);
 
         PanelDomingo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
-        PanelDomingo.setLayout(new javax.swing.BoxLayout(PanelDomingo, javax.swing.BoxLayout.Y_AXIS));
+        PanelDomingo.setLayout(new java.awt.GridLayout(0, 1));
         jScrollPane8.setViewportView(PanelDomingo);
 
         jPanel11.add(jScrollPane8);
@@ -723,9 +726,9 @@ public class Horario extends javax.swing.JFrame implements Runnable
                             .addComponent(jLabel10))
                         .addGap(34, 34, 34)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ComboDias, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ComboHora, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(ComboHora, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboMaterias, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jCheckNotificar)
@@ -850,14 +853,14 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnGuardarActionPerformed
     {//GEN-HEADEREND:event_btnGuardarActionPerformed
-
+        
         int id = totalHor++;
         int materia = (int) ids.get(jComboMaterias.getSelectedIndex());
         String dia = (String) ComboDias.getSelectedItem();
         String horaInicio = (String) ComboHora.getSelectedItem();
         boolean notificar = jCheckNotificar.isSelected();
         ManipulaBD.AltaHorarios(id, materia, dia, horaInicio, notificar);
-        
+        Consultar();
         
 
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -870,7 +873,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAceptarActionPerformed
     {//GEN-HEADEREND:event_btnAceptarActionPerformed
-
+        
         String libretaS = (String) jComLibreta.getSelectedItem();
         int libreta = Integer.parseInt(libretaS);
         int semestre = Integer.parseInt(txtSemestre.getText());
