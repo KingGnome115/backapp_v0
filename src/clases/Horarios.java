@@ -4,27 +4,26 @@ package clases;
  *
  * @author Kevin
  */
-public class Horarios
+public class Horarios implements Comparable<Horarios>
 {
+
     private int id;
     private int materia;
     private String dia;
     private String horaInicio;
-    private String horaFinal;
-    private boolean notificar=false;
+    private boolean notificar = false;
 
     public Horarios()
     {
     }
 
-    public Horarios(int id, int materia, String dia, String horaInicio, String horaFinal, boolean notificar)
+    public Horarios(int id, int materia, String dia, String horaInicio, boolean notificar)
     {
         this.id = id;
         this.materia = materia;
         this.dia = dia;
         this.horaInicio = horaInicio;
-        this.horaFinal = horaFinal;
-        this.notificar=notificar;
+        this.notificar = notificar;
     }
 
     /**
@@ -76,22 +75,6 @@ public class Horarios
     }
 
     /**
-     * @return the horaFinal
-     */
-    public String getHoraFinal()
-    {
-        return horaFinal;
-    }
-
-    /**
-     * @param horaFinal the horaFinal to set
-     */
-    public void setHoraFinal(String horaFinal)
-    {
-        this.horaFinal = horaFinal;
-    }
-
-    /**
      * @return the notificar
      */
     public boolean isNotificar()
@@ -122,6 +105,13 @@ public class Horarios
     {
         this.id = id;
     }
-    
-    
+
+    @Override
+    public int compareTo(Horarios o)
+    {
+        String a = new String(String.valueOf(this.getHoraInicio()));
+        String b = new String(String.valueOf(o.getHoraInicio()));
+        return a.compareTo(b);
+    }
+
 }

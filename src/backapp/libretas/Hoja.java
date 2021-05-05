@@ -177,7 +177,6 @@ public class Hoja extends javax.swing.JPanel
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         btnNuevaImagen = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(234, 239, 210));
@@ -230,9 +229,6 @@ public class Hoja extends javax.swing.JPanel
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton2.setText("portapapeles");
-
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener()
         {
@@ -267,8 +263,6 @@ public class Hoja extends javax.swing.JPanel
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnNuevaImagen)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addComponent(jSplitPane1)
@@ -290,8 +284,7 @@ public class Hoja extends javax.swing.JPanel
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(btnNuevaImagen)
-                    .addComponent(jButton2))
+                    .addComponent(btnNuevaImagen))
                 .addGap(15, 15, 15))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -370,7 +363,6 @@ public class Hoja extends javax.swing.JPanel
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevaImagen;
-    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;

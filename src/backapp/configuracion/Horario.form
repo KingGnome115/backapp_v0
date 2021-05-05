@@ -353,7 +353,7 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                           <SubComponents>
-                            <Container class="javax.swing.JPanel" name="jPanel13">
+                            <Container class="javax.swing.JPanel" name="PanelLunes">
                               <Properties>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -374,7 +374,7 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                           <SubComponents>
-                            <Container class="javax.swing.JPanel" name="jPanel17">
+                            <Container class="javax.swing.JPanel" name="PanelMartes">
                               <Properties>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -395,7 +395,7 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                           <SubComponents>
-                            <Container class="javax.swing.JPanel" name="jPanel18">
+                            <Container class="javax.swing.JPanel" name="PanelMiercoles">
                               <Properties>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -416,7 +416,7 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                           <SubComponents>
-                            <Container class="javax.swing.JPanel" name="jPanel_Jueves">
+                            <Container class="javax.swing.JPanel" name="PanelJueves">
                               <Properties>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -437,7 +437,7 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                           <SubComponents>
-                            <Container class="javax.swing.JPanel" name="jPanel20">
+                            <Container class="javax.swing.JPanel" name="PanelViernes">
                               <Properties>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -458,7 +458,7 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                           <SubComponents>
-                            <Container class="javax.swing.JPanel" name="jPanel21">
+                            <Container class="javax.swing.JPanel" name="PanelSabado">
                               <Properties>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -479,7 +479,7 @@
 
                           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                           <SubComponents>
-                            <Container class="javax.swing.JPanel" name="jPanel22">
+                            <Container class="javax.swing.JPanel" name="PanelDomingo">
                               <Properties>
                                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -831,7 +831,7 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="100" max="32767" attributes="0"/>
+                          <EmptySpace pref="90" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -895,14 +895,12 @@
                                           <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel10" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel14" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="jComboMaterias" max="32767" attributes="0"/>
-                                          <Component id="jLHoraInicio" max="32767" attributes="0"/>
-                                          <Component id="jLHoraFinal" max="32767" attributes="0"/>
-                                          <Component id="jLabelDia" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jComboMaterias" min="-2" pref="56" max="-2" attributes="0"/>
+                                          <Component id="ComboDias" max="32767" attributes="0"/>
+                                          <Component id="ComboHora" alignment="0" max="32767" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
                                   </Group>
@@ -924,22 +922,17 @@
                                   <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jComboMaterias" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabelDia" min="-2" pref="22" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="ComboDias" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLHoraInicio" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="ComboHora" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel14" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLHoraFinal" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jCheckNotificar" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="btnGuardar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -974,29 +967,9 @@
                         <Property name="text" type="java.lang.String" value="Hora Inicio"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="jLHoraInicio">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="HH:mm"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel14">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Hora Final"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLHoraFinal">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="HH:mm"/>
-                      </Properties>
-                    </Component>
                     <Component class="javax.swing.JCheckBox" name="jCheckNotificar">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Notificar"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabelDia">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="DDDDDDD"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JButton" name="btnGuardar">
@@ -1006,6 +979,60 @@
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarActionPerformed"/>
                       </Events>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="ComboDias">
+                      <Properties>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="7">
+                            <StringItem index="0" value="Lunes"/>
+                            <StringItem index="1" value="Martes"/>
+                            <StringItem index="2" value="Miercoles"/>
+                            <StringItem index="3" value="Jueves"/>
+                            <StringItem index="4" value="Viernes"/>
+                            <StringItem index="5" value="Sabado"/>
+                            <StringItem index="6" value="Domingo"/>
+                          </StringArray>
+                        </Property>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                      </AuxValues>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="ComboHora">
+                      <Properties>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="25">
+                            <StringItem index="0" value="00:00"/>
+                            <StringItem index="1" value="01:00"/>
+                            <StringItem index="2" value="02:00"/>
+                            <StringItem index="3" value="03:00"/>
+                            <StringItem index="4" value="04:00"/>
+                            <StringItem index="5" value="05:00"/>
+                            <StringItem index="6" value="06:00"/>
+                            <StringItem index="7" value="07:00"/>
+                            <StringItem index="8" value="08:00"/>
+                            <StringItem index="9" value="09:00"/>
+                            <StringItem index="10" value="10:00"/>
+                            <StringItem index="11" value="11:00"/>
+                            <StringItem index="12" value="12:00"/>
+                            <StringItem index="13" value="13:00"/>
+                            <StringItem index="14" value="14:00"/>
+                            <StringItem index="15" value="15:00"/>
+                            <StringItem index="16" value="16:00"/>
+                            <StringItem index="17" value="17:00"/>
+                            <StringItem index="18" value="18:00"/>
+                            <StringItem index="19" value="19:00"/>
+                            <StringItem index="20" value="20:00"/>
+                            <StringItem index="21" value="21:00"/>
+                            <StringItem index="22" value="22:00"/>
+                            <StringItem index="23" value="23:00"/>
+                            <StringItem index="24" value="24:00"/>
+                          </StringArray>
+                        </Property>
+                      </Properties>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                      </AuxValues>
                     </Component>
                   </SubComponents>
                 </Container>

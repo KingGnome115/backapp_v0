@@ -253,7 +253,7 @@ public class ManipulaBD
         ArrayList<Horarios> v = new ArrayList<>();
         try
         {
-            for (int i = 0; i < reg.size(); i += 6)
+            for (int i = 0; i < reg.size(); i += 5)
             {
                 String idS = "";
                 idS = (String) reg.get(i);
@@ -265,10 +265,9 @@ public class ManipulaBD
                     int materia = Integer.parseInt(materiaS);
                     String dia = ((String) reg.get(i + 2)).trim();
                     String horaInicio = ((String) reg.get(i + 3)).trim();
-                    String horaFinal = ((String) reg.get(i + 4)).trim();
-                    String notificarS = ((String) reg.get(i + 5)).trim();
+                    String notificarS = ((String) reg.get(i + 4)).trim();
                     boolean notificar = Boolean.parseBoolean(notificarS);
-                    Horarios obj = new Horarios(id, materia, dia, horaInicio, horaFinal, notificar);
+                    Horarios obj = new Horarios(id, materia, dia, horaInicio, notificar);
                     v.add(obj);
                 }
             }
@@ -286,7 +285,7 @@ public class ManipulaBD
         }
     }
 
-    public static void AltaHorarios(int id, int materia, String dia, String horaInicio, String horaFinal, boolean notificar)
+    public static void AltaHorarios(int id, int materia, String dia, String horaInicio, boolean notificar)
     {
         Connection con = ManipulaBD.conecta();
         if (con != null)
@@ -297,7 +296,6 @@ public class ManipulaBD
                     + materia + ",'"
                     + dia + "','"
                     + horaInicio + "','"
-                    + horaFinal + "','"
                     + notificar + "'"
             );
         }

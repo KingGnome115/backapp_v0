@@ -9,8 +9,11 @@ import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
@@ -35,6 +38,14 @@ public class Horario extends javax.swing.JFrame implements Runnable
     private int totalMate;
 
     ArrayList<Object> ids = new ArrayList<>();
+
+    ArrayList<Horarios> lunes = new ArrayList<>();
+    ArrayList<Horarios> martes = new ArrayList<>();
+    ArrayList<Horarios> miercoles = new ArrayList<>();
+    ArrayList<Horarios> jueves = new ArrayList<>();
+    ArrayList<Horarios> viernes = new ArrayList<>();
+    ArrayList<Horarios> sabado = new ArrayList<>();
+    ArrayList<Horarios> domingo = new ArrayList<>();
 
     /**
      * Creates new form Horario
@@ -80,6 +91,14 @@ public class Horario extends javax.swing.JFrame implements Runnable
                 if (!horari.isEmpty())
                 {
                     totalHor = horari.get(horari.size() - 1).getId() + 1;
+                    CatalogarDias();
+                    ActualizarDias(lunes, PanelLunes);
+                    ActualizarDias(martes, PanelMartes);
+                    ActualizarDias(miercoles, PanelMiercoles);
+                    ActualizarDias(jueves, PanelJueves);
+                    ActualizarDias(viernes, PanelViernes);
+                    ActualizarDias(sabado, PanelSabado);
+                    ActualizarDias(domingo, PanelDomingo);
                 } else
                 {
                     totalHor = 0;
@@ -111,6 +130,63 @@ public class Horario extends javax.swing.JFrame implements Runnable
         calendario.setTime(horaactual);
         hora = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY) : "0" + calendario.get(Calendar.HOUR_OF_DAY);
         minuto = calendario.get(Calendar.MINUTE) > 9 ? "" + calendario.get(Calendar.MINUTE) : "0" + calendario.get(Calendar.MINUTE);
+    }
+
+    public void CatalogarDias()
+    {
+        for (int i = 0; i < horari.size(); i++)
+        {
+            switch (horari.get(i).getDia())
+            {
+                case "Lunes":
+                    lunes.add(horari.get(i));
+                    break;
+                case "Martes":
+                    martes.add(horari.get(i));
+                    break;
+                case "Miercoles":
+                    miercoles.add(horari.get(i));
+                    break;
+                case "Jueves":
+                    jueves.add(horari.get(i));
+                    break;
+                case "Viernes":
+                    viernes.add(horari.get(i));
+                    break;
+                case "Sabado":
+                    sabado.add(horari.get(i));
+                    break;
+                case "Domingo":
+                    domingo.add(horari.get(i));
+                    break;
+            }
+        }
+        Collections.sort(lunes);
+        Collections.sort(martes);
+        Collections.sort(miercoles);
+        Collections.sort(jueves);
+        Collections.sort(viernes);
+        Collections.sort(sabado);
+        Collections.sort(domingo);
+    }
+
+    public void ActualizarDias(ArrayList<Horarios> lista, JPanel dia)
+    {
+        dia.removeAll();
+
+        for (int i = 0; i < lista.size(); i++)
+        {
+            int id = lista.get(i).getMateria();
+            ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + id + "");
+            String texto = materia.get(0).getNombreMateria() + " \n " + materia.get(0).getNombreMaestro() + " \n "
+                    + materia.get(0).getSemestre() + "   " + lista.get(i).getHoraInicio();
+            JLabel caja = new JLabel();
+            caja.setSize(50, 50);
+            caja.setText(texto);
+            dia.add(caja);
+        }
+
+        dia.updateUI();
     }
 
     public void ActualizarTablaMaterias()
@@ -163,82 +239,6 @@ public class Horario extends javax.swing.JFrame implements Runnable
         });
     }
 
-//    public void TablaHorarios()
-//    {
-//        jPanel5.removeAll();
-//        for (int i = 0; i < 8; i++)
-//        {
-//            JLabel hora = new JLabel();
-//            hora.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-//            hora.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-//
-//            String ho = (i + 7) + "";
-//            if (ho.length() == 1)
-//            {
-//                hora.setText("0" + ho + ":00");
-//            } else
-//            {
-//                hora.setText(ho + ":00");
-//            }
-//
-//            hora.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-//            hora.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-//            jPanel5.add(hora);
-//
-//            for (int j = 0; j < 6; j++)
-//            {
-//                JButton dias1 = new JButton();
-//                dias1.setBackground(new java.awt.Color(0, 255, 204));
-//                dias1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-//                dias1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-//                dias1.setOpaque(true);
-//                int di = j;
-//                dias1.addActionListener(new ActionListener()
-//                {
-//                    @Override
-//                    public void actionPerformed(ActionEvent e)
-//                    {
-//                        switch (di)
-//                        {
-//                            case 0:
-//                                jLabelDia.setText("Lunes");
-//                                break;
-//                            case 1:
-//                                jLabelDia.setText("Martes");
-//                                break;
-//                            case 2:
-//                                jLabelDia.setText("Miercoles");
-//                                break;
-//                            case 3:
-//                                jLabelDia.setText("Jueves");
-//                                break;
-//                            case 4:
-//                                jLabelDia.setText("Viernes");
-//                                break;
-//                            case 5:
-//                                jLabelDia.setText("Sabado");
-//                                break;
-//                        }
-//
-//                        if (in)
-//                        {
-//                            jLHoraFinal.setText(hora.getText());
-//                            in = false;
-//                        } else
-//                        {
-//                            jLHoraInicio.setText(hora.getText());
-//                            in = true;
-//                        }
-//                    }
-//
-//                });
-//
-//                jPanel5.add(dias1);
-//            }
-//        }
-//        jPanel5.updateUI();
-//    }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -268,19 +268,19 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jLabel20 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel13 = new javax.swing.JPanel();
+        PanelLunes = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jPanel17 = new javax.swing.JPanel();
+        PanelMartes = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jPanel18 = new javax.swing.JPanel();
+        PanelMiercoles = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jPanel_Jueves = new javax.swing.JPanel();
+        PanelJueves = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jPanel20 = new javax.swing.JPanel();
+        PanelViernes = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
-        jPanel21 = new javax.swing.JPanel();
+        PanelSabado = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
-        jPanel22 = new javax.swing.JPanel();
+        PanelDomingo = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel56 = new javax.swing.JLabel();
@@ -309,12 +309,10 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jComboMaterias = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLHoraInicio = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLHoraFinal = new javax.swing.JLabel();
         jCheckNotificar = new javax.swing.JCheckBox();
-        jLabelDia = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
+        ComboDias = new javax.swing.JComboBox<>();
+        ComboHora = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -404,45 +402,45 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel11.setLayout(new java.awt.GridLayout(1, 7, 5, 0));
 
-        jPanel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
-        jPanel13.setLayout(new javax.swing.BoxLayout(jPanel13, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPane1.setViewportView(jPanel13);
+        PanelLunes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
+        PanelLunes.setLayout(new javax.swing.BoxLayout(PanelLunes, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane1.setViewportView(PanelLunes);
 
         jPanel11.add(jScrollPane1);
 
-        jPanel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
-        jPanel17.setLayout(new javax.swing.BoxLayout(jPanel17, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPane3.setViewportView(jPanel17);
+        PanelMartes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
+        PanelMartes.setLayout(new javax.swing.BoxLayout(PanelMartes, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane3.setViewportView(PanelMartes);
 
         jPanel11.add(jScrollPane3);
 
-        jPanel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
-        jPanel18.setLayout(new javax.swing.BoxLayout(jPanel18, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPane4.setViewportView(jPanel18);
+        PanelMiercoles.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
+        PanelMiercoles.setLayout(new javax.swing.BoxLayout(PanelMiercoles, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane4.setViewportView(PanelMiercoles);
 
         jPanel11.add(jScrollPane4);
 
-        jPanel_Jueves.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
-        jPanel_Jueves.setLayout(new javax.swing.BoxLayout(jPanel_Jueves, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPane5.setViewportView(jPanel_Jueves);
+        PanelJueves.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
+        PanelJueves.setLayout(new javax.swing.BoxLayout(PanelJueves, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane5.setViewportView(PanelJueves);
 
         jPanel11.add(jScrollPane5);
 
-        jPanel20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
-        jPanel20.setLayout(new javax.swing.BoxLayout(jPanel20, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPane6.setViewportView(jPanel20);
+        PanelViernes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
+        PanelViernes.setLayout(new javax.swing.BoxLayout(PanelViernes, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane6.setViewportView(PanelViernes);
 
         jPanel11.add(jScrollPane6);
 
-        jPanel21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
-        jPanel21.setLayout(new javax.swing.BoxLayout(jPanel21, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPane7.setViewportView(jPanel21);
+        PanelSabado.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
+        PanelSabado.setLayout(new javax.swing.BoxLayout(PanelSabado, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane7.setViewportView(PanelSabado);
 
         jPanel11.add(jScrollPane7);
 
-        jPanel22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
-        jPanel22.setLayout(new javax.swing.BoxLayout(jPanel22, javax.swing.BoxLayout.Y_AXIS));
-        jScrollPane8.setViewportView(jPanel22);
+        PanelDomingo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 153)));
+        PanelDomingo.setLayout(new javax.swing.BoxLayout(PanelDomingo, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane8.setViewportView(PanelDomingo);
 
         jPanel11.add(jScrollPane8);
 
@@ -696,15 +694,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
         jLabel10.setText("Hora Inicio");
 
-        jLHoraInicio.setText("HH:mm");
-
-        jLabel14.setText("Hora Final");
-
-        jLHoraFinal.setText("HH:mm");
-
         jCheckNotificar.setText("Notificar");
-
-        jLabelDia.setText("DDDDDDD");
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener()
@@ -714,6 +704,10 @@ public class Horario extends javax.swing.JFrame implements Runnable
                 btnGuardarActionPerformed(evt);
             }
         });
+
+        ComboDias.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo" }));
+
+        ComboHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -726,14 +720,12 @@ public class Horario extends javax.swing.JFrame implements Runnable
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
                             .addComponent(jLabel12)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel14))
+                            .addComponent(jLabel10))
                         .addGap(34, 34, 34)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboMaterias, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLHoraInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLHoraFinal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelDia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jComboMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ComboDias, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ComboHora, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jCheckNotificar)
@@ -748,19 +740,15 @@ public class Horario extends javax.swing.JFrame implements Runnable
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(jComboMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(19, 19, 19)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(jLabelDia, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ComboDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jLHoraInicio))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
-                    .addComponent(jLHoraFinal))
-                .addGap(22, 22, 22)
+                    .addComponent(ComboHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(51, 51, 51)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jCheckNotificar)
                     .addComponent(btnGuardar)))
@@ -800,7 +788,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Horarios", jPanel3);
@@ -865,13 +853,13 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
         int id = totalHor++;
         int materia = (int) ids.get(jComboMaterias.getSelectedIndex());
-        String dia = jLabelDia.getText();
-        String horaInicio = jLHoraInicio.getText();
-        String horaFinal = jLHoraFinal.getText();
+        String dia = (String) ComboDias.getSelectedItem();
+        String horaInicio = (String) ComboHora.getSelectedItem();
         boolean notificar = jCheckNotificar.isSelected();
+        ManipulaBD.AltaHorarios(id, materia, dia, horaInicio, notificar);
         
-        ManipulaBD.AltaHorarios(id, materia, dia, horaInicio, horaFinal, notificar);
         
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
@@ -894,8 +882,8 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
-        jPanel_Jueves.add(new CuadroHorario(Color.pink, "Redes", "10:00", "12:00", "Juanín"));
-        jPanel_Jueves.updateUI();
+        PanelJueves.add(new CuadroHorario(Color.pink, "Redes", "10:00", "12:00", "Juanín"));
+        PanelJueves.updateUI();
         System.out.println("nuevo cuadro horario agregado");
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -945,6 +933,15 @@ public class Horario extends javax.swing.JFrame implements Runnable
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboDias;
+    private javax.swing.JComboBox<String> ComboHora;
+    private javax.swing.JPanel PanelDomingo;
+    private javax.swing.JPanel PanelJueves;
+    private javax.swing.JPanel PanelLunes;
+    private javax.swing.JPanel PanelMartes;
+    private javax.swing.JPanel PanelMiercoles;
+    private javax.swing.JPanel PanelSabado;
+    private javax.swing.JPanel PanelViernes;
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;
@@ -958,14 +955,11 @@ public class Horario extends javax.swing.JFrame implements Runnable
     private javax.swing.JComboBox<String> jComboMaterias;
     private javax.swing.JLabel jLFecha;
     private javax.swing.JLabel jLHora;
-    private javax.swing.JLabel jLHoraFinal;
-    private javax.swing.JLabel jLHoraInicio;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -979,24 +973,16 @@ public class Horario extends javax.swing.JFrame implements Runnable
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabelDia;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel20;
-    private javax.swing.JPanel jPanel21;
-    private javax.swing.JPanel jPanel22;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JPanel jPanel_Jueves;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

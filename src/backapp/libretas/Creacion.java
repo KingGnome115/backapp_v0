@@ -1,7 +1,6 @@
 package backapp.libretas;
 
 import backapp.Opciones;
-import static backapp.Opciones.lista;
 import clases.HojaLibreta;
 import java.io.File;
 import java.io.FileFilter;
