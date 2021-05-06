@@ -11,8 +11,11 @@ import backapp.libretas.Libreta;
 import basededatos.ManipulaBD;
 import clases.Horarios;
 import clases.Materias;
+import java.awt.AWTException;
 import java.awt.Image;
+import java.awt.SystemTray;
 import java.awt.Toolkit;
+import java.awt.TrayIcon;
 import java.io.File;
 import java.io.FileFilter;
 import java.text.Normalizer;
@@ -150,6 +153,10 @@ public class Opciones extends javax.swing.JFrame implements Runnable
                     {
                         ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + horarioHoy.get(i).getMateria() + "");
                         jLabelClase.setText(materia.get(0).getNombreMateria());
+                        if (horaOC.equals(hor))
+                        {
+                            Notificaciones("Nueva Clase", materia.get(0).getNombreMateria());
+                        }
                         break;
                     }
                 }
@@ -166,6 +173,29 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         calendario.setTime(horaactual);
         hora = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY) : "0" + calendario.get(Calendar.HOUR_OF_DAY);
         minuto = calendario.get(Calendar.MINUTE) > 9 ? "" + calendario.get(Calendar.MINUTE) : "0" + calendario.get(Calendar.MINUTE);
+    }
+    
+        protected void Notificaciones(String titulo, String mensaje)
+    {
+        try
+        {
+            SystemTray tray = SystemTray.getSystemTray();
+
+            Image image = Toolkit.getDefaultToolkit().createImage("some-icon.png");
+
+            TrayIcon trayicon = new TrayIcon(image, "Java AWT Tray Demo");
+
+            trayicon.setImageAutoSize(true);
+
+            trayicon.setToolTip("System tray icon demo");
+
+            tray.add(trayicon);
+
+            trayicon.displayMessage(titulo, mensaje, TrayIcon.MessageType.INFO);
+        } catch (AWTException ex)
+        {
+            Logger.getLogger(Opciones.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
