@@ -10,16 +10,21 @@ import backapp.libretas.Importar;
 import backapp.libretas.Libreta;
 import basededatos.ManipulaBD;
 import clases.Horarios;
+import clases.Materias;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileFilter;
 import java.text.Normalizer;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JMenuItem;
 
 /**
@@ -41,6 +46,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     ArrayList<Horarios> horarioHoy = new ArrayList<>();
 
     SimpleDateFormat formato = new SimpleDateFormat("EEEE");
+    SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
     Date fecha = new Date();
 
     /**
@@ -50,18 +56,21 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     {
         this.setLocation(100, 30);
         initComponents();
-        hilo = new Thread(this);
-        hilo.start();
+
         String diaActual = quitarAcentos(formato.format(fecha));
         horarioHoy = ManipulaBD.ConsultaHorarios("dia=", "'" + diaActual + "'");
-        if (horarioHoy!=null)
+        if (horarioHoy != null)
         {
-            jLabelClase.setText("si hay clase");
+            Collections.sort(horarioHoy);
+//            ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + horarioHoy.get(0).getMateria() + "");
+//            jLabelClase.setText(materia.get(0).getNombreMateria());
         } else
         {
             jLabelClase.setText("no hay clases hoy");
         }
 
+        hilo = new Thread(this);
+        hilo.start();
         File carpeta = new File(dir);
         if (!carpeta.exists())
         {
@@ -127,7 +136,20 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         while (current == hilo)
         {
             hora();
-            jLHora.setText(hora + ":" + minuto);
+            String horaActual = hora + ":" + minuto;
+            jLHora.setText(horaActual);
+
+            for (int i = 0; i < horarioHoy.size(); i++)
+            {
+                String hor = horarioHoy.get(i).getHoraInicio().substring(0, 2);
+                if (hora.compareTo(hor) == 0)
+                {
+                    ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + horarioHoy.get(i).getMateria() + "");
+                    jLabelClase.setText(materia.get(0).getNombreMateria());
+                    break;
+                }
+            }
+
         }
     }
 
