@@ -58,6 +58,8 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
     Date fecha = new Date();
 
+    int cont = 0;
+
     /**
      * Creates new form Opciones
      */
@@ -71,8 +73,6 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         if (horarioHoy != null)
         {
             Collections.sort(horarioHoy);
-//            ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + horarioHoy.get(0).getMateria() + "");
-//            jLabelClase.setText(materia.get(0).getNombreMateria());
         } else
         {
             jLabelClase.setText("no hay clases hoy");
@@ -153,20 +153,23 @@ public class Opciones extends javax.swing.JFrame implements Runnable
                 Date horaOC = formatoHora.parse(horaActual);
                 for (int i = 0; i < horarioHoy.size(); i++)
                 {
-                    Date hor;
-                    hor = formatoHora.parse(horarioHoy.get(i).getHoraInicio());
-                    if (horaOC.equals(hor) || horaOC.after(hor))
+                    if (cont==0)
                     {
-                        ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + horarioHoy.get(i).getMateria() + "");
-                        jLabelClase.setText(materia.get(0).getNombreMateria());
-                        if (horaOC.equals(hor))
+                        cont=1;
+                        Date hor;
+                        hor = formatoHora.parse(horarioHoy.get(i).getHoraInicio());
+                        if (horaOC.equals(hor) || horaOC.after(hor))
                         {
-                            Notificaciones("Nueva Clase", materia.get(0).getNombreMateria());
+                            ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + horarioHoy.get(i).getMateria() + "");
+                            jLabelClase.setText(materia.get(0).getNombreMateria());
+                            if (horaOC.equals(hor))
+                            {
+                                Notificaciones("Nueva Clase", materia.get(0).getNombreMateria());
+                                cont = 0;
+                            }
+                            directorioLibreta = Opciones.directorio + "\\" + materia.get(0).getNombreMateria();
+                            break;
                         }
-
-                        directorioLibreta = Opciones.directorio + "\\" + materia.get(0).getNombreMateria();
-
-                        break;
                     }
                 }
             } catch (ParseException ex)

@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 public class Companieros extends javax.swing.JFrame
 {
 
-    ArrayList<CompanierosObj> compa = new ArrayList<>();
+    public ArrayList<CompanierosObj> compa = new ArrayList<>();
     private int tam;
     private int total;
 

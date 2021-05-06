@@ -1,9 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package backapp.libretas;
+
+import backapp.Opciones;
+import basededatos.ManipulaBD;
+import clases.CompanierosObj;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.jar.JarEntry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  *
@@ -12,12 +20,32 @@ package backapp.libretas;
 public class Compartir extends javax.swing.JFrame
 {
 
+    private File[] libretas;
+    private ArrayList<CompanierosObj> compa = new ArrayList<>();
+
     /**
      * Creates new form Eliminar
      */
     public Compartir()
     {
         initComponents();
+
+        File mochila = new File(Opciones.directorio);
+        libretas = mochila.listFiles();
+
+        for (int i = 0; i < libretas.length; i++)
+        {
+            ComboLibretas.addItem(libretas[i].getName());
+        }
+
+        compa = ManipulaBD.ConsultaCompanieros("id!=", "-1"); //Recibo todos los datos de la bd
+        if (compa != null) //Por si la bd esta vacia
+        {
+            for (int i = 0; i < compa.size(); i++)
+            {
+                ComboCompanieros.addItem(compa.get(i).getNombre());
+            }
+        }
     }
 
     /**
@@ -32,12 +60,12 @@ public class Compartir extends javax.swing.JFrame
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel2 = new javax.swing.JLabel();
+        ComboLibretas = new javax.swing.JComboBox<>();
+        jLabelCorreo = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnEnviar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        ComboCompanieros = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -50,26 +78,37 @@ public class Compartir extends javax.swing.JFrame
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Seleccione la libreta que desea compartir:");
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administracion", "Bases de datos", "Teoria de lenguajes de programacion" }));
+        ComboLibretas.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        jLabel2.setText("juan@gmail.com");
+        jLabelCorreo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabelCorreo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setText("Correo:");
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButton1.setText("Enviar");
+        btnEnviar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnEnviar.setText("Enviar");
+        btnEnviar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnEnviarActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Seleccione el compañero:");
 
-        jComboBox2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Juan", "Mario", "María", "Oscar" }));
+        ComboCompanieros.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ComboCompanieros.addItemListener(new java.awt.event.ItemListener()
+        {
+            public void itemStateChanged(java.awt.event.ItemEvent evt)
+            {
+                ComboCompanierosItemStateChanged(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -81,31 +120,27 @@ public class Compartir extends javax.swing.JFrame
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ComboLibretas, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGap(0, 16, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addGap(52, 52, 52)))
-                        .addContainerGap())
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addGap(0, 16, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnEnviar, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(ComboCompanieros, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(52, 52, 52))
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,19 +148,19 @@ public class Compartir extends javax.swing.JFrame
                 .addGap(25, 25, 25)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(ComboLibretas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ComboCompanieros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabelCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
-                .addComponent(jButton1)
+                .addComponent(btnEnviar)
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
@@ -145,6 +180,74 @@ public class Compartir extends javax.swing.JFrame
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ComboCompanierosItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_ComboCompanierosItemStateChanged
+    {//GEN-HEADEREND:event_ComboCompanierosItemStateChanged
+
+        int index = ComboCompanieros.getSelectedIndex();
+        jLabelCorreo.setText(compa.get(index).getEmail());
+
+    }//GEN-LAST:event_ComboCompanierosItemStateChanged
+
+    private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEnviarActionPerformed
+    {//GEN-HEADEREND:event_btnEnviarActionPerformed
+
+        int index = ComboLibretas.getSelectedIndex();
+        String libretaCompartir = libretas[index].getAbsolutePath();
+        String padre = Opciones.directorio;
+        padre+="\\"+libretas[index].getName()+".zip";
+        try
+        {
+            comprimir(libretaCompartir, padre);
+        } catch (Exception ex)
+        {
+            Logger.getLogger(Compartir.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_btnEnviarActionPerformed
+
+    public void Carpeta(String ruta, String carpeta, ZipOutputStream zip) throws Exception
+    {
+        File directorio = new File(carpeta);
+        for (String nombreArchivo : directorio.list())
+        {
+            if (ruta.equals(""))
+            {
+                Agregar(directorio.getName(), carpeta + "\\" + nombreArchivo, zip);
+            } else
+            {
+                Agregar(ruta + "\\" + directorio.getName(), carpeta + "\\" + nombreArchivo, zip);
+            }
+        }
+    }
+
+    private void Agregar(String ruta, String directorio, ZipOutputStream zip) throws Exception
+    {
+        File archivo = new File(directorio);
+        if (archivo.isDirectory())
+        {
+            Carpeta(ruta, directorio, zip);
+        } else
+        {
+            byte[] buffer = new byte[4096];
+            int leido;
+            FileInputStream entrada = new FileInputStream(archivo);
+            zip.putNextEntry(new ZipEntry(ruta + "\\" + archivo.getName()));
+            while ((leido = entrada.read(buffer)) > 0)
+            {
+                zip.write(buffer, 0, leido);
+            }
+        }
+    }
+
+    public void comprimir(String archivo, String archivoZIP) throws Exception
+    {
+        ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(archivoZIP));
+        Agregar("", archivo, zip);
+        zip.flush();
+        zip.close();
+    }
 
     /**
      * @param args the command line arguments
@@ -195,14 +298,14 @@ public class Compartir extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> ComboCompanieros;
+    private javax.swing.JComboBox<String> ComboLibretas;
+    private javax.swing.JButton btnEnviar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabelCorreo;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
