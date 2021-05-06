@@ -9,6 +9,7 @@ import backapp.configuracion.Horario;
 import backapp.libretas.Importar;
 import backapp.libretas.Libreta;
 import basededatos.ManipulaBD;
+import clases.HojaLibreta;
 import clases.Horarios;
 import clases.Materias;
 import java.awt.AWTException;
@@ -18,6 +19,9 @@ import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,6 +33,7 @@ import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JMenuItem;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
@@ -43,6 +48,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     private String user = System.getProperty("user.name");
     private String dir = "C:\\Users\\" + user + "\\Documents\\Mochila";
     public static String directorio;
+    public String directorioLibreta;
 
     public static File[] lista = null;
 
@@ -157,6 +163,9 @@ public class Opciones extends javax.swing.JFrame implements Runnable
                         {
                             Notificaciones("Nueva Clase", materia.get(0).getNombreMateria());
                         }
+
+                        directorioLibreta = Opciones.directorio + "\\" + materia.get(0).getNombreMateria();
+
                         break;
                     }
                 }
@@ -174,8 +183,8 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         hora = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY) : "0" + calendario.get(Calendar.HOUR_OF_DAY);
         minuto = calendario.get(Calendar.MINUTE) > 9 ? "" + calendario.get(Calendar.MINUTE) : "0" + calendario.get(Calendar.MINUTE);
     }
-    
-        protected void Notificaciones(String titulo, String mensaje)
+
+    protected void Notificaciones(String titulo, String mensaje)
     {
         try
         {
@@ -195,6 +204,33 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         } catch (AWTException ex)
         {
             Logger.getLogger(Opciones.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    protected void Renombrar(File[] obj)
+    {
+        String s = "";
+        for (int i = 0; i < obj.length; i++)
+        {
+            File tmp;
+            s = obj[i].getParent() + "\\";
+            String tam = String.valueOf(obj.length);
+            String ii = String.valueOf(i);
+            String ceros = "";
+            int t = tam.length() - ii.length();
+            if (t == 0 && ii.length() == 1)
+            {
+                t = 1;
+            }
+            for (int j = 0; j < t; j++)
+            {
+                ceros += "0";
+            }
+            s += ceros + i;
+            String extencion = FilenameUtils.getExtension(obj[i].getName());
+            s += "." + extencion;
+            tmp = new File(s);
+            obj[i].renameTo(tmp);
         }
     }
 
@@ -278,6 +314,13 @@ public class Opciones extends javax.swing.JFrame implements Runnable
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButton3.setText("nueva hoja");
+        jButton3.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3);
 
         jMenuBar2.setBackground(new java.awt.Color(240, 234, 210));
@@ -494,6 +537,30 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         dispose();
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton3ActionPerformed
+    {//GEN-HEADEREND:event_jButton3ActionPerformed
+
+        File libreta = new File(directorioLibreta);
+        File[] hojasL = libreta.listFiles();
+        directorioLibreta += "\\Z";
+
+        File hoja1 = new File(directorioLibreta);
+        hoja1.mkdir();
+        try
+        {
+            ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream(directorioLibreta + "\\Text.dat"));
+            HojaLibreta obj = new HojaLibreta();
+            file.writeObject(obj);
+            file.close();
+        } catch (IOException ex)
+        {
+            System.out.println("No se encontro archivo");
+        }
+        hojasL = libreta.listFiles();
+        Renombrar(hojasL);
+
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
