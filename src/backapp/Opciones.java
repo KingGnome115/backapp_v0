@@ -139,17 +139,23 @@ public class Opciones extends javax.swing.JFrame implements Runnable
             String horaActual = hora + ":" + minuto;
             jLHora.setText(horaActual);
 
-            for (int i = 0; i < horarioHoy.size(); i++)
+            try
             {
-                String hor = horarioHoy.get(i).getHoraInicio().substring(0, 2);
-                if (hora.compareTo(hor) == 0)
+                Date horaOC = formatoHora.parse(horaActual);
+                for (int i = 0; i < horarioHoy.size(); i++)
                 {
-                    ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + horarioHoy.get(i).getMateria() + "");
-                    jLabelClase.setText(materia.get(0).getNombreMateria());
-                    break;
+                    Date hor;
+                    hor = formatoHora.parse(horarioHoy.get(i).getHoraInicio());
+                    if (horaOC.equals(hor) || horaOC.after(hor))
+                    {
+                        ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + horarioHoy.get(i).getMateria() + "");
+                        jLabelClase.setText(materia.get(0).getNombreMateria());
+                        break;
+                    }
                 }
+            } catch (ParseException ex)
+            {
             }
-
         }
     }
 
