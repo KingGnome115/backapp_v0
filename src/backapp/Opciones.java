@@ -6,14 +6,16 @@ import backapp.libretas.Creacion;
 import backapp.libretas.Eliminacion;
 import backapp.libretas.Exportar;
 import backapp.configuracion.Horario;
-import backapp.libretas.Hoja;
 import backapp.libretas.Importar;
 import backapp.libretas.Libreta;
+import basededatos.ManipulaBD;
+import clases.Horarios;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileFilter;
+import java.text.Normalizer;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,6 +38,11 @@ public class Opciones extends javax.swing.JFrame implements Runnable
 
     public static File[] lista = null;
 
+    ArrayList<Horarios> horarioHoy = new ArrayList<>();
+
+    SimpleDateFormat formato = new SimpleDateFormat("EEEE");
+    Date fecha = new Date();
+
     /**
      * Creates new form Opciones
      */
@@ -45,6 +52,15 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         initComponents();
         hilo = new Thread(this);
         hilo.start();
+        String diaActual = quitarAcentos(formato.format(fecha));
+        horarioHoy = ManipulaBD.ConsultaHorarios("dia=", "'" + diaActual + "'");
+        if (horarioHoy!=null)
+        {
+            jLabelClase.setText("si hay clase");
+        } else
+        {
+            jLabelClase.setText("no hay clases hoy");
+        }
 
         File carpeta = new File(dir);
         if (!carpeta.exists())
@@ -64,7 +80,13 @@ public class Opciones extends javax.swing.JFrame implements Runnable
             MostrarLibretas();
         }
         directorio = carpeta.getAbsolutePath();
+    }
 
+    public String quitarAcentos(String texto)
+    {
+        texto = Normalizer.normalize(texto, Normalizer.Form.NFD);
+        texto = texto.replaceAll("[\\p{InCombiningDiacriticalMarks}]", "");
+        return texto;
     }
 
     public void MostrarLibretas()
@@ -76,7 +98,6 @@ public class Opciones extends javax.swing.JFrame implements Runnable
             jLibreta.setText(lista[i].getName());
 
             String dir = lista[i].getAbsolutePath();
-            
 
             jLibreta.addActionListener(new java.awt.event.ActionListener()
             {
@@ -130,12 +151,13 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     {
 
         jMenu3 = new javax.swing.JMenu();
+        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLHora = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        jLabelClase = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -159,6 +181,8 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jMenuItem1 = new javax.swing.JMenuItem();
 
         jMenu3.setText("jMenu3");
+
+        jLabel2.setText("jLabel2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("BackApp v0");
@@ -190,9 +214,9 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jLabel7.setText("Clase actual:");
         jPanel1.add(jLabel7);
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabel9.setText("Administracion");
-        jPanel1.add(jLabel9);
+        jLabelClase.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jLabelClase.setText("Administracion");
+        jPanel1.add(jLabelClase);
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButton3.setText("nueva hoja");
@@ -352,7 +376,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -464,8 +488,9 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     private javax.swing.JLabel jLHora;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelClase;
     private javax.swing.JMenu jMSalir;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;

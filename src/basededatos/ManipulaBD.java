@@ -159,7 +159,7 @@ public class ManipulaBD
         ArrayList<Materias> v = new ArrayList<>();
         try
         {
-            for (int i = 0; i < reg.size(); i += 5)
+            for (int i = 0; i < reg.size(); i += 4)
             {
                 String idS = "";
                 idS = (String) reg.get(i);
@@ -167,13 +167,11 @@ public class ManipulaBD
                 if (idS != "" && idS != " ")
                 {
                     int id = Integer.parseInt(idS.trim());
-                    String libretaS = ((String) reg.get(i + 1)).trim();
-                    int libreta = Integer.parseInt(libretaS);
-                    String semestreS = ((String) reg.get(i + 2)).trim();
+                    String semestreS = ((String) reg.get(i + 1)).trim();
                     int semestre = Integer.parseInt(semestreS);
-                    String nombreMaestro = ((String) reg.get(i + 3)).trim();
-                    String nombreMateria = ((String) reg.get(i + 4)).trim();
-                    Materias obj = new Materias(id, libreta, semestre, nombreMaestro, nombreMateria);
+                    String nombreMaestro = ((String) reg.get(i + 2)).trim();
+                    String nombreMateria = ((String) reg.get(i + 3)).trim();
+                    Materias obj = new Materias(id, semestre, nombreMaestro, nombreMateria);
                     v.add(obj);
                 }
             }
@@ -191,7 +189,7 @@ public class ManipulaBD
         }
     }
 
-    public static void AltaMaterias(int id, int libreta, int semestre, String nombreMaestro, String nombreMateria)
+    public static void AltaMaterias(int id,  int semestre, String nombreMaestro, String nombreMateria)
     {
         Connection con = ManipulaBD.conecta();
         if (con != null)
@@ -199,7 +197,6 @@ public class ManipulaBD
             Querys sql = new Querys();
             sql.Insertar(con, "materias",
                     "" + id + ","
-                    + libreta + ","
                     + semestre + ",'"
                     + nombreMaestro + "','"
                     + nombreMateria + "'"

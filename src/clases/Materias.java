@@ -7,7 +7,6 @@ package clases;
 public class Materias
 {
     private int id;
-    private int libreta;
     private int semestre;
     private String nombreMaestro;
     private String nombreMateria;
@@ -16,10 +15,9 @@ public class Materias
     {
     }
 
-    public Materias(int id, int libreta, int semestre, String nombreMaestro, String nombreMateria)
+    public Materias(int id, int semestre, String nombreMaestro, String nombreMateria)
     {
         this.id = id;
-        this.libreta = libreta;
         this.semestre = semestre;
         this.nombreMaestro = nombreMaestro;
         this.nombreMateria = nombreMateria;
@@ -41,23 +39,7 @@ public class Materias
         this.id = id;
     }
 
-    /**
-     * @return the libreta
-     */
-    public int getLibreta()
-    {
-        return libreta;
-    }
-
-    /**
-     * @param libreta the libreta to set
-     */
-    public void setLibreta(int libreta)
-    {
-        this.libreta = libreta;
-    }
-
-    /**
+     /**
      * @return the semestre
      */
     public int getSemestre()
