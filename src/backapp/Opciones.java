@@ -14,6 +14,7 @@ import clases.Horarios;
 import clases.Materias;
 import java.awt.AWTException;
 import java.awt.Image;
+import java.awt.MouseInfo;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
@@ -32,6 +33,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JMenuItem;
 import org.apache.commons.io.FilenameUtils;
 
@@ -73,9 +75,23 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         if (horarioHoy != null)
         {
             Collections.sort(horarioHoy);
+            try
+            {
+                for (int i = 0; i < horarioHoy.size(); i++)
+                {
+                    ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + horarioHoy.get(i).getMateria() + "");
+                    jComboBox1.addItem(materia.get(0).getNombreMateria());
+                }
+            } catch (Exception e)
+            {
+                System.err.println("No se cargaron materias en el ComboBox");
+            }
         } else
         {
-            jLabelClase.setText("no hay clases hoy");
+            // cuando no haya clases hoy:
+            jLabel_Info.setText("no hay clases hoy");
+            jButton3.setVisible(false);
+            jComboBox1.setVisible(false);
         }
 
         hilo = new Thread(this);
@@ -144,36 +160,52 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         Thread current = Thread.currentThread();
         while (current == hilo)
         {
+            System.out.println("hola");
+            
             hora();
             String horaActual = hora + ":" + minuto;
             jLHora.setText(horaActual);
 
             try
             {
-                Date horaOC = formatoHora.parse(horaActual);
-                for (int i = 0; i < horarioHoy.size(); i++)
+                if (horarioHoy != null)
                 {
-                    if (cont==0)
+                    Date horaOC = formatoHora.parse(horaActual);
+                    for (int i = 0; i < horarioHoy.size(); i++)
                     {
-                        cont=1;
-                        Date hor;
-                        hor = formatoHora.parse(horarioHoy.get(i).getHoraInicio());
-                        if (horaOC.equals(hor) || horaOC.after(hor))
+                        if (cont == 0)
                         {
-                            ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + horarioHoy.get(i).getMateria() + "");
-                            jLabelClase.setText(materia.get(0).getNombreMateria());
-                            if (horaOC.equals(hor))
+                            cont = 1;
+                            Date hor;
+                            hor = formatoHora.parse(horarioHoy.get(i).getHoraInicio());
+                            if (horaOC.equals(hor) || horaOC.after(hor))
                             {
-                                Notificaciones("Nueva Clase", materia.get(0).getNombreMateria());
-                                cont = 0;
+                                ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + horarioHoy.get(i).getMateria() + "");
+                                jComboBox1.setSelectedItem(materia);
+                                if (horaOC.equals(hor))
+                                {
+                                    Notificaciones("Nueva Clase", materia.get(0).getNombreMateria());
+                                    cont = 0;
+                                }
+                                directorioLibreta = Opciones.directorio + "\\" + materia.get(0).getNombreMateria();
+                                break;
                             }
-                            directorioLibreta = Opciones.directorio + "\\" + materia.get(0).getNombreMateria();
-                            break;
                         }
                     }
-                }
+                } 
             } catch (ParseException ex)
             {
+                System.out.println("parse exception");
+            }
+            
+            try
+            {
+                System.out.println("me dormi");
+                hilo.sleep(60000);
+                System.out.println("ya desperte");
+            } catch (InterruptedException ex)
+            {
+                Logger.getLogger(Opciones.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -250,32 +282,28 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jMenu3 = new javax.swing.JMenu();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLHora = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel7 = new javax.swing.JLabel();
-        jLabelClase = new javax.swing.JLabel();
+        jLabel_Info = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu_Mover = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
-        jMenu7 = new javax.swing.JMenu();
-        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
-        jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
+        jMSalir = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem18 = new javax.swing.JMenuItem();
+        jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
         jMenuLibretas = new javax.swing.JMenu();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMSalir = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
 
         jMenu3.setText("jMenu3");
 
@@ -290,15 +318,13 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(234, 239, 210));
+        jPanel1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.setMinimumSize(new java.awt.Dimension(450, 50));
         jPanel1.setPreferredSize(new java.awt.Dimension(450, 50));
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/tiempo.png"))); // NOI18N
-        jPanel1.add(jLabel1);
-
         jLHora.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLHora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/tiempo.png"))); // NOI18N
         jLHora.setText("10:45 ");
         jPanel1.add(jLHora);
 
@@ -307,16 +333,16 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jSeparator2.setPreferredSize(new java.awt.Dimension(5, 40));
         jPanel1.add(jSeparator2);
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel7.setText("Clase actual:");
-        jPanel1.add(jLabel7);
+        jLabel_Info.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel_Info.setText("Clases de hoy:");
+        jPanel1.add(jLabel_Info);
 
-        jLabelClase.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jLabelClase.setText("Administracion");
-        jPanel1.add(jLabelClase);
+        jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        jPanel1.add(jComboBox1);
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButton3.setText("nueva hoja");
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -327,29 +353,50 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jPanel1.add(jButton3);
 
         jMenuBar2.setBackground(new java.awt.Color(240, 234, 210));
+        jMenuBar2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenuBar2.setMaximumSize(new java.awt.Dimension(450, 32769));
         jMenuBar2.setMinimumSize(new java.awt.Dimension(450, 35));
         jMenuBar2.setPreferredSize(new java.awt.Dimension(450, 35));
 
+        jMenu_Mover.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/hold.png"))); // NOI18N
+        jMenu_Mover.setToolTipText("Mover Ventana");
+        jMenu_Mover.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jMenu_Mover.addMouseMotionListener(new java.awt.event.MouseMotionAdapter()
+        {
+            public void mouseDragged(java.awt.event.MouseEvent evt)
+            {
+                jMenu_MoverMouseDragged(evt);
+            }
+        });
+        jMenu_Mover.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseReleased(java.awt.event.MouseEvent evt)
+            {
+                jMenu_MoverMouseReleased(evt);
+            }
+        });
+        jMenuBar2.add(jMenu_Mover);
+
         jMenu1.setText("Ayuda");
+        jMenu1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuBar2.add(jMenu1);
 
-        jMenu7.setText("Notificaciones");
-        jMenu7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-
-        jCheckBoxMenuItem1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jCheckBoxMenuItem1.setSelected(true);
-        jCheckBoxMenuItem1.setText("Notificar siguiente clase");
-        jMenu7.add(jCheckBoxMenuItem1);
-
-        jCheckBoxMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jCheckBoxMenuItem2.setText("Silenciar notificaciones");
-        jMenu7.add(jCheckBoxMenuItem2);
-
-        jMenuBar2.add(jMenu7);
+        jMSalir.setText("Salir");
+        jMSalir.setToolTipText("Salir de la aplicación (Escape)");
+        jMSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMSalir.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jMSalir.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMSalirActionPerformed(evt);
+            }
+        });
+        jMenuBar2.add(jMSalir);
 
         jMenu5.setText("Configuración");
+        jMenu5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -375,22 +422,16 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jMenu5.add(jMenuItem15);
         jMenu5.add(jSeparator7);
 
-        jMenuItem18.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jMenuItem18.setText("Shortcuts");
-        jMenuItem18.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jMenuItem18ActionPerformed(evt);
-            }
-        });
-        jMenu5.add(jMenuItem18);
+        jCheckBoxMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jCheckBoxMenuItem2.setText("Silenciar notificaciones");
+        jCheckBoxMenuItem2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenu5.add(jCheckBoxMenuItem2);
 
         jMenuBar2.add(jMenu5);
 
         jMenuLibretas.setText("Libretas");
+        jMenuLibretas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuLibretas.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jMenuLibretas.add(jSeparator1);
 
         jMenuItem5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem5.setText("Compartir ");
@@ -447,32 +488,9 @@ public class Opciones extends javax.swing.JFrame implements Runnable
             }
         });
         jMenuLibretas.add(jMenuItem4);
+        jMenuLibretas.add(jSeparator1);
 
         jMenuBar2.add(jMenuLibretas);
-
-        jMSalir.setText("Salir");
-        jMSalir.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jMSalir.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jMSalirActionPerformed(evt);
-            }
-        });
-
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_ESCAPE, 0));
-        jMenuItem1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jMenuItem1.setText("Salir de la aplicación");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMSalir.add(jMenuItem1);
-
-        jMenuBar2.add(jMSalir);
 
         setJMenuBar(jMenuBar2);
 
@@ -480,11 +498,11 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 509, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
         );
 
         pack();
@@ -525,21 +543,11 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         new Compartir().setVisible(true);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
-    private void jMenuItem18ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem18ActionPerformed
-    {//GEN-HEADEREND:event_jMenuItem18ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem18ActionPerformed
-
     private void jMSalirActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMSalirActionPerformed
     {//GEN-HEADEREND:event_jMSalirActionPerformed
-
-    }//GEN-LAST:event_jMSalirActionPerformed
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem1ActionPerformed
-    {//GEN-HEADEREND:event_jMenuItem1ActionPerformed
         dispose();
         System.exit(0);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jMSalirActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton3ActionPerformed
     {//GEN-HEADEREND:event_jButton3ActionPerformed
@@ -564,6 +572,18 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         Renombrar(hojasL);
 
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jMenu_MoverMouseDragged(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jMenu_MoverMouseDragged
+    {//GEN-HEADEREND:event_jMenu_MoverMouseDragged
+        jMenu_Mover.setIcon(new ImageIcon(getClass().getResource("/iconos/drag.png")));
+        this.setLocation(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
+    }//GEN-LAST:event_jMenu_MoverMouseDragged
+
+    private void jMenu_MoverMouseReleased(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jMenu_MoverMouseReleased
+    {//GEN-HEADEREND:event_jMenu_MoverMouseReleased
+        this.setLocation(this.getX() - 15, this.getY() - 15);
+        jMenu_Mover.setIcon(new ImageIcon(getClass().getResource("/iconos/hold.png")));
+    }//GEN-LAST:event_jMenu_MoverMouseReleased
 
     /**
      * @param args the command line arguments
@@ -612,22 +632,17 @@ public class Opciones extends javax.swing.JFrame implements Runnable
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLHora;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabelClase;
+    private javax.swing.JLabel jLabel_Info;
     private javax.swing.JMenu jMSalir;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem15;
-    private javax.swing.JMenuItem jMenuItem18;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -635,6 +650,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenu jMenuLibretas;
+    private javax.swing.JMenu jMenu_Mover;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
