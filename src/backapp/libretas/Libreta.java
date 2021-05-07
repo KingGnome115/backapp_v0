@@ -65,10 +65,12 @@ public class Libreta extends javax.swing.JFrame
         setUndecorated(true);
 
         jTabbedPane1.setBackground(new java.awt.Color(196, 170, 151));
+        jTabbedPane1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jTabbedPane1.setOpaque(true);
 
         jPanel10.setBackground(new java.awt.Color(196, 170, 151));
+        jPanel10.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         btnSalir1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnSalir1.setText("Salir");
@@ -107,9 +109,8 @@ public class Libreta extends javax.swing.JFrame
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(btnSalir1, javax.swing.GroupLayout.Alignment.TRAILING)
-                .addComponent(jLabel_Mover, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(btnSalir1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jLabel_Mover, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

@@ -266,7 +266,6 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
         jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
         jMenuLibretas = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
@@ -388,17 +387,6 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jMenuLibretas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuLibretas.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
-        jMenuItem5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jMenuItem5.setText("Compartir ");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
-        jMenuLibretas.add(jMenuItem5);
-
         jMenuItem8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem8.setText("Crear ");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener()
@@ -518,11 +506,6 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         new Exportar().setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem5ActionPerformed
-    {//GEN-HEADEREND:event_jMenuItem5ActionPerformed
-        new Compartir().setVisible(true);
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
-
     private void jMSalirActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMSalirActionPerformed
     {//GEN-HEADEREND:event_jMSalirActionPerformed
         dispose();
@@ -640,7 +623,6 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenu jMenuLibretas;

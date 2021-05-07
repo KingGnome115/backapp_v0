@@ -489,7 +489,7 @@ public class Horario extends javax.swing.JFrame
                 .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLFecha.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLFecha.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jLFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLFecha.setText("Hoy: Miercoles 6 de mayo");
 
