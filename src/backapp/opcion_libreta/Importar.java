@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package backapp.libretas;
+package backapp.opcion_libreta;
 
 import java.awt.MouseInfo;
 import javax.swing.ImageIcon;
@@ -256,7 +256,6 @@ public class Importar extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnSalir1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -266,7 +265,6 @@ public class Importar extends javax.swing.JFrame
     private javax.swing.JLabel jLabel_Mover;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables

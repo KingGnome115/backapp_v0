@@ -1,4 +1,4 @@
-package backapp.libretas;
+package backapp.opcion_libreta;
 
 import backapp.Opciones;
 import static backapp.Opciones.directorio;

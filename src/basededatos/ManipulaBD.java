@@ -1,6 +1,6 @@
 package basededatos;
 
-import clases.CompanierosObj;
+import backapp.papelera.CompanierosObj;
 import clases.Horarios;
 import clases.Materias;
 import java.sql.Connection;

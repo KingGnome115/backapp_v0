@@ -1,8 +1,7 @@
-package backapp.configuracion;
+package backapp.papelera;
 
 import backapp.Opciones;
 import basededatos.ManipulaBD;
-import clases.CompanierosObj;
 import java.awt.MouseInfo;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;

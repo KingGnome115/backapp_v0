@@ -1,4 +1,4 @@
-package backapp.configuracion;
+package backapp;
 
 import backapp.Opciones;
 import basededatos.ManipulaBD;
@@ -311,7 +311,6 @@ public class Horario extends javax.swing.JFrame
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(900, 600));
 
         jPanel10.setBackground(new java.awt.Color(196, 170, 151));
         jPanel10.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));

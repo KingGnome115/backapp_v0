@@ -1,8 +1,7 @@
-package backapp.libretas;
+package backapp.papelera;
 
 import backapp.Opciones;
 import basededatos.ManipulaBD;
-import clases.CompanierosObj;
 import java.awt.MouseInfo;
 import java.io.File;
 import java.io.FileInputStream;
@@ -372,7 +371,6 @@ public class Compartir extends javax.swing.JFrame
     private javax.swing.JComboBox<String> ComboCompanieros;
     private javax.swing.JComboBox<String> ComboLibretas;
     private javax.swing.JButton btnEnviar;
-    private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnSalir1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
@@ -381,7 +379,6 @@ public class Compartir extends javax.swing.JFrame
     private javax.swing.JLabel jLabelCorreo;
     private javax.swing.JLabel jLabel_Mover;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 }

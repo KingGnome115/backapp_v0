@@ -1,4 +1,4 @@
-package clases;
+package backapp.papelera;
 
 /**
  *

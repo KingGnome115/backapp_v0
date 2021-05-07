@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package backapp.libretas;
+package backapp.opcion_libreta;
 
 import backapp.Opciones;
 import java.awt.MouseInfo;
@@ -207,7 +207,7 @@ public class Exportar extends javax.swing.JFrame
                 .addGroup(layout.createSequentialGroup()
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, 0)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 383, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
                     .addGap(0, 0, 0))
             );
 

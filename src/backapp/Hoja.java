@@ -1,4 +1,4 @@
-package backapp.libretas;
+package backapp;
 
 import clases.HojaLibreta;
 import java.awt.Image;
