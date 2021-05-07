@@ -1175,18 +1175,22 @@ public class Horario extends javax.swing.JFrame
 
 class CuadroHorario extends javax.swing.JPanel
 {
+    private javax.swing.JLabel grupo;
     private javax.swing.JLabel horafin;
     private javax.swing.JLabel horainicio;
     private javax.swing.JLabel materia;
     private javax.swing.JLabel profe;
+    private javax.swing.JLabel semestre;
 
-    public CuadroHorario(Color color, String materia, String horainicio, String horafin, String profe)
+    public CuadroHorario(Color color, String materia, String horainicio, String horafin, String profe, String semestre, String grupo)
     {
         initComponents();
         this.materia.setText(materia);
         this.horainicio.setText(horainicio);
         this.horafin.setText(horafin);
         this.profe.setText(profe);
+        this.semestre.setText(semestre);
+        this.grupo.setText(grupo);
         this.setBackground(color);
     }
                        
@@ -1194,50 +1198,50 @@ class CuadroHorario extends javax.swing.JPanel
     {
         materia = new javax.swing.JLabel();
         horainicio = new javax.swing.JLabel();
-        profe = new javax.swing.JLabel();
         horafin = new javax.swing.JLabel();
+        profe = new javax.swing.JLabel();
+        semestre = new javax.swing.JLabel();
+        grupo = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        setMaximumSize(new java.awt.Dimension(100, 110));
-        setPreferredSize(new java.awt.Dimension(100, 110));
+        setMinimumSize(new java.awt.Dimension(100, 150));
+        setName(""); // NOI18N
+        setPreferredSize(new java.awt.Dimension(100, 150));
 
+        materia.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         materia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         materia.setText("Materia");
+        materia.setPreferredSize(new java.awt.Dimension(90, 20));
+        add(materia);
 
+        horainicio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         horainicio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        horainicio.setText("inicia");
+        horainicio.setText("Inicio");
+        horainicio.setPreferredSize(new java.awt.Dimension(90, 20));
+        add(horainicio);
 
+        horafin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        horafin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        horafin.setText("Termino");
+        horafin.setPreferredSize(new java.awt.Dimension(90, 20));
+        add(horafin);
+
+        profe.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         profe.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         profe.setText("Profe");
+        profe.setPreferredSize(new java.awt.Dimension(90, 20));
+        add(profe);
 
-        horafin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        horafin.setText("termina");
+        semestre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        semestre.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        semestre.setText("Semestre");
+        semestre.setPreferredSize(new java.awt.Dimension(90, 20));
+        add(semestre);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(horainicio, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(materia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(profe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(horafin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(materia)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(horainicio)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(horafin)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(profe)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        grupo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        grupo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        grupo.setText("Grupo");
+        grupo.setPreferredSize(new java.awt.Dimension(90, 20));
+        add(grupo);
     }                                          
 }
