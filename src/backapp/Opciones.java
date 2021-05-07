@@ -195,12 +195,6 @@ public class Opciones extends javax.swing.JFrame implements Runnable
             {
             }
 
-            try
-            {
-                hilo.sleep(1000);
-            } catch (InterruptedException ex)
-            {
-            }
         }
     }
 
@@ -276,8 +270,6 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jMenu3 = new javax.swing.JMenu();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLHora = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
         jLabel_Info = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
@@ -316,16 +308,6 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jPanel1.setMinimumSize(new java.awt.Dimension(450, 50));
         jPanel1.setPreferredSize(new java.awt.Dimension(450, 50));
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
-
-        jLHora.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLHora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/tiempo.png"))); // NOI18N
-        jLHora.setText("10:45 ");
-        jPanel1.add(jLHora);
-
-        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jSeparator2.setMinimumSize(new java.awt.Dimension(5, 10));
-        jSeparator2.setPreferredSize(new java.awt.Dimension(5, 40));
-        jPanel1.add(jSeparator2);
 
         jLabel_Info.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel_Info.setText("Clases de hoy:");
@@ -496,7 +478,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -628,7 +610,6 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     private javax.swing.JButton jButton3;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLHora;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel_Info;
     private javax.swing.JMenu jMSalir;
@@ -647,7 +628,6 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     private javax.swing.JMenu jMenu_Mover;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator7;
     // End of variables declaration//GEN-END:variables

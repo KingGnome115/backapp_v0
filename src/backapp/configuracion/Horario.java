@@ -288,9 +288,6 @@ public class Horario extends javax.swing.JFrame implements Runnable
         PanelSabado = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         PanelDomingo = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jLFecha = new javax.swing.JLabel();
-        jLHora = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel56 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
@@ -487,28 +484,15 @@ public class Horario extends javax.swing.JFrame implements Runnable
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 787, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE))
+                .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE))
         );
-
-        jPanel5.setBackground(new java.awt.Color(234, 239, 210));
-
-        jLFecha.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLFecha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/tiempo.png"))); // NOI18N
-        jLFecha.setText("Miercoles 26 de marzo ");
-        jLFecha.setIconTextGap(10);
-        jPanel5.add(jLFecha);
-
-        jLHora.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLHora.setText("HH:mm");
-        jPanel5.add(jLHora);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -516,17 +500,13 @@ public class Horario extends javax.swing.JFrame implements Runnable
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -989,8 +969,6 @@ public class Horario extends javax.swing.JFrame implements Runnable
     private javax.swing.JButton jButton6;
     private javax.swing.JCheckBox jCheckNotificar;
     private javax.swing.JComboBox<String> jComboMaterias;
-    private javax.swing.JLabel jLFecha;
-    private javax.swing.JLabel jLHora;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -1015,7 +993,6 @@ public class Horario extends javax.swing.JFrame implements Runnable
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
