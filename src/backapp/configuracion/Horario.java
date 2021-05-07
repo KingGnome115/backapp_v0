@@ -360,9 +360,8 @@ public class Horario extends javax.swing.JFrame implements Runnable
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING)
-                .addComponent(jLabel_Mover, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(btnSalir, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jLabel_Mover, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jTabbedPane1.setBackground(new java.awt.Color(196, 170, 151));
