@@ -159,7 +159,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     {
         Thread current = Thread.currentThread();
         while (current == hilo)
-        {          
+        {
             hora();
             String horaActual = hora + ":" + minuto;
             jLHora.setText(horaActual);
@@ -190,18 +190,16 @@ public class Opciones extends javax.swing.JFrame implements Runnable
                             }
                         }
                     }
-                } 
+                }
             } catch (ParseException ex)
             {
             }
-            
+
             try
             {
-                
-                hilo.sleep(60000);
+                hilo.sleep(1000);
             } catch (InterruptedException ex)
             {
-                Logger.getLogger(Opciones.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
