@@ -27,13 +27,10 @@ import javax.swing.JTextField;
  *
  * @author rosal
  */
-public class Horario extends javax.swing.JFrame implements Runnable
+public class Horario extends javax.swing.JFrame
 {
     
     boolean in = false;
-    
-    private String hora, minuto;
-    private Thread hilo;
     
     SimpleDateFormat formato = new SimpleDateFormat("EEEE d MMMM");
     Date fecha = new Date();
@@ -61,8 +58,6 @@ public class Horario extends javax.swing.JFrame implements Runnable
     public Horario()
     {
         initComponents();
-        hilo = new Thread(this);
-        hilo.start();
         jLFecha.setText(formato.format(fecha));
 //        TablaHorarios();
 
@@ -156,26 +151,6 @@ public class Horario extends javax.swing.JFrame implements Runnable
             Collections.sort(domingo);
             ActualizarDias(domingo, PanelDomingo);
         }
-    }
-    
-    @Override
-    public void run()
-    {
-        Thread current = Thread.currentThread();
-        while (current == hilo)
-        {
-            hora();
-            jLHora.setText(hora + ":" + minuto);
-        }
-    }
-    
-    public void hora()
-    {
-        Calendar calendario = new GregorianCalendar();
-        Date horaactual = new Date();
-        calendario.setTime(horaactual);
-        hora = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY) : "0" + calendario.get(Calendar.HOUR_OF_DAY);
-        minuto = calendario.get(Calendar.MINUTE) > 9 ? "" + calendario.get(Calendar.MINUTE) : "0" + calendario.get(Calendar.MINUTE);
     }
     
     public void ActualizarDias(ArrayList<Horarios> lista, JPanel dia)
@@ -288,7 +263,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
         PanelSabado = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         PanelDomingo = new javax.swing.JPanel();
-        jLabel_Fecha = new javax.swing.JLabel();
+        jLFecha = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel56 = new javax.swing.JLabel();
         jButton6 = new javax.swing.JButton();
@@ -494,9 +469,9 @@ public class Horario extends javax.swing.JFrame implements Runnable
                 .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE))
         );
 
-        jLabel_Fecha.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel_Fecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel_Fecha.setText("Hoy: Miercoles 6 de mayo");
+        jLFecha.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLFecha.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLFecha.setText("Hoy: Miercoles 6 de mayo");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -506,14 +481,14 @@ public class Horario extends javax.swing.JFrame implements Runnable
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel_Fecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel_Fecha)
+                .addComponent(jLFecha)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -903,7 +878,6 @@ public class Horario extends javax.swing.JFrame implements Runnable
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSalirActionPerformed
     {//GEN-HEADEREND:event_btnSalirActionPerformed
-        new Opciones().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
@@ -977,6 +951,7 @@ public class Horario extends javax.swing.JFrame implements Runnable
     private javax.swing.JButton jButton6;
     private javax.swing.JCheckBox jCheckNotificar;
     private javax.swing.JComboBox<String> jComboMaterias;
+    private javax.swing.JLabel jLFecha;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -993,7 +968,6 @@ public class Horario extends javax.swing.JFrame implements Runnable
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabel_Fecha;
     private javax.swing.JLabel jLabel_Mover;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;

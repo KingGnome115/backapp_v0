@@ -158,7 +158,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jPanel8" max="32767" attributes="0"/>
-                              <Component id="jLabel_Fecha" max="32767" attributes="0"/>
+                              <Component id="jLFecha" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -168,7 +168,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel_Fecha" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLFecha" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jPanel8" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -510,7 +510,7 @@
                     </Container>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JLabel" name="jLabel_Fecha">
+                <Component class="javax.swing.JLabel" name="jLFecha">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="18" style="1"/>

@@ -433,6 +433,9 @@ public class Companieros extends javax.swing.JFrame
         {
             txtEmail.setText("");
         }
+        
+        compa = ManipulaBD.ConsultaCompanieros("id!=", "-1");
+        ActualizarTabla(compa, tam);
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed

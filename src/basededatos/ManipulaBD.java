@@ -21,8 +21,8 @@ public class ManipulaBD
     {
         try
         {
-//            return con.Conecta("localhost:3306", "backapp", "root", "", 2);
-            return con.Conecta("127.0.0.1:3307", "backapp", "root", "", 2);
+            return con.Conecta("localhost:3306", "backapp", "root", "", 2);
+//            return con.Conecta("127.0.0.1:3307", "backapp", "root", "", 2);
         } catch (Exception e)
         {
             System.out.println("No se pudo conectar a la bd");

@@ -27,10 +27,8 @@ import java.text.Normalizer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -70,30 +68,6 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         this.setLocation(100, 30);
         initComponents();
 
-        String diaActual = quitarAcentos(formato.format(fecha));
-        horarioHoy = ManipulaBD.ConsultaHorarios("dia=", "'" + diaActual + "'");
-        if (horarioHoy != null)
-        {
-            Collections.sort(horarioHoy);
-            try
-            {
-                for (int i = 0; i < horarioHoy.size(); i++)
-                {
-                    ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + horarioHoy.get(i).getMateria() + "");
-                    jComboBox1.addItem(materia.get(0).getNombreMateria());
-                }
-            } catch (Exception e)
-            {
-                System.err.println("No se cargaron materias en el ComboBox");
-            }
-        } else
-        {
-            // cuando no haya clases hoy:
-            jLabel_Info.setText("no hay clases hoy");
-            jButton3.setVisible(false);
-            jComboBox1.setVisible(false);
-        }
-
         hilo = new Thread(this);
         hilo.start();
         File carpeta = new File(dir);
@@ -114,6 +88,30 @@ public class Opciones extends javax.swing.JFrame implements Runnable
             MostrarLibretas();
         }
         directorio = carpeta.getAbsolutePath();
+
+        String diaActual = quitarAcentos(formato.format(fecha));
+        horarioHoy = ManipulaBD.ConsultaHorarios("dia=", "'" + diaActual + "'");
+        if (horarioHoy != null)
+        {
+            Collections.sort(horarioHoy);
+            try
+            {
+                for (int i = 0; i < horarioHoy.size(); i++)
+                {
+                    ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + horarioHoy.get(i).getMateria() + "");
+                    ComboLibretasHoy.addItem(materia.get(0).getNombreMateria());
+                }
+            } catch (Exception e)
+            {
+                System.err.println("No se cargaron materias en el ComboBox");
+            }
+        } else
+        {
+            // cuando no haya clases hoy:
+            jLabel_Info.setText("no hay clases hoy");
+            jButton3.setVisible(false);
+            ComboLibretasHoy.setVisible(false);
+        }
     }
 
     public String quitarAcentos(String texto)
@@ -160,10 +158,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         Thread current = Thread.currentThread();
         while (current == hilo)
         {
-            hora();
             String horaActual = hora + ":" + minuto;
-            jLHora.setText(horaActual);
-
             try
             {
                 if (horarioHoy != null)
@@ -179,13 +174,11 @@ public class Opciones extends javax.swing.JFrame implements Runnable
                             if (horaOC.equals(hor) || horaOC.after(hor))
                             {
                                 ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + horarioHoy.get(i).getMateria() + "");
-                                jComboBox1.setSelectedItem(materia);
                                 if (horaOC.equals(hor))
                                 {
                                     Notificaciones("Nueva Clase", materia.get(0).getNombreMateria());
                                     cont = 0;
                                 }
-                                directorioLibreta = Opciones.directorio + "\\" + materia.get(0).getNombreMateria();
                                 break;
                             }
                         }
@@ -196,15 +189,6 @@ public class Opciones extends javax.swing.JFrame implements Runnable
             }
 
         }
-    }
-
-    public void hora()
-    {
-        Calendar calendario = new GregorianCalendar();
-        Date horaactual = new Date();
-        calendario.setTime(horaactual);
-        hora = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY) : "0" + calendario.get(Calendar.HOUR_OF_DAY);
-        minuto = calendario.get(Calendar.MINUTE) > 9 ? "" + calendario.get(Calendar.MINUTE) : "0" + calendario.get(Calendar.MINUTE);
     }
 
     protected void Notificaciones(String titulo, String mensaje)
@@ -270,10 +254,8 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jMenu3 = new javax.swing.JMenu();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel_Fecha = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
         jLabel_Info = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        ComboLibretasHoy = new javax.swing.JComboBox<>();
         jButton3 = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu_Mover = new javax.swing.JMenu();
@@ -311,22 +293,19 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jPanel1.setPreferredSize(new java.awt.Dimension(450, 50));
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jLabel_Fecha.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jLabel_Fecha.setText("Miercoles 6 de mayo");
-        jPanel1.add(jLabel_Fecha);
-
-        jSeparator2.setBackground(new java.awt.Color(0, 0, 0));
-        jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
-        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jSeparator2.setPreferredSize(new java.awt.Dimension(5, 30));
-        jPanel1.add(jSeparator2);
-
         jLabel_Info.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel_Info.setText("Clases de hoy:");
         jPanel1.add(jLabel_Info);
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        jPanel1.add(jComboBox1);
+        ComboLibretasHoy.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        ComboLibretasHoy.addItemListener(new java.awt.event.ItemListener()
+        {
+            public void itemStateChanged(java.awt.event.ItemEvent evt)
+            {
+                ComboLibretasHoyItemStateChanged(evt);
+            }
+        });
+        jPanel1.add(ComboLibretasHoy);
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButton3.setText("nueva hoja");
@@ -573,6 +552,14 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jMenu_Mover.setIcon(new ImageIcon(getClass().getResource("/iconos/hold.png")));
     }//GEN-LAST:event_jMenu_MoverMouseReleased
 
+    private void ComboLibretasHoyItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_ComboLibretasHoyItemStateChanged
+    {//GEN-HEADEREND:event_ComboLibretasHoyItemStateChanged
+
+        directorioLibreta = Opciones.directorio + "\\" + ComboLibretasHoy.getSelectedItem();
+        System.out.println(directorioLibreta);
+
+    }//GEN-LAST:event_ComboLibretasHoyItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -619,11 +606,10 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboLibretasHoy;
     private javax.swing.JButton jButton3;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel_Fecha;
     private javax.swing.JLabel jLabel_Info;
     private javax.swing.JMenu jMSalir;
     private javax.swing.JMenu jMenu1;
@@ -641,7 +627,6 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     private javax.swing.JMenu jMenu_Mover;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator7;
     // End of variables declaration//GEN-END:variables
