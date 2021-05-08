@@ -1,13 +1,19 @@
 package clases;
 
+import java.awt.Color;
+import java.util.Scanner;
+
 /**
  *
  * @author Kevin
  */
 public class Materias
 {
+
     private int id;
     private int semestre;
+    private String grupo;
+    private Color color;
     private String nombreMaestro;
     private String nombreMateria;
 
@@ -15,12 +21,16 @@ public class Materias
     {
     }
 
-    public Materias(int id, int semestre, String nombreMaestro, String nombreMateria)
+    public Materias(int id, int semestre, String grupo, String nombreMaestro, String nombreMateria, String color)
     {
         this.id = id;
         this.semestre = semestre;
+        this.grupo = grupo;
         this.nombreMaestro = nombreMaestro;
         this.nombreMateria = nombreMateria;
+        Scanner sc = new Scanner(color);
+        sc.useDelimiter("\\D+");
+        this.color = new Color(sc.nextInt(), sc.nextInt(), sc.nextInt());
     }
 
     /**
@@ -39,7 +49,7 @@ public class Materias
         this.id = id;
     }
 
-     /**
+    /**
      * @return the semestre
      */
     public int getSemestre()
@@ -86,6 +96,37 @@ public class Materias
     {
         this.nombreMateria = nombreMateria;
     }
-    
-    
+
+    /**
+     * @return the grupo
+     */
+    public String getGrupo()
+    {
+        return grupo;
+    }
+
+    /**
+     * @param grupo the grupo to set
+     */
+    public void setGrupo(String grupo)
+    {
+        this.grupo = grupo;
+    }
+
+    /**
+     * @return the color
+     */
+    public Color getColor()
+    {
+        return color;
+    }
+
+    /**
+     * @param color the color to set
+     */
+    public void setColor(Color color)
+    {
+        this.color = color;
+    }
+
 }

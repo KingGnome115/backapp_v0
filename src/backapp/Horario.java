@@ -1,7 +1,7 @@
 package backapp;
 
 import backapp.Opciones;
-import basededatos.ManipulaBD;
+import clases.ManipulaBD;
 import clases.HojaLibreta;
 import clases.Horarios;
 import clases.Materias;
@@ -278,7 +278,7 @@ public class Horario extends javax.swing.JFrame
         jLabel4 = new javax.swing.JLabel();
         btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
-        txtSemestre1 = new javax.swing.JTextField();
+        txtGrupo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel_Color = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -571,7 +571,7 @@ public class Horario extends javax.swing.JFrame
             }
         });
 
-        txtSemestre1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtGrupo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Grupo:");
@@ -632,10 +632,9 @@ public class Horario extends javax.swing.JFrame
                 .addGap(24, 24, 24)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtSemestre1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
-                .addComponent(jCheckNotificar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+                .addComponent(jCheckNotificar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -643,7 +642,7 @@ public class Horario extends javax.swing.JFrame
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(txtSemestre1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(jCheckNotificar1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -953,8 +952,9 @@ public class Horario extends javax.swing.JFrame
         int materia = (int) ids.get(jComboMaterias.getSelectedIndex());
         String dia = (String) ComboDias.getSelectedItem();
         String horaInicio = (String) ComboHora.getSelectedItem();
+        String horaFinal= (String) ComboHora1.getSelectedItem();
         boolean notificar = jCheckNotificar.isSelected();
-        ManipulaBD.AltaHorarios(id, materia, dia, horaInicio, notificar);
+        ManipulaBD.AltaHorarios(id, materia, dia, horaInicio,horaFinal, notificar);
         Consultar();
 
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -967,10 +967,13 @@ public class Horario extends javax.swing.JFrame
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAceptarActionPerformed
     {//GEN-HEADEREND:event_btnAceptarActionPerformed
 
-        int semestre = Integer.parseInt(txtSemestre.getText());
-        String nombreMaestro = txtMaestro.getText();
         String nombreMateria = txtMateria.getText();
-        ManipulaBD.AltaMaterias(totalMate++, semestre, nombreMaestro, nombreMateria); // ManipulaBD.AltaMaterias(total++, libreta, semestre, nombreMaestro, nombreMateria);
+        String nombreMaestro = txtMaestro.getText();
+        int semestre = Integer.parseInt(txtSemestre.getText());
+        String grupo = txtGrupo.getText();
+        String color = jLabel_Color.getBackground().toString();
+        
+        ManipulaBD.AltaMaterias(totalMate++, semestre, nombreMaestro, nombreMateria, grupo, color); // AntiguoManipulaBD.AltaMaterias(total++, libreta, semestre, nombreMaestro, nombreMateria);
 
         String directorio = Opciones.directorio + "\\" + nombreMateria;
         File libreta = new File(directorio);
@@ -1164,10 +1167,10 @@ public class Horario extends javax.swing.JFrame
     private javax.swing.JTable jTablaMaterias;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtGrupo;
     private javax.swing.JTextField txtMaestro;
     private javax.swing.JTextField txtMateria;
     private javax.swing.JTextField txtSemestre;
-    private javax.swing.JTextField txtSemestre1;
     // End of variables declaration//GEN-END:variables
 }
 

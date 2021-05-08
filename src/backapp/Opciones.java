@@ -6,7 +6,7 @@ import backapp.opcion_libreta.Creacion;
 import backapp.opcion_libreta.Eliminacion;
 import backapp.opcion_libreta.Exportar;
 import backapp.opcion_libreta.Importar;
-import basededatos.ManipulaBD;
+import clases.ManipulaBD;
 import clases.HojaLibreta;
 import clases.Horarios;
 import clases.Materias;

@@ -682,10 +682,9 @@
                               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtSemestre1" min="-2" pref="91" max="-2" attributes="0"/>
+                              <Component id="txtGrupo" min="-2" pref="91" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                               <Component id="jCheckNotificar1" max="32767" attributes="0"/>
-                              <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -695,7 +694,7 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="txtSemestre" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtSemestre1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtGrupo" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jCheckNotificar1" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -792,7 +791,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="txtSemestre1">
+                    <Component class="javax.swing.JTextField" name="txtGrupo">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI" size="14" style="0"/>
