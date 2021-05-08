@@ -1,7 +1,6 @@
 package backapp.papelera;
 
 import backapp.Opciones;
-import basededatos.ManipulaBD;
 import java.awt.MouseInfo;
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,7 +38,7 @@ public class Compartir extends javax.swing.JFrame
             ComboLibretas.addItem(libretas[i].getName());
         }
 
-        compa = ManipulaBD.ConsultaCompanieros("id!=", "-1"); //Recibo todos los datos de la bd
+        compa = AntiguoManipulaBD.ConsultaCompanieros("id!=", "-1"); //Recibo todos los datos de la bd
         if (compa != null) //Por si la bd esta vacia
         {
             for (int i = 0; i < compa.size(); i++)

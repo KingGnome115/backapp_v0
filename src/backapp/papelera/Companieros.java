@@ -1,7 +1,6 @@
 package backapp.papelera;
 
 import backapp.Opciones;
-import basededatos.ManipulaBD;
 import java.awt.MouseInfo;
 import java.awt.event.ItemEvent;
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class Companieros extends javax.swing.JFrame
     public Companieros()
     {
         initComponents();
-        compa = ManipulaBD.ConsultaCompanieros("id!=", "-1"); //Recibo todos los datos de la bd
+        compa = AntiguoManipulaBD.ConsultaCompanieros("id!=", "-1"); //Recibo todos los datos de la bd
         if (compa != null) //Por si la bd esta vacia
         {
             tam = compa.size(); //cuantos datos existen en la bd
@@ -371,7 +370,7 @@ public class Companieros extends javax.swing.JFrame
                     || (email.compareTo(compa.get(i).getEmail()) != 0)
                     || estatus != compa.get(i).isEstatus())
             {
-                ManipulaBD.ModificarCompanieros(id, "nombre,email,estatus", "'" + nombre + "','" + email + "','" + estatus + "'");
+                AntiguoManipulaBD.ModificarCompanieros(id, "nombre,email,estatus", "'" + nombre + "','" + email + "','" + estatus + "'");
             }
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -388,7 +387,7 @@ public class Companieros extends javax.swing.JFrame
             switch (opc)
             {
                 case "Todos":
-                    compa = ManipulaBD.ConsultaCompanieros("id!=", "-1");
+                    compa = AntiguoManipulaBD.ConsultaCompanieros("id!=", "-1");
                     ActualizarTabla(compa, tam);
                     break;
                 case "Activos":
@@ -427,13 +426,13 @@ public class Companieros extends javax.swing.JFrame
 
         if (Verificar(email))
         {
-            ManipulaBD.AltaCompanieros(total++, nombre, email, true);            
+            AntiguoManipulaBD.AltaCompanieros(total++, nombre, email, true);            
         } else
         {
             txtEmail.setText("");
         }
         
-        compa = ManipulaBD.ConsultaCompanieros("id!=", "-1");
+        compa = AntiguoManipulaBD.ConsultaCompanieros("id!=", "-1");
         ActualizarTabla(compa, tam);
     }//GEN-LAST:event_btnAceptarActionPerformed
 
