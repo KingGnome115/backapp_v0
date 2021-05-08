@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3307
--- Tiempo de generación: 08-05-2021 a las 01:35:09
+-- Tiempo de generación: 08-05-2021 a las 01:48:55
 -- Versión del servidor: 10.4.17-MariaDB
 -- Versión de PHP: 8.0.2
 
@@ -48,7 +48,7 @@ CREATE TABLE `materias` (
   `nombreMaestro` varchar(128) NOT NULL,
   `semestre` int(11) NOT NULL,
   `grupo` varchar(10) NOT NULL,
-  `color` varchar(13) NOT NULL
+  `color` varchar(40) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
