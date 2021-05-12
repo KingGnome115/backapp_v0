@@ -36,6 +36,7 @@ public class Horario extends javax.swing.JFrame
     Date fecha = new Date();
 
     ArrayList<Horarios> horari = new ArrayList<>();
+    private int tamHor;
     private int totalHor;
 
     ArrayList<Materias> mate = new ArrayList<>();
@@ -52,7 +53,8 @@ public class Horario extends javax.swing.JFrame
     ArrayList<Horarios> sabado = new ArrayList<>();
     ArrayList<Horarios> domingo = new ArrayList<>();
 
-    private int[] seleccionados;
+    private int[] seleccionadosMaterias;
+    private int[] seleccionadosHorarios;
 
     /**
      * Creates new form Horario
@@ -63,7 +65,7 @@ public class Horario extends javax.swing.JFrame
         jLFecha.setText(formato.format(fecha));
         ConsultarMaterias();
 
-        Consultar();
+        ConsultarHorarios();
         btnSalir.setMnemonic(KeyEvent.VK_ESCAPE);
     }
 
@@ -96,11 +98,12 @@ public class Horario extends javax.swing.JFrame
         }
     }
 
-    public void Consultar()
+    public void ConsultarHorarios()
     {
         horari = ManipulaBD.ConsultaHorarios("id!=", "-1");
         if (horari != null)
         {
+            tamHor = horari.size();
             try
             {
                 if (!horari.isEmpty())
@@ -157,6 +160,7 @@ public class Horario extends javax.swing.JFrame
             Collections.sort(domingo);
             ActualizarDias(domingo, PanelDomingo);
         }
+        ActualizarTablaHorario();
     }
 
     public void ActualizarDias(ArrayList<Horarios> lista, JPanel dia)
@@ -235,7 +239,69 @@ public class Horario extends javax.swing.JFrame
             @Override
             public void valueChanged(ListSelectionEvent e)
             {
-                seleccionados = TablaMateria.getSelectedRows();
+                seleccionadosMaterias = TablaMateria.getSelectedRows();
+            }
+        });
+    }
+
+    public void ActualizarTablaHorario()
+    {
+        Object matriz[][] = new Object[tamHor][6];
+        for (int i = 0; i < horari.size(); i++)
+        {
+            matriz[i][0] = horari.get(i).getId();
+            ArrayList<Materias> ap = ManipulaBD.ConsultaMaterias("id=", "" + horari.get(i).getId() + "");
+            matriz[i][1] = ap.get(0).getNombreMateria();
+            matriz[i][2] = horari.get(i).getDia();
+            matriz[i][3] = horari.get(i).getHoraInicio();
+            matriz[i][4] = horari.get(i).getHoraFinal();
+            matriz[i][5] = horari.get(i).isNotificar();
+        }
+
+        /*
+        Los titulos de las columnas
+         */
+        TablaHorarios.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]
+        {
+            "Id", "Materia", "Dia", "horaInicio", "horaFinal", "Notificar"
+        })
+        {
+            /*
+            Las clases de cada propiedad para tener un nivel de validación
+             */
+            Class[] types = new Class[]
+            {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class,
+                java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
+            };
+
+            /*
+            Cuales columnas pueden ser modificadas
+             */
+            boolean[] canEdit = new boolean[]
+            {
+                false, false, false, false, false, true
+            };
+
+            @Override
+            public Class getColumnClass(int columnIndex)
+            {
+                return types[columnIndex];
+            }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex)
+            {
+                return canEdit[columnIndex];
+            }
+        });
+
+        TablaHorarios.getSelectionModel().addListSelectionListener(new ListSelectionListener()
+        {
+            @Override
+            public void valueChanged(ListSelectionEvent e)
+            {
+                seleccionadosHorarios = TablaHorarios.getSelectedRows();
             }
         });
     }
@@ -293,19 +359,19 @@ public class Horario extends javax.swing.JFrame
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        btnAceptar = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
+        btnAgregarMaterias = new javax.swing.JButton();
+        btnLimpiarMaterias = new javax.swing.JButton();
         txtGrupo = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel_Color = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         btnCancelar1 = new javax.swing.JButton();
         jLabel57 = new javax.swing.JLabel();
-        btnEditar = new javax.swing.JButton();
+        btnEditarMaterias = new javax.swing.JButton();
         btnEliminarMateria = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel58 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtFinSemestre = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -317,13 +383,12 @@ public class Horario extends javax.swing.JFrame
         ComboHora = new javax.swing.JComboBox<>();
         ComboHora1 = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
-        btnGuardar1 = new javax.swing.JButton();
-        btnGuardar = new javax.swing.JButton();
+        btnLimpiarHorario = new javax.swing.JButton();
+        btnAgregarHorario = new javax.swing.JButton();
         jScrollPane9 = new javax.swing.JScrollPane();
         TablaHorarios = new javax.swing.JTable();
         jLabel59 = new javax.swing.JLabel();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        btnEliminarHorario = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -567,23 +632,23 @@ public class Horario extends javax.swing.JFrame
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Nombre de la Materia:");
 
-        btnAceptar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnAceptar.setText("Agregar materia");
-        btnAceptar.addActionListener(new java.awt.event.ActionListener()
+        btnAgregarMaterias.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnAgregarMaterias.setText("Agregar materia");
+        btnAgregarMaterias.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnAceptarActionPerformed(evt);
+                btnAgregarMateriasActionPerformed(evt);
             }
         });
 
-        btnCancelar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnCancelar.setText("Limpiar campos");
-        btnCancelar.addActionListener(new java.awt.event.ActionListener()
+        btnLimpiarMaterias.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnLimpiarMaterias.setText("Limpiar campos");
+        btnLimpiarMaterias.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnCancelarActionPerformed(evt);
+                btnLimpiarMateriasActionPerformed(evt);
             }
         });
 
@@ -621,9 +686,9 @@ public class Horario extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtMaestro))
             .addGroup(jPanel16Layout.createSequentialGroup()
-                .addComponent(btnCancelar)
+                .addComponent(btnLimpiarMaterias)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAceptar))
+                .addComponent(btnAgregarMaterias))
             .addGroup(jPanel16Layout.createSequentialGroup()
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
@@ -670,21 +735,21 @@ public class Horario extends javax.swing.JFrame
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAceptar)
-                    .addComponent(btnCancelar)))
+                    .addComponent(btnAgregarMaterias)
+                    .addComponent(btnLimpiarMaterias)))
         );
 
         jLabel57.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel57.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel57.setText("Datos de la materia:");
 
-        btnEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnEditar.setText("Editar");
-        btnEditar.addActionListener(new java.awt.event.ActionListener()
+        btnEditarMaterias.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEditarMaterias.setText("Editar");
+        btnEditarMaterias.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnEditarActionPerformed(evt);
+                btnEditarMateriasActionPerformed(evt);
             }
         });
 
@@ -708,7 +773,7 @@ public class Horario extends javax.swing.JFrame
                     .addComponent(jScrollPane2)
                     .addComponent(jLabel56, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addComponent(btnEditar)
+                        .addComponent(btnEditarMaterias)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnEliminarMateria))
                     .addComponent(jLabel57, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -722,7 +787,7 @@ public class Horario extends javax.swing.JFrame
                 .addComponent(jLabel56)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEditar)
+                    .addComponent(btnEditarMaterias)
                     .addComponent(btnEliminarMateria))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -741,8 +806,8 @@ public class Horario extends javax.swing.JFrame
         jLabel58.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel58.setText("Horario");
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField1.setText("17/07/2021");
+        txtFinSemestre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtFinSemestre.setText("17/07/2021");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
@@ -778,23 +843,23 @@ public class Horario extends javax.swing.JFrame
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel14.setText("Hora de termino:");
 
-        btnGuardar1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnGuardar1.setText("Limpiar campos");
-        btnGuardar1.addActionListener(new java.awt.event.ActionListener()
+        btnLimpiarHorario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnLimpiarHorario.setText("Limpiar campos");
+        btnLimpiarHorario.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnGuardar1ActionPerformed(evt);
+                btnLimpiarHorarioActionPerformed(evt);
             }
         });
 
-        btnGuardar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnGuardar.setText("Agregar al horario");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener()
+        btnAgregarHorario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnAgregarHorario.setText("Agregar al horario");
+        btnAgregarHorario.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnGuardarActionPerformed(evt);
+                btnAgregarHorarioActionPerformed(evt);
             }
         });
 
@@ -803,9 +868,9 @@ public class Horario extends javax.swing.JFrame
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(btnGuardar1)
+                .addComponent(btnLimpiarHorario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnGuardar))
+                .addComponent(btnAgregarHorario))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -851,8 +916,8 @@ public class Horario extends javax.swing.JFrame
                     .addComponent(ComboHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGuardar1)
-                    .addComponent(btnGuardar))
+                    .addComponent(btnLimpiarHorario)
+                    .addComponent(btnAgregarHorario))
                 .addGap(0, 0, 0))
         );
 
@@ -872,11 +937,15 @@ public class Horario extends javax.swing.JFrame
         jLabel59.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel59.setText("Datos Horario:");
 
-        jButton9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton9.setText("Eliminar");
-
-        jButton10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton10.setText("Editar");
+        btnEliminarHorario.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEliminarHorario.setText("Eliminar");
+        btnEliminarHorario.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnEliminarHorarioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -886,9 +955,8 @@ public class Horario extends javax.swing.JFrame
                 .addGap(150, 150, 150)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton9))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnEliminarHorario))
                     .addComponent(jLabel58, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel59, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane9, javax.swing.GroupLayout.Alignment.LEADING))
@@ -897,7 +965,7 @@ public class Horario extends javax.swing.JFrame
                 .addGap(228, 228, 228)
                 .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addComponent(jTextField1)
+                .addComponent(txtFinSemestre)
                 .addGap(238, 238, 238))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(210, 210, 210)
@@ -910,9 +978,7 @@ public class Horario extends javax.swing.JFrame
                 .addContainerGap()
                 .addComponent(jLabel58)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton10)
-                    .addComponent(jButton9))
+                .addComponent(btnEliminarHorario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -922,8 +988,8 @@ public class Horario extends javax.swing.JFrame
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(txtFinSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Horarios", jPanel3);
@@ -966,8 +1032,8 @@ public class Horario extends javax.swing.JFrame
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnGuardarActionPerformed
-    {//GEN-HEADEREND:event_btnGuardarActionPerformed
+    private void btnAgregarHorarioActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAgregarHorarioActionPerformed
+    {//GEN-HEADEREND:event_btnAgregarHorarioActionPerformed
 
         int id = totalHor++;
         int materia = (int) ids.get(jComboMaterias.getSelectedIndex());
@@ -976,17 +1042,17 @@ public class Horario extends javax.swing.JFrame
         String horaFinal = (String) ComboHora1.getSelectedItem();
         boolean notificar = jCheckNotificar.isSelected();
         ManipulaBD.AltaHorarios(id, materia, dia, horaInicio, horaFinal, notificar);
-        Consultar();
+        ConsultarHorarios();
 
-    }//GEN-LAST:event_btnGuardarActionPerformed
+    }//GEN-LAST:event_btnAgregarHorarioActionPerformed
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
-    {//GEN-HEADEREND:event_btnCancelarActionPerformed
+    private void btnLimpiarMateriasActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnLimpiarMateriasActionPerformed
+    {//GEN-HEADEREND:event_btnLimpiarMateriasActionPerformed
         Limpiar();
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    }//GEN-LAST:event_btnLimpiarMateriasActionPerformed
 
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAceptarActionPerformed
-    {//GEN-HEADEREND:event_btnAceptarActionPerformed
+    private void btnAgregarMateriasActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAgregarMateriasActionPerformed
+    {//GEN-HEADEREND:event_btnAgregarMateriasActionPerformed
 
         String nombreMateria = txtMateria.getText();
         String nombreMaestro = txtMaestro.getText();
@@ -1039,7 +1105,7 @@ public class Horario extends javax.swing.JFrame
         ActualizarTablaMaterias();
         Limpiar();
 
-    }//GEN-LAST:event_btnAceptarActionPerformed
+    }//GEN-LAST:event_btnAgregarMateriasActionPerformed
 
     private void jLabel_MoverMouseDragged(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jLabel_MoverMouseDragged
     {//GEN-HEADEREND:event_jLabel_MoverMouseDragged
@@ -1064,13 +1130,8 @@ public class Horario extends javax.swing.JFrame
         jLabel_Color.setBackground(c0);
     }//GEN-LAST:event_btnCancelar1ActionPerformed
 
-    private void btnGuardar1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnGuardar1ActionPerformed
-    {//GEN-HEADEREND:event_btnGuardar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGuardar1ActionPerformed
-
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEditarActionPerformed
-    {//GEN-HEADEREND:event_btnEditarActionPerformed
+    private void btnEditarMateriasActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEditarMateriasActionPerformed
+    {//GEN-HEADEREND:event_btnEditarMateriasActionPerformed
 
         for (int i = 0; i < TablaMateria.getRowCount(); i++)
         {
@@ -1092,21 +1153,37 @@ public class Horario extends javax.swing.JFrame
         }
         ConsultarMaterias();
 
-    }//GEN-LAST:event_btnEditarActionPerformed
+    }//GEN-LAST:event_btnEditarMateriasActionPerformed
 
     private void btnEliminarMateriaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminarMateriaActionPerformed
     {//GEN-HEADEREND:event_btnEliminarMateriaActionPerformed
 
-        for (int i = 0; i < seleccionados.length; i++)
+        for (int i = 0; i < seleccionadosMaterias.length; i++)
         {
-            ManipulaBD.BajasMaterias(mate.get(seleccionados[i]).getId());
-            ManipulaBD.BajasHorarios("materia", mate.get(seleccionados[i]).getId());
+            ManipulaBD.BajasMaterias(mate.get(seleccionadosMaterias[i]).getId());
+            ManipulaBD.BajasHorarios("materia", mate.get(seleccionadosMaterias[i]).getId());
         }
         ConsultarMaterias();
         ActualizarTablaMaterias();
-        Consultar();
+        ConsultarHorarios();
 
     }//GEN-LAST:event_btnEliminarMateriaActionPerformed
+
+    private void btnLimpiarHorarioActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnLimpiarHorarioActionPerformed
+    {//GEN-HEADEREND:event_btnLimpiarHorarioActionPerformed
+        txtFinSemestre.setText("DD/MM/AAAA");
+    }//GEN-LAST:event_btnLimpiarHorarioActionPerformed
+
+    private void btnEliminarHorarioActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminarHorarioActionPerformed
+    {//GEN-HEADEREND:event_btnEliminarHorarioActionPerformed
+        
+        for (int i = 0; i < seleccionadosHorarios.length; i++)
+        {
+            ManipulaBD.BajasHorarios("id=", horari.get(seleccionadosHorarios[i]).getId());
+        }
+        ConsultarHorarios();
+        
+    }//GEN-LAST:event_btnEliminarHorarioActionPerformed
 
     public void Limpiar()
     {
@@ -1181,16 +1258,15 @@ public class Horario extends javax.swing.JFrame
     private javax.swing.JPanel PanelViernes;
     private javax.swing.JTable TablaHorarios;
     private javax.swing.JTable TablaMateria;
-    private javax.swing.JButton btnAceptar;
-    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnAgregarHorario;
+    private javax.swing.JButton btnAgregarMaterias;
     private javax.swing.JButton btnCancelar1;
-    private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEditarMaterias;
+    private javax.swing.JButton btnEliminarHorario;
     private javax.swing.JButton btnEliminarMateria;
-    private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnGuardar1;
+    private javax.swing.JButton btnLimpiarHorario;
+    private javax.swing.JButton btnLimpiarMaterias;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckNotificar;
     private javax.swing.JComboBox<String> jComboMaterias;
     private javax.swing.JLabel jLFecha;
@@ -1237,7 +1313,7 @@ public class Horario extends javax.swing.JFrame
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtFinSemestre;
     private javax.swing.JTextField txtGrupo;
     private javax.swing.JTextField txtMaestro;
     private javax.swing.JTextField txtMateria;
