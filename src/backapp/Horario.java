@@ -1,6 +1,5 @@
 package backapp;
 
-import backapp.Opciones;
 import clases.ManipulaBD;
 import clases.HojaLibreta;
 import clases.Horarios;
@@ -15,10 +14,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JPanel;
@@ -60,12 +57,11 @@ public class Horario extends javax.swing.JFrame
     {
         initComponents();
         jLFecha.setText(formato.format(fecha));
-//        TablaHorarios();
-
         mate = ManipulaBD.ConsultaMaterias("id!=", "-1");
         if (mate != null)
         {
             tamMate = mate.size();
+            System.out.println(tamMate + " ESTOS SON LAS MATEIAS");
             ActualizarTablaMaterias();
             try
             {
@@ -177,21 +173,22 @@ public class Horario extends javax.swing.JFrame
 
     public void ActualizarTablaMaterias()
     {
-        Object matriz[][] = new Object[tamMate][4];
+        Object matriz[][] = new Object[tamMate][5];
         for (int i = 0; i < mate.size(); i++)
         {
             matriz[i][0] = mate.get(i).getId();
-            matriz[i][1] = mate.get(i).getSemestre();
-            matriz[i][2] = mate.get(i).getNombreMateria();
-            matriz[i][3] = mate.get(i).getNombreMaestro();
+            matriz[i][1] = mate.get(i).getNombreMateria();
+            matriz[i][2] = mate.get(i).getNombreMaestro();
+            matriz[i][3] = mate.get(i).getSemestre();
+            matriz[i][4] = mate.get(i).getGrupo();
         }
 
         /*
         Los titulos de las columnas
          */
-        jTablaMaterias.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]
+        TablaMateria.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]
         {
-            "Id", "Semestre", "Materia", "Maestro"
+            "Id", "Materia", "Maestro", "Semestre", "Grupo"
         })
         {
             /*
@@ -199,7 +196,7 @@ public class Horario extends javax.swing.JFrame
              */
             Class[] types = new Class[]
             {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
             };
 
             /*
@@ -207,7 +204,7 @@ public class Horario extends javax.swing.JFrame
              */
             boolean[] canEdit = new boolean[]
             {
-                false, true, true, true
+                false, true, true, true, true
             };
 
             @Override
@@ -268,7 +265,7 @@ public class Horario extends javax.swing.JFrame
         jPanel7 = new javax.swing.JPanel();
         jLabel56 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTablaMaterias = new javax.swing.JTable();
+        TablaMateria = new javax.swing.JTable();
         jPanel16 = new javax.swing.JPanel();
         txtSemestre = new javax.swing.JTextField();
         txtMaestro = new javax.swing.JTextField();
@@ -283,9 +280,8 @@ public class Horario extends javax.swing.JFrame
         jLabel_Color = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         btnCancelar1 = new javax.swing.JButton();
-        jCheckNotificar1 = new javax.swing.JCheckBox();
         jLabel57 = new javax.swing.JLabel();
-        jButton7 = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel58 = new javax.swing.JLabel();
@@ -304,7 +300,7 @@ public class Horario extends javax.swing.JFrame
         btnGuardar1 = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         jScrollPane9 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaHorarios = new javax.swing.JTable();
         jLabel59 = new javax.swing.JLabel();
         jButton9 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
@@ -521,8 +517,8 @@ public class Horario extends javax.swing.JFrame
         jLabel56.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel56.setText("Lista de materias");
 
-        jTablaMaterias.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTablaMaterias.setModel(new javax.swing.table.DefaultTableModel(
+        TablaMateria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        TablaMateria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
             {
 
@@ -532,7 +528,7 @@ public class Horario extends javax.swing.JFrame
 
             }
         ));
-        jScrollPane2.setViewportView(jTablaMaterias);
+        jScrollPane2.setViewportView(TablaMateria);
 
         jPanel16.setBackground(new java.awt.Color(234, 239, 210));
 
@@ -596,10 +592,6 @@ public class Horario extends javax.swing.JFrame
             }
         });
 
-        jCheckNotificar1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jCheckNotificar1.setText("Crear libreta");
-        jCheckNotificar1.setOpaque(false);
-
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
@@ -616,7 +608,7 @@ public class Horario extends javax.swing.JFrame
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(txtMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -633,8 +625,7 @@ public class Horario extends javax.swing.JFrame
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46)
-                .addComponent(jCheckNotificar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -643,8 +634,7 @@ public class Horario extends javax.swing.JFrame
                     .addComponent(txtSemestre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(txtGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(jCheckNotificar1))
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtMaestro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -668,8 +658,15 @@ public class Horario extends javax.swing.JFrame
         jLabel57.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel57.setText("Datos de la materia:");
 
-        jButton7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton7.setText("Editar");
+        btnEditar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         jButton8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton8.setText("Eliminar");
@@ -684,7 +681,7 @@ public class Horario extends javax.swing.JFrame
                     .addComponent(jScrollPane2)
                     .addComponent(jLabel56, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                        .addComponent(jButton7)
+                        .addComponent(btnEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton8))
                     .addComponent(jLabel57, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -698,7 +695,7 @@ public class Horario extends javax.swing.JFrame
                 .addComponent(jLabel56)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton7)
+                    .addComponent(btnEditar)
                     .addComponent(jButton8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -832,20 +829,17 @@ public class Horario extends javax.swing.JFrame
                 .addGap(0, 0, 0))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaHorarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][]
             {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String []
             {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane9.setViewportView(jTable1);
+        jScrollPane9.setViewportView(TablaHorarios);
 
         jLabel59.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel59.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -952,16 +946,16 @@ public class Horario extends javax.swing.JFrame
         int materia = (int) ids.get(jComboMaterias.getSelectedIndex());
         String dia = (String) ComboDias.getSelectedItem();
         String horaInicio = (String) ComboHora.getSelectedItem();
-        String horaFinal= (String) ComboHora1.getSelectedItem();
+        String horaFinal = (String) ComboHora1.getSelectedItem();
         boolean notificar = jCheckNotificar.isSelected();
-        ManipulaBD.AltaHorarios(id, materia, dia, horaInicio,horaFinal, notificar);
+        ManipulaBD.AltaHorarios(id, materia, dia, horaInicio, horaFinal, notificar);
         Consultar();
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
     {//GEN-HEADEREND:event_btnCancelarActionPerformed
-        
+        Limpiar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAceptarActionPerformed
@@ -972,7 +966,7 @@ public class Horario extends javax.swing.JFrame
         int semestre = Integer.parseInt(txtSemestre.getText());
         String grupo = txtGrupo.getText();
         String color = jLabel_Color.getBackground().toString();
-        
+
         ManipulaBD.AltaMaterias(totalMate++, semestre, nombreMaestro, nombreMateria, grupo, color); // AntiguoManipulaBD.AltaMaterias(total++, libreta, semestre, nombreMaestro, nombreMateria);
 
         String directorio = Opciones.directorio + "\\" + nombreMateria;
@@ -1013,7 +1007,11 @@ public class Horario extends javax.swing.JFrame
             }
         }
 
-        btnCancelarActionPerformed(evt);
+        mate = ManipulaBD.ConsultaMaterias("id!=", "-1");
+        tamMate = mate.size();
+        ActualizarTablaMaterias();
+        Limpiar();
+
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void jLabel_MoverMouseDragged(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jLabel_MoverMouseDragged
@@ -1044,6 +1042,39 @@ public class Horario extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_btnGuardar1ActionPerformed
 
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEditarActionPerformed
+    {//GEN-HEADEREND:event_btnEditarActionPerformed
+
+        for (int i = 0; i < TablaMateria.getRowCount(); i++)
+        {
+            int id = (int) TablaMateria.getValueAt(i, 0);
+            String materia = (String) TablaMateria.getValueAt(i, 1);
+            String maestro = (String) TablaMateria.getValueAt(i, 2);
+            int semestre = (int) TablaMateria.getValueAt(i, 3);
+            String grupo = (String) TablaMateria.getValueAt(i, 4);
+
+            if (id != mate.get(i).getId()
+                    || (materia.compareTo(mate.get(i).getNombreMateria()) == 0)
+                    || (maestro.compareTo(mate.get(i).getNombreMaestro()) == 0)
+                    || semestre != mate.get(i).getSemestre()
+                    || (grupo.compareTo(mate.get(i).getGrupo()) == 0))
+            {
+                ManipulaBD.ModificarMaterias(id, "nombreMateria,nombreMaestro,semestre,grupo",
+                        "'" + materia + "','" + maestro + "'," + semestre + ",'" + grupo + "'");
+            }
+
+        }
+
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    public void Limpiar()
+    {
+        txtSemestre.setText("");
+        txtGrupo.setText("");
+        txtMaestro.setText("");
+        txtMateria.setText("");
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -1107,18 +1138,19 @@ public class Horario extends javax.swing.JFrame
     private javax.swing.JPanel PanelMiercoles;
     private javax.swing.JPanel PanelSabado;
     private javax.swing.JPanel PanelViernes;
+    private javax.swing.JTable TablaHorarios;
+    private javax.swing.JTable TablaMateria;
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCancelar1;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnGuardar1;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckNotificar;
-    private javax.swing.JCheckBox jCheckNotificar1;
     private javax.swing.JComboBox<String> jComboMaterias;
     private javax.swing.JLabel jLFecha;
     private javax.swing.JLabel jLabel10;
@@ -1164,8 +1196,6 @@ public class Horario extends javax.swing.JFrame
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTablaMaterias;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField txtGrupo;
     private javax.swing.JTextField txtMaestro;
@@ -1174,9 +1204,9 @@ public class Horario extends javax.swing.JFrame
     // End of variables declaration//GEN-END:variables
 }
 
-
 class CuadroHorario extends javax.swing.JPanel
 {
+
     private javax.swing.JLabel grupo;
     private javax.swing.JLabel horafin;
     private javax.swing.JLabel horainicio;
@@ -1195,7 +1225,7 @@ class CuadroHorario extends javax.swing.JPanel
         this.grupo.setText(grupo);
         this.setBackground(color);
     }
-                       
+
     private void initComponents()
     {
         materia = new javax.swing.JLabel();
@@ -1245,5 +1275,5 @@ class CuadroHorario extends javax.swing.JPanel
         grupo.setText("Grupo");
         grupo.setPreferredSize(new java.awt.Dimension(90, 20));
         add(grupo);
-    }                                          
+    }
 }
