@@ -139,7 +139,7 @@ public class ManipulaBD
         ArrayList<Horarios> v = new ArrayList<>();
         try
         {
-            for (int i = 0; i < reg.size(); i += 5)
+            for (int i = 0; i < reg.size(); i += 6)
             {
                 String idS = "";
                 idS = (String) reg.get(i);
@@ -192,13 +192,13 @@ public class ManipulaBD
         desconecta(con);
     }
     
-    public static void BajasHorarios(int id)
+    public static void BajasHorarios(String campo,int dato)
     {
         Connection con = ManipulaBD.conecta();
         if (con != null)
         {
             Querys sql = new Querys();
-            sql.Delete(con, "horarios", "id", "" + id + "");
+            sql.Delete(con, "horarios", campo, "" + dato + "");
         }
         desconecta(con);
     }

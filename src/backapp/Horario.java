@@ -20,6 +20,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -50,6 +52,8 @@ public class Horario extends javax.swing.JFrame
     ArrayList<Horarios> sabado = new ArrayList<>();
     ArrayList<Horarios> domingo = new ArrayList<>();
 
+    private int[] seleccionados;
+
     /**
      * Creates new form Horario
      */
@@ -57,17 +61,25 @@ public class Horario extends javax.swing.JFrame
     {
         initComponents();
         jLFecha.setText(formato.format(fecha));
+        ConsultarMaterias();
+
+        Consultar();
+        btnSalir.setMnemonic(KeyEvent.VK_ESCAPE);
+    }
+
+    public void ConsultarMaterias()
+    {
         mate = ManipulaBD.ConsultaMaterias("id!=", "-1");
         if (mate != null)
         {
             tamMate = mate.size();
-            System.out.println(tamMate + " ESTOS SON LAS MATEIAS");
             ActualizarTablaMaterias();
             try
             {
                 if (!mate.isEmpty())
                 {
                     totalMate = mate.get(mate.size() - 1).getId() + 1;
+                    jComboMaterias.removeAll();
                     for (int i = 0; i < mate.size(); i++)
                     {
                         jComboMaterias.addItem(mate.get(i).getId() + ": " + mate.get(i).getNombreMateria());
@@ -82,9 +94,6 @@ public class Horario extends javax.swing.JFrame
                 totalMate = 0;
             }
         }
-
-        Consultar();
-        btnSalir.setMnemonic(KeyEvent.VK_ESCAPE);
     }
 
     public void Consultar()
@@ -166,6 +175,7 @@ public class Horario extends javax.swing.JFrame
                     "Profesor :" + materia.get(0).getNombreMaestro() + " \nSemestre:"
                     + +materia.get(0).getSemestre());
             caja.setEditable(false);
+            caja.setBackground(materia.get(i).getColor());
             dia.add(caja);
         }
         dia.updateUI();
@@ -219,8 +229,18 @@ public class Horario extends javax.swing.JFrame
                 return canEdit[columnIndex];
             }
         });
+
+        TablaMateria.getSelectionModel().addListSelectionListener(new ListSelectionListener()
+        {
+            @Override
+            public void valueChanged(ListSelectionEvent e)
+            {
+                seleccionados = TablaMateria.getSelectedRows();
+            }
+        });
     }
 
+    //C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -282,7 +302,7 @@ public class Horario extends javax.swing.JFrame
         btnCancelar1 = new javax.swing.JButton();
         jLabel57 = new javax.swing.JLabel();
         btnEditar = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        btnEliminarMateria = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel58 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -668,8 +688,15 @@ public class Horario extends javax.swing.JFrame
             }
         });
 
-        jButton8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton8.setText("Eliminar");
+        btnEliminarMateria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnEliminarMateria.setText("Eliminar");
+        btnEliminarMateria.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnEliminarMateriaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -683,7 +710,7 @@ public class Horario extends javax.swing.JFrame
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addComponent(btnEditar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton8))
+                        .addComponent(btnEliminarMateria))
                     .addComponent(jLabel57, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(200, 200, 200))
@@ -696,7 +723,7 @@ public class Horario extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditar)
-                    .addComponent(jButton8))
+                    .addComponent(btnEliminarMateria))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -780,7 +807,7 @@ public class Horario extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnGuardar))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel10)
@@ -803,7 +830,7 @@ public class Horario extends javax.swing.JFrame
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jComboMaterias, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1062,10 +1089,24 @@ public class Horario extends javax.swing.JFrame
                 ManipulaBD.ModificarMaterias(id, "nombreMateria,nombreMaestro,semestre,grupo",
                         "'" + materia + "','" + maestro + "'," + semestre + ",'" + grupo + "'");
             }
-
         }
+        ConsultarMaterias();
 
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnEliminarMateriaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminarMateriaActionPerformed
+    {//GEN-HEADEREND:event_btnEliminarMateriaActionPerformed
+
+        for (int i = 0; i < seleccionados.length; i++)
+        {
+            ManipulaBD.BajasMaterias(mate.get(seleccionados[i]).getId());
+            ManipulaBD.BajasHorarios("materia", mate.get(seleccionados[i]).getId());
+        }
+        ConsultarMaterias();
+        ActualizarTablaMaterias();
+        Consultar();
+
+    }//GEN-LAST:event_btnEliminarMateriaActionPerformed
 
     public void Limpiar()
     {
@@ -1074,7 +1115,7 @@ public class Horario extends javax.swing.JFrame
         txtMaestro.setText("");
         txtMateria.setText("");
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -1144,11 +1185,11 @@ public class Horario extends javax.swing.JFrame
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCancelar1;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnEliminarMateria;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnGuardar1;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JCheckBox jCheckNotificar;
     private javax.swing.JComboBox<String> jComboMaterias;
