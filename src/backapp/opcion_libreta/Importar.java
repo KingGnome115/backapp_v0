@@ -1,12 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package backapp.opcion_libreta;
 
 import java.awt.MouseInfo;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -14,6 +20,9 @@ import javax.swing.ImageIcon;
  */
 public class Importar extends javax.swing.JFrame
 {
+    
+    private String user = System.getProperty("user.name");
+    private String padre = "C:\\Users\\" + user + "\\Documents\\Mochila";
 
     /**
      * Creates new form Eliminar
@@ -38,7 +47,7 @@ public class Importar extends javax.swing.JFrame
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         btnImportar = new javax.swing.JButton();
-        txtRuta = new javax.swing.JTextField();
+        txtGuardar = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
@@ -59,6 +68,13 @@ public class Importar extends javax.swing.JFrame
 
         jButton1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton1.setText("explorar");
+        jButton1.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -74,7 +90,7 @@ public class Importar extends javax.swing.JFrame
             }
         });
 
-        txtRuta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtGuardar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField2.setText("Redes y telecomunicaciones");
@@ -94,7 +110,7 @@ public class Importar extends javax.swing.JFrame
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -119,7 +135,7 @@ public class Importar extends javax.swing.JFrame
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
@@ -204,19 +220,76 @@ public class Importar extends javax.swing.JFrame
     private void jLabel_MoverMouseDragged(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jLabel_MoverMouseDragged
     {//GEN-HEADEREND:event_jLabel_MoverMouseDragged
         jLabel_Mover.setIcon(new ImageIcon(getClass().getResource("/iconos/drag.png")));
-        this.setLocation(MouseInfo.getPointerInfo().getLocation().x,MouseInfo.getPointerInfo().getLocation().y);
+        this.setLocation(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
     }//GEN-LAST:event_jLabel_MoverMouseDragged
 
     private void jLabel_MoverMouseReleased(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jLabel_MoverMouseReleased
     {//GEN-HEADEREND:event_jLabel_MoverMouseReleased
-        this.setLocation(this.getX()-15, this.getY()-15);
+        this.setLocation(this.getX() - 15, this.getY() - 15);
         jLabel_Mover.setIcon(new ImageIcon(getClass().getResource("/iconos/hold.png")));
     }//GEN-LAST:event_jLabel_MoverMouseReleased
 
     private void btnImportarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnImportarActionPerformed
     {//GEN-HEADEREND:event_btnImportarActionPerformed
-        // TODO add your handling code here:
+        
+        try
+        {
+            Descomprimir(padre, "C:\\Users\\" + user + "\\Documents\\Mochila");
+            File ziip = new File(padre);
+            ziip.delete();
+        } catch (Exception ex)
+        {
+            Logger.getLogger(Importar.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }//GEN-LAST:event_btnImportarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
+    {//GEN-HEADEREND:event_jButton1ActionPerformed
+        
+        JFileChooser carpeta = new JFileChooser();
+        carpeta.setCurrentDirectory(new File("."));
+        carpeta.setDialogTitle("Seleccione la carpeta para trabajar");
+        carpeta.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        carpeta.setAcceptAllFileFilterUsed(false);
+        int seleccion = carpeta.showOpenDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION)
+        {
+            padre = carpeta.getSelectedFile().getAbsolutePath();
+            txtGuardar.setText(padre);
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+    
+        public void Descomprimir(String archivoZip, String rutaSalida) {
+        byte[] buffer = new byte[1024];
+        try {
+            File folder = new File("C:\\Users\\" + user + "\\Documents\\Mochila");
+            if (!folder.exists()) {
+                folder.mkdir();
+            }
+            ZipInputStream zis = new ZipInputStream(new FileInputStream(archivoZip));
+            ZipEntry ze = zis.getNextEntry();
+            while (ze != null) {
+                String nombreArchivo = ze.getName();
+                File archivoNuevo = new File(rutaSalida + File.separator + nombreArchivo);
+                System.out.println("archivo descomprimido : " + archivoNuevo.getAbsoluteFile());
+                new File(archivoNuevo.getParent()).mkdirs();
+                FileOutputStream fos = new FileOutputStream(archivoNuevo);
+                int len;
+                while ((len = zis.read(buffer)) > 0) {
+                    fos.write(buffer, 0, len);
+                }
+                fos.close();
+                ze = zis.getNextEntry();
+            }
+            zis.closeEntry();
+            zis.close();
+            System.out.println("Listo");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -277,6 +350,6 @@ public class Importar extends javax.swing.JFrame
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField txtRuta;
+    private javax.swing.JTextField txtGuardar;
     // End of variables declaration//GEN-END:variables
 }
