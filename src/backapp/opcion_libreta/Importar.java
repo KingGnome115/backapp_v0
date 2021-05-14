@@ -37,8 +37,8 @@ public class Importar extends javax.swing.JFrame
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        btnImportar = new javax.swing.JButton();
+        txtRuta = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
@@ -64,11 +64,17 @@ public class Importar extends javax.swing.JFrame
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Escriba el nombre de la libreta:");
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButton2.setText("Importar");
+        btnImportar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnImportar.setText("Importar");
+        btnImportar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnImportarActionPerformed(evt);
+            }
+        });
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextField1.setText("C:\\Users\\rosal\\Desktop\\libA3fu7e.dat");
+        txtRuta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextField2.setText("Redes y telecomunicaciones");
@@ -88,7 +94,7 @@ public class Importar extends javax.swing.JFrame
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -98,7 +104,7 @@ public class Importar extends javax.swing.JFrame
                 .addGap(62, 62, 62))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnImportar, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
@@ -113,7 +119,7 @@ public class Importar extends javax.swing.JFrame
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
@@ -121,7 +127,7 @@ public class Importar extends javax.swing.JFrame
                 .addGap(10, 10, 10)
                 .addComponent(jLabel2)
                 .addGap(30, 30, 30)
-                .addComponent(jButton2)
+                .addComponent(btnImportar)
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
@@ -207,6 +213,11 @@ public class Importar extends javax.swing.JFrame
         jLabel_Mover.setIcon(new ImageIcon(getClass().getResource("/iconos/hold.png")));
     }//GEN-LAST:event_jLabel_MoverMouseReleased
 
+    private void btnImportarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnImportarActionPerformed
+    {//GEN-HEADEREND:event_btnImportarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnImportarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -256,16 +267,16 @@ public class Importar extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnImportar;
     private javax.swing.JButton btnSalir1;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel_Mover;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField txtRuta;
     // End of variables declaration//GEN-END:variables
 }

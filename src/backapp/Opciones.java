@@ -1,7 +1,5 @@
 package backapp;
 
-import backapp.papelera.Companieros;
-import backapp.papelera.Compartir;
 import backapp.opcion_libreta.Creacion;
 import backapp.opcion_libreta.Eliminacion;
 import backapp.opcion_libreta.Exportar;

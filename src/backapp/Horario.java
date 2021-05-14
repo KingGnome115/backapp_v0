@@ -1176,13 +1176,11 @@ public class Horario extends javax.swing.JFrame
 
     private void btnEliminarHorarioActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminarHorarioActionPerformed
     {//GEN-HEADEREND:event_btnEliminarHorarioActionPerformed
-        
         for (int i = 0; i < seleccionadosHorarios.length; i++)
         {
             ManipulaBD.BajasHorarios("id=", horari.get(seleccionadosHorarios[i]).getId());
         }
         ConsultarHorarios();
-        
     }//GEN-LAST:event_btnEliminarHorarioActionPerformed
 
     public void Limpiar()
