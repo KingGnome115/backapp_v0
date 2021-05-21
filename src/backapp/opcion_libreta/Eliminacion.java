@@ -30,9 +30,15 @@ public class Eliminacion extends javax.swing.JFrame
         btnSalir.setMnemonic(KeyEvent.VK_Z);
         this.padre = padre;
 
-        for (int i = 0; i < Opciones.lista.length; i++)
+        if (Opciones.lista.length != 0)
         {
-            jCListaLibretas.addItem(i + ": " + Opciones.lista[i].getName());
+            for (int i = 0; i < Opciones.lista.length; i++)
+            {
+                jCListaLibretas.addItem(i + ": " + Opciones.lista[i].getName());
+            }
+        } else
+        {
+            jCListaLibretas.addItem("No hay libretas");
         }
 
     }
@@ -201,37 +207,52 @@ public class Eliminacion extends javax.swing.JFrame
     private void btnEliminacionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminacionActionPerformed
     {//GEN-HEADEREND:event_btnEliminacionActionPerformed
 
-        File libreta = new File(Opciones.lista[index].getAbsolutePath());
-        if (libreta != null)
+        if (Opciones.lista.length != 0)
         {
-            try {
-                FileUtils.deleteDirectory(libreta);
-                File carpeta = new File(Opciones.directorio);
-                if (!carpeta.exists())
+            File libreta = new File(Opciones.lista[index].getAbsolutePath());
+            if (libreta != null)
+            {
+                try
                 {
-                    carpeta.mkdir();
-                } else
-                {
-                    FileFilter filtro = new FileFilter()
+                    FileUtils.deleteDirectory(libreta);
+                    File carpeta = new File(Opciones.directorio);
+                    if (!carpeta.exists())
                     {
-                        @Override
-                        public boolean accept(File fil)
+                        carpeta.mkdir();
+                    } else
+                    {
+                        FileFilter filtro = new FileFilter()
                         {
-                            return fil.isDirectory();
+                            @Override
+                            public boolean accept(File fil)
+                            {
+                                return fil.isDirectory();
+                            }
+                        };
+                        Opciones.lista = carpeta.listFiles(filtro);
+                        padre.MostrarLibretas();
+                    }
+
+                    if (Opciones.lista.length != 0)
+                    {
+                        jCListaLibretas.removeAllItems();
+                        for (int i = 0; i < Opciones.lista.length; i++)
+                        {
+                            jCListaLibretas.addItem(i + ": " + Opciones.lista[i].getName());
                         }
-                    };
-                    Opciones.lista = carpeta.listFiles(filtro);
-                    padre.MostrarLibretas();
-                }
-                
-                jCListaLibretas.removeAllItems();
-                for (int i = 0; i < Opciones.lista.length; i++)
+                    } else
+                    {
+                        btnSalirActionPerformed(evt);
+                    }
+
+                } catch (IOException ex)
                 {
-                    jCListaLibretas.addItem(i + ": " + Opciones.lista[i].getName());
+                    Logger.getLogger(Eliminacion.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (IOException ex) {
-                Logger.getLogger(Eliminacion.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else
+        {
+            btnSalirActionPerformed(evt);
         }
 
     }//GEN-LAST:event_btnEliminacionActionPerformed
