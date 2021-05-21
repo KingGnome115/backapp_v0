@@ -1,8 +1,7 @@
 package backapp.opcion_libreta;
 
 import java.awt.MouseInfo;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -30,6 +29,7 @@ public class Importar extends javax.swing.JFrame
     public Importar()
     {
         initComponents();
+        btnSalir1.setMnemonic(KeyEvent.VK_Z);
     }
 
     /**
@@ -213,7 +213,6 @@ public class Importar extends javax.swing.JFrame
 
     private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSalir1ActionPerformed
     {//GEN-HEADEREND:event_btnSalir1ActionPerformed
-        //        new Opciones().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalir1ActionPerformed
 

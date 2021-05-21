@@ -2,6 +2,7 @@ package backapp.opcion_libreta;
 
 import backapp.Opciones;
 import java.awt.MouseInfo;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,6 +29,7 @@ public class Exportar extends javax.swing.JFrame
     public Exportar()
     {
         initComponents();
+        btnSalir.setMnemonic(KeyEvent.VK_Z);
 
         File carpeta = new File(Opciones.directorio);
         libretas = carpeta.listFiles();
@@ -208,7 +210,6 @@ public class Exportar extends javax.swing.JFrame
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSalirActionPerformed
     {//GEN-HEADEREND:event_btnSalirActionPerformed
-        new Opciones().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 

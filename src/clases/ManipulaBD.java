@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clases;
 
 import java.sql.Connection;
@@ -16,9 +11,9 @@ import poo.bd.Querys;
  */
 public class ManipulaBD
 {
-    
+
     private static Conexion con = new Conexion();
-    
+
     public static Connection conecta()
     {
         try
@@ -31,12 +26,24 @@ public class ManipulaBD
             return null;
         }
     }
-    
+
     public static void desconecta(Connection conn)
     {
         con.desconectar(conn);
     }
+
+    /*
+    Avion
     
+    nuas 0
+    bole 1
+    dest 2
+    
+    nuas bole dest
+    1    5    mexico
+    3    7    francia
+    1,5,mexico,3,7,francia
+     */
     public static ArrayList<Materias> cargarMaterias(ArrayList<Object> reg)
     {
         ArrayList<Materias> v = new ArrayList<>();
@@ -57,7 +64,7 @@ public class ManipulaBD
                     String grupo = ((String) reg.get(i + 4)).trim();
                     String color = ((String) reg.get(i + 5)).replaceAll("|", ",");
                     System.out.println(color + " AQUI LLEGUE");
-                    
+
                     Materias obj = new Materias(id, semestre, grupo, nombreMaestro, nombreMateria, color);
                     v.add(obj);
                 }
@@ -75,7 +82,7 @@ public class ManipulaBD
             }
         }
     }
-    
+
     public static void AltaMaterias(int id, int semestre, String nombreMaestro, String nombreMateria, String grupo, String color)
     {
         Connection con = ManipulaBD.conecta();
@@ -93,7 +100,7 @@ public class ManipulaBD
         }
         desconecta(con);
     }
-    
+
     public static void BajasMaterias(int id)
     {
         Connection con = ManipulaBD.conecta();
@@ -104,7 +111,7 @@ public class ManipulaBD
         }
         desconecta(con);
     }
-    
+
     public static ArrayList<Materias> ConsultaMaterias(String variable, String condicion)
     {
         Connection con = ManipulaBD.conecta();
@@ -117,7 +124,13 @@ public class ManipulaBD
         }
         return ap;
     }
-    
+
+    /**
+     * 
+     * @param id
+     * @param campos 
+     * @param datos
+     */
     public static void ModificarMaterias(int id, String campos, String datos)
     {
         Connection con = ManipulaBD.conecta();
@@ -133,7 +146,7 @@ public class ManipulaBD
             }
         }
     }
-    
+
     public static ArrayList<Horarios> cargarHorarios(ArrayList<Object> reg)
     {
         ArrayList<Horarios> v = new ArrayList<>();
@@ -147,7 +160,7 @@ public class ManipulaBD
                 if (idS != "" && idS != " ")
                 {
                     int id = Integer.parseInt(idS.trim());
-                    
+
                     String materiaS = ((String) reg.get(i + 1)).trim();
                     int materia = Integer.parseInt(materiaS);
                     String dia = ((String) reg.get(i + 2)).trim();
@@ -155,7 +168,7 @@ public class ManipulaBD
                     String horaFinal = ((String) reg.get(i + 4)).trim();
                     String notificarS = ((String) reg.get(i + 5)).trim();
                     boolean notificar = Boolean.parseBoolean(notificarS);
-                    
+
                     Horarios obj = new Horarios(id, materia, dia, horaInicio, horaFinal, notificar);
                     v.add(obj);
                 }
@@ -173,7 +186,7 @@ public class ManipulaBD
             }
         }
     }
-    
+
     public static void AltaHorarios(int id, int materia, String dia, String horaInicio, String horaFinal, boolean notificar)
     {
         Connection con = ManipulaBD.conecta();
@@ -191,8 +204,8 @@ public class ManipulaBD
         }
         desconecta(con);
     }
-    
-    public static void BajasHorarios(String campo,int dato)
+
+    public static void BajasHorarios(String campo, int dato)
     {
         Connection con = ManipulaBD.conecta();
         if (con != null)
@@ -202,7 +215,7 @@ public class ManipulaBD
         }
         desconecta(con);
     }
-    
+
     public static ArrayList<Horarios> ConsultaHorarios(String variable, String condicion)
     {
         Connection con = ManipulaBD.conecta();
@@ -215,7 +228,7 @@ public class ManipulaBD
         }
         return ap;
     }
-    
+
     public static void ModificarHorarios(int id, String campos, String datos)
     {
         Connection con = ManipulaBD.conecta();
@@ -231,5 +244,5 @@ public class ManipulaBD
             }
         }
     }
-    
+
 }

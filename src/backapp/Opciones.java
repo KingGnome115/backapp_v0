@@ -54,6 +54,8 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
     Date fecha = new Date();
 
+    public ArrayList<String> libretasMos = new ArrayList<>();
+
     int cont = 0;
 
     /**
@@ -136,7 +138,11 @@ public class Opciones extends javax.swing.JFrame implements Runnable
                 }
             });
 
-            jMenuLibretas.add(jLibreta);
+            if (!libretasMos.contains(lista[i].getName()))
+            {
+                libretasMos.add(lista[i].getName());
+                jMenuLibretas.add(jLibreta);
+            }
 
         }
     }
@@ -152,38 +158,42 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     public void run()
     {
         Thread current = Thread.currentThread();
-        while (current == hilo)
+
+        if (notificacion.isSelected())
         {
-            String horaActual = hora + ":" + minuto;
-            try
+            while (current == hilo)
             {
-                if (horarioHoy != null)
+                String horaActual = hora + ":" + minuto;
+                try
                 {
-                    Date horaOC = formatoHora.parse(horaActual);
-                    for (int i = 0; i < horarioHoy.size(); i++)
+                    if (horarioHoy != null)
                     {
-                        if (cont == 0)
+                        Date horaOC = formatoHora.parse(horaActual);
+                        for (int i = 0; i < horarioHoy.size(); i++)
                         {
-                            cont = 1;
-                            Date hor;
-                            hor = formatoHora.parse(horarioHoy.get(i).getHoraInicio());
-                            if (horaOC.equals(hor) || horaOC.after(hor))
+                            if (cont == 0)
                             {
-                                ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + horarioHoy.get(i).getMateria() + "");
-                                if (horaOC.equals(hor))
+                                cont = 1;
+                                Date hor;
+                                hor = formatoHora.parse(horarioHoy.get(i).getHoraInicio());
+                                if (horaOC.equals(hor) || horaOC.after(hor))
                                 {
-                                    Notificaciones("Nueva Clase", materia.get(0).getNombreMateria());
-                                    cont = 0;
+                                    ArrayList<Materias> materia = ManipulaBD.ConsultaMaterias("id=", "" + horarioHoy.get(i).getMateria() + "");
+                                    if (horaOC.equals(hor))
+                                    {
+                                        Notificaciones("Nueva Clase", materia.get(0).getNombreMateria());
+                                        cont = 0;
+                                    }
+                                    break;
                                 }
-                                break;
                             }
                         }
                     }
+                } catch (ParseException ex)
+                {
                 }
-            } catch (ParseException ex)
-            {
-            }
 
+            }
         }
     }
 
@@ -256,7 +266,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu_Mover = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
-        jCheckBoxMenuItem2 = new javax.swing.JCheckBoxMenuItem();
+        notificacion = new javax.swing.JCheckBoxMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
         jMenuItem2 = new javax.swing.JMenuItem();
         jSeparator8 = new javax.swing.JPopupMenu.Separator();
@@ -343,12 +353,14 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jMenu5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenu5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
-        jCheckBoxMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jCheckBoxMenuItem2.setText("Silenciar notificaciones");
-        jCheckBoxMenuItem2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jMenu5.add(jCheckBoxMenuItem2);
+        notificacion.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        notificacion.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        notificacion.setText("Silenciar notificaciones");
+        notificacion.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jMenu5.add(notificacion);
         jMenu5.add(jSeparator7);
 
+        jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem2.setText("Horario y Materias");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener()
@@ -361,6 +373,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jMenu5.add(jMenuItem2);
         jMenu5.add(jSeparator8);
 
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, 0));
         jMenuItem5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem5.setText("Guía de usuario");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener()
@@ -390,6 +403,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jMenuLibretas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jMenuLibretas.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
+        jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, 0));
         jMenuItem8.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem8.setText("Crear ");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener()
@@ -401,6 +415,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         });
         jMenuLibretas.add(jMenuItem8);
 
+        jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, 0));
         jMenuItem9.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem9.setText("Eliminar ");
         jMenuItem9.addActionListener(new java.awt.event.ActionListener()
@@ -413,6 +428,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         jMenuLibretas.add(jMenuItem9);
         jMenuLibretas.add(jSeparator3);
 
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, 0));
         jMenuItem3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem3.setText("Importar");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener()
@@ -424,6 +440,7 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         });
         jMenuLibretas.add(jMenuItem3);
 
+        jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, 0));
         jMenuItem4.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jMenuItem4.setText("Exportar");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener()
@@ -461,12 +478,12 @@ public class Opciones extends javax.swing.JFrame implements Runnable
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem9ActionPerformed
     {//GEN-HEADEREND:event_jMenuItem9ActionPerformed
-        new Eliminacion().setVisible(true);
+        new Eliminacion(this).setVisible(true);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem8ActionPerformed
     {//GEN-HEADEREND:event_jMenuItem8ActionPerformed
-        new Creacion().setVisible(true);
+        new Creacion(this).setVisible(true);
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem3ActionPerformed
@@ -582,7 +599,6 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> ComboLibretasHoy;
     private javax.swing.JButton jButton3;
-    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel_Info;
     private javax.swing.JMenu jMenu3;
@@ -602,5 +618,6 @@ public class Opciones extends javax.swing.JFrame implements Runnable
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator7;
     private javax.swing.JPopupMenu.Separator jSeparator8;
+    private javax.swing.JCheckBoxMenuItem notificacion;
     // End of variables declaration//GEN-END:variables
 }

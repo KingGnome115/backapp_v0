@@ -2,6 +2,7 @@ package backapp;
 
 import clases.HojaLibreta;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -30,7 +31,8 @@ public class Hoja extends javax.swing.JPanel
     public HojaLibreta texto;
     private File[] imagenes;
     public String path;
-    private File libreta;
+    private File hojaA;
+    private Libreta libretaM;
 
     protected ArrayList<String> label = new ArrayList<>();
     protected ArrayList<File> ImagenesNuevas = new ArrayList<>();
@@ -38,10 +40,13 @@ public class Hoja extends javax.swing.JPanel
     /**
      * Creates new form Hoja
      */
-    public Hoja(File hoja)
+    public Hoja(File hoja, javax.swing.JFrame libretaM)
     {
         initComponents();
-        this.libreta = hoja;
+        btnNuevaImagen.setMnemonic(KeyEvent.VK_S);
+        btnGuardar.setMnemonic(KeyEvent.VK_D);
+        this.hojaA = hoja;
+        this.libretaM = (Libreta) libretaM;
         path = hoja.getAbsolutePath() + "\\Text.dat";
         try
         {
@@ -91,7 +96,7 @@ public class Hoja extends javax.swing.JPanel
                 imagenes[i].renameTo(tmp);
             }
         }
-        imagenes = libreta.listFiles();
+        imagenes = hojaA.listFiles();
         SepararFormatos();
     }
 
@@ -137,12 +142,12 @@ public class Hoja extends javax.swing.JPanel
             jPanelImagenes.updateUI();
         }
     }
-    
+
     private String RecortarNombre(String nombre)
     {
         String s = "";
 
-        if (nombre.length() > 15)
+        if (nombre.length() > 10)
         {
             int n = nombre.length() - FilenameUtils.getExtension(nombre).length() - 1;
             s = nombre.substring(0, 4) + "..." + nombre.substring(n - 2, n) + "." + FilenameUtils.getExtension(nombre);
@@ -178,6 +183,7 @@ public class Hoja extends javax.swing.JPanel
         jLabel4 = new javax.swing.JLabel();
         btnNuevaImagen = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(234, 239, 210));
 
@@ -239,6 +245,15 @@ public class Hoja extends javax.swing.JPanel
             }
         });
 
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -263,6 +278,8 @@ public class Hoja extends javax.swing.JPanel
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnNuevaImagen)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEliminar)
+                        .addGap(26, 26, 26)
                         .addComponent(btnGuardar)))
                 .addContainerGap())
             .addComponent(jSplitPane1)
@@ -284,7 +301,8 @@ public class Hoja extends javax.swing.JPanel
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(btnNuevaImagen)
-                    .addComponent(btnGuardar))
+                    .addComponent(btnGuardar)
+                    .addComponent(btnEliminar))
                 .addGap(15, 15, 15))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -300,7 +318,7 @@ public class Hoja extends javax.swing.JPanel
             try
             {
                 //Definimos el destino del archivo, que será la carpeta Imágenes
-                String dest = libreta.getAbsolutePath() + "\\" + ImagenesNuevas.get(i).getName();
+                String dest = hojaA.getAbsolutePath() + "\\" + ImagenesNuevas.get(i).getName();
                 Path destino = Paths.get(dest);
                 //Definimos el origen, que será el archivo seleccionado
                 String orig = ImagenesNuevas.get(i).getPath();
@@ -315,7 +333,7 @@ public class Hoja extends javax.swing.JPanel
             }
         }
 
-        imagenes = libreta.listFiles();
+        imagenes = hojaA.listFiles();
         SepararFormatos();
         RenombrarImagenes();
 
@@ -359,8 +377,16 @@ public class Hoja extends javax.swing.JPanel
 
     }//GEN-LAST:event_btnNuevaImagenActionPerformed
 
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminarActionPerformed
+    {//GEN-HEADEREND:event_btnEliminarActionPerformed
+
+        libretaM.Eliminar(hojaA);
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevaImagen;
     private javax.swing.JComboBox<String> jComboBox1;

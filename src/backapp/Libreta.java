@@ -1,10 +1,20 @@
 package backapp;
 
+import clases.HojaLibreta;
 import java.awt.Image;
 import java.awt.MouseInfo;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import org.apache.commons.io.FilenameUtils;
 
 /**
  *
@@ -21,19 +31,30 @@ public class Libreta extends javax.swing.JFrame
     public Libreta()
     {
         initComponents();
+        btnSalir1.setMnemonic(KeyEvent.VK_Z);
+        btnNueva.setMnemonic(KeyEvent.VK_N);
         CrearHojas();
         this.pack();
     }
 
     public void CrearHojas()
     {
+        jTabbedPane1.removeAll();
         File carpeta = new File(libreta);
         this.setTitle(carpeta.getName());
         File[] hojas = carpeta.listFiles();
+        System.out.println(hojas.length);
         for (int i = 0; i < hojas.length; i++)
         {
-            jTabbedPane1.addTab("Hoja 1", new Hoja(hojas[i]));
+            jTabbedPane1.addTab("Hoja " + (i + 1), new Hoja(hojas[i], this));
         }
+
+    }
+
+    public void Eliminar(File elimina)
+    {
+        File prueba = new File("C:\\Users\\Kevin\\Downloads\\prueba");
+        prueba.delete();
 
     }
 
@@ -58,6 +79,7 @@ public class Libreta extends javax.swing.JFrame
         jPanel10 = new javax.swing.JPanel();
         btnSalir1 = new javax.swing.JButton();
         jLabel_Mover = new javax.swing.JLabel();
+        btnNueva = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Administracion");
@@ -98,6 +120,15 @@ public class Libreta extends javax.swing.JFrame
             }
         });
 
+        btnNueva.setText("Nueva Hoja");
+        btnNueva.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnNuevaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -105,11 +136,15 @@ public class Libreta extends javax.swing.JFrame
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createSequentialGroup()
                 .addComponent(jLabel_Mover)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnNueva)
+                .addGap(27, 27, 27)
                 .addComponent(btnSalir1))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btnSalir1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(btnSalir1)
+                .addComponent(btnNueva))
             .addComponent(jLabel_Mover, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
@@ -142,14 +177,65 @@ public class Libreta extends javax.swing.JFrame
     private void jLabel_MoverMouseDragged(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jLabel_MoverMouseDragged
     {//GEN-HEADEREND:event_jLabel_MoverMouseDragged
         jLabel_Mover.setIcon(new ImageIcon(getClass().getResource("/iconos/drag.png")));
-        this.setLocation(MouseInfo.getPointerInfo().getLocation().x,MouseInfo.getPointerInfo().getLocation().y);
+        this.setLocation(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
     }//GEN-LAST:event_jLabel_MoverMouseDragged
 
     private void jLabel_MoverMouseReleased(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jLabel_MoverMouseReleased
     {//GEN-HEADEREND:event_jLabel_MoverMouseReleased
-        this.setLocation(this.getX()-15, this.getY()-15);
+        this.setLocation(this.getX() - 15, this.getY() - 15);
         jLabel_Mover.setIcon(new ImageIcon(getClass().getResource("/iconos/hold.png")));
     }//GEN-LAST:event_jLabel_MoverMouseReleased
+
+    private void btnNuevaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnNuevaActionPerformed
+    {//GEN-HEADEREND:event_btnNuevaActionPerformed
+
+        File libretan = new File(libreta);
+        File[] hojasL = libretan.listFiles();
+
+        File hoja1 = new File(libreta + "\\Z");
+        hoja1.mkdir();
+        try
+        {
+            ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream(libreta + "\\Z\\Text.dat"));
+            HojaLibreta obj = new HojaLibreta();
+            file.writeObject(obj);
+            file.close();
+        } catch (IOException ex)
+        {
+            System.out.println("No se encontro archivo");
+        }
+        hojasL = libretan.listFiles();
+        Renombrar(hojasL);
+        CrearHojas();
+
+    }//GEN-LAST:event_btnNuevaActionPerformed
+
+    protected void Renombrar(File[] obj)
+    {
+        String s = "";
+        for (int i = 0; i < obj.length; i++)
+        {
+            File tmp;
+            s = obj[i].getParent() + "\\";
+            String tam = String.valueOf(obj.length);
+            String ii = String.valueOf(i);
+            String ceros = "";
+            int t = tam.length() - ii.length();
+            if (t == 0 && ii.length() == 1)
+            {
+                t = 1;
+            }
+            for (int j = 0; j < t; j++)
+            {
+                ceros += "0";
+            }
+            s += ceros + i;
+            String extencion = FilenameUtils.getExtension(obj[i].getName());
+            s += "." + extencion;
+            tmp = new File(s);
+            obj[i].renameTo(tmp);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -197,6 +283,7 @@ public class Libreta extends javax.swing.JFrame
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnNueva;
     private javax.swing.JButton btnSalir1;
     private javax.swing.JLabel jLabel_Mover;
     private javax.swing.JPanel jPanel10;

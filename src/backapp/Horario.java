@@ -62,6 +62,8 @@ public class Horario extends javax.swing.JFrame
     public Horario()
     {
         initComponents();
+        btnSalir.setMnemonic(KeyEvent.VK_Z);
+        
         jLFecha.setText(formato.format(fecha));
         ConsultarMaterias();
 

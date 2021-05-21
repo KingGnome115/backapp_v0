@@ -1,9 +1,8 @@
 package backapp.opcion_libreta;
 
 import backapp.Opciones;
-import static backapp.Opciones.directorio;
-import static backapp.Opciones.lista;
 import java.awt.MouseInfo;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileFilter;
 import javax.swing.ImageIcon;
@@ -16,14 +15,17 @@ public class Eliminacion extends javax.swing.JFrame
 {
 
     private int index;
+    public Opciones padre;
 
     /**
      * Creates new form Eliminar
      */
-    public Eliminacion()
+    public Eliminacion(Opciones padre)
     {
         initComponents();
-
+        btnSalir.setMnemonic(KeyEvent.VK_Z);
+        this.padre=padre;
+        
         for (int i = 0; i < Opciones.lista.length; i++)
         {
             jCListaLibretas.addItem(i + ": " + Opciones.lista[i].getName());
@@ -213,6 +215,7 @@ public class Eliminacion extends javax.swing.JFrame
                     }
                 };
                 Opciones.lista = carpeta.listFiles(filtro);
+                padre.MostrarLibretas();
             }
             
             jCListaLibretas.removeAllItems();
@@ -226,7 +229,6 @@ public class Eliminacion extends javax.swing.JFrame
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSalirActionPerformed
     {//GEN-HEADEREND:event_btnSalirActionPerformed
-        new Opciones().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
@@ -283,7 +285,7 @@ public class Eliminacion extends javax.swing.JFrame
         {
             public void run()
             {
-                new Eliminacion().setVisible(true);
+                new Eliminacion(null).setVisible(true);
             }
         });
     }

@@ -3,6 +3,7 @@ package backapp.opcion_libreta;
 import backapp.Opciones;
 import clases.HojaLibreta;
 import java.awt.MouseInfo;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileOutputStream;
@@ -17,12 +18,16 @@ import javax.swing.ImageIcon;
 public class Creacion extends javax.swing.JFrame
 {
 
+    public Opciones padre;
+
     /**
      * Creates new form Eliminar
      */
-    public Creacion()
+    public Creacion(Opciones padre)
     {
         initComponents();
+        btnSalir.setMnemonic(KeyEvent.VK_Z);
+        this.padre = padre;
     }
 
     /**
@@ -201,13 +206,15 @@ public class Creacion extends javax.swing.JFrame
 
             try
             {
-                ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream(directorio+ "\\Text.dat"));
+                ObjectOutputStream file = new ObjectOutputStream(new FileOutputStream(directorio + "\\Text.dat"));
                 HojaLibreta obj = new HojaLibreta();
                 file.writeObject(obj);
                 file.close();
             } catch (IOException ex)
             {
                 System.out.println("No se encontro archivo");
+            }finally{
+                padre.MostrarLibretas();
             }
 
         } else
@@ -222,19 +229,18 @@ public class Creacion extends javax.swing.JFrame
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSalirActionPerformed
     {//GEN-HEADEREND:event_btnSalirActionPerformed
-        new Opciones().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void jLabel_MoverMouseDragged(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jLabel_MoverMouseDragged
     {//GEN-HEADEREND:event_jLabel_MoverMouseDragged
         jLabel_Mover.setIcon(new ImageIcon(getClass().getResource("/iconos/drag.png")));
-        this.setLocation(MouseInfo.getPointerInfo().getLocation().x,MouseInfo.getPointerInfo().getLocation().y);
+        this.setLocation(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
     }//GEN-LAST:event_jLabel_MoverMouseDragged
 
     private void jLabel_MoverMouseReleased(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jLabel_MoverMouseReleased
     {//GEN-HEADEREND:event_jLabel_MoverMouseReleased
-        this.setLocation(this.getX()-15, this.getY()-15);
+        this.setLocation(this.getX() - 15, this.getY() - 15);
         jLabel_Mover.setIcon(new ImageIcon(getClass().getResource("/iconos/hold.png")));
     }//GEN-LAST:event_jLabel_MoverMouseReleased
 
@@ -285,7 +291,7 @@ public class Creacion extends javax.swing.JFrame
         {
             public void run()
             {
-                new Creacion().setVisible(true);
+                new Creacion(null).setVisible(true);
             }
         });
     }
