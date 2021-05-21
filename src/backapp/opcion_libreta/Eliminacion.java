@@ -5,7 +5,11 @@ import java.awt.MouseInfo;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import org.apache.commons.io.FileUtils;
 
 /**
  *
@@ -24,8 +28,8 @@ public class Eliminacion extends javax.swing.JFrame
     {
         initComponents();
         btnSalir.setMnemonic(KeyEvent.VK_Z);
-        this.padre=padre;
-        
+        this.padre = padre;
+
         for (int i = 0; i < Opciones.lista.length; i++)
         {
             jCListaLibretas.addItem(i + ": " + Opciones.lista[i].getName());
@@ -198,30 +202,35 @@ public class Eliminacion extends javax.swing.JFrame
     {//GEN-HEADEREND:event_btnEliminacionActionPerformed
 
         File libreta = new File(Opciones.lista[index].getAbsolutePath());
-        if (libreta.delete())
+        if (libreta != null)
         {
-            File carpeta = new File(Opciones.directorio);
-            if (!carpeta.exists())
-            {
-                carpeta.mkdir();
-            } else
-            {
-                FileFilter filtro = new FileFilter()
+            try {
+                FileUtils.deleteDirectory(libreta);
+                File carpeta = new File(Opciones.directorio);
+                if (!carpeta.exists())
                 {
-                    @Override
-                    public boolean accept(File fil)
+                    carpeta.mkdir();
+                } else
+                {
+                    FileFilter filtro = new FileFilter()
                     {
-                        return fil.isDirectory();
-                    }
-                };
-                Opciones.lista = carpeta.listFiles(filtro);
-                padre.MostrarLibretas();
-            }
-            
-            jCListaLibretas.removeAllItems();
-            for (int i = 0; i < Opciones.lista.length; i++)
-            {
-                jCListaLibretas.addItem(i + ": " + Opciones.lista[i].getName());
+                        @Override
+                        public boolean accept(File fil)
+                        {
+                            return fil.isDirectory();
+                        }
+                    };
+                    Opciones.lista = carpeta.listFiles(filtro);
+                    padre.MostrarLibretas();
+                }
+                
+                jCListaLibretas.removeAllItems();
+                for (int i = 0; i < Opciones.lista.length; i++)
+                {
+                    jCListaLibretas.addItem(i + ": " + Opciones.lista[i].getName());
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Eliminacion.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -235,12 +244,12 @@ public class Eliminacion extends javax.swing.JFrame
     private void jLabel_MoverMouseDragged(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jLabel_MoverMouseDragged
     {//GEN-HEADEREND:event_jLabel_MoverMouseDragged
         jLabel_Mover.setIcon(new ImageIcon(getClass().getResource("/iconos/drag.png")));
-        this.setLocation(MouseInfo.getPointerInfo().getLocation().x,MouseInfo.getPointerInfo().getLocation().y);
+        this.setLocation(MouseInfo.getPointerInfo().getLocation().x, MouseInfo.getPointerInfo().getLocation().y);
     }//GEN-LAST:event_jLabel_MoverMouseDragged
 
     private void jLabel_MoverMouseReleased(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jLabel_MoverMouseReleased
     {//GEN-HEADEREND:event_jLabel_MoverMouseReleased
-        this.setLocation(this.getX()-15, this.getY()-15);
+        this.setLocation(this.getX() - 15, this.getY() - 15);
         jLabel_Mover.setIcon(new ImageIcon(getClass().getResource("/iconos/hold.png")));
     }//GEN-LAST:event_jLabel_MoverMouseReleased
 

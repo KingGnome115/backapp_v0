@@ -14,6 +14,7 @@ import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 
 /**
@@ -53,8 +54,14 @@ public class Libreta extends javax.swing.JFrame
 
     public void Eliminar(File elimina)
     {
-        File prueba = new File("C:\\Users\\Kevin\\Downloads\\prueba");
-        prueba.delete();
+        try
+        {
+            FileUtils.deleteDirectory(elimina);
+            CrearHojas();
+        } catch (IOException ex)
+        {
+            Logger.getLogger(Libreta.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
