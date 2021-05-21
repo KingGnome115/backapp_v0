@@ -23,7 +23,7 @@ import org.apache.commons.io.FilenameUtils;
  */
 public class Libreta extends javax.swing.JFrame
 {
-
+    
     public static String libreta = "";
 
     /**
@@ -37,21 +37,24 @@ public class Libreta extends javax.swing.JFrame
         CrearHojas();
         this.pack();
     }
-
+    
     public void CrearHojas()
     {
         jTabbedPane1.removeAll();
         File carpeta = new File(libreta);
         this.setTitle(carpeta.getName());
         File[] hojas = carpeta.listFiles();
-        System.out.println(hojas.length);
+        if (hojas.length == 0)
+        {
+            btnNuevaActionPerformed(null);
+        }
         for (int i = 0; i < hojas.length; i++)
         {
             jTabbedPane1.addTab("Hoja " + (i + 1), new Hoja(hojas[i], this));
         }
-
+        
     }
-
+    
     public void Eliminar(File elimina)
     {
         try
@@ -62,9 +65,9 @@ public class Libreta extends javax.swing.JFrame
         {
             Logger.getLogger(Libreta.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
     }
-
+    
     @Override
     public Image getIconImage()
     {
@@ -195,10 +198,10 @@ public class Libreta extends javax.swing.JFrame
 
     private void btnNuevaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnNuevaActionPerformed
     {//GEN-HEADEREND:event_btnNuevaActionPerformed
-
+        
         File libretan = new File(libreta);
         File[] hojasL = libretan.listFiles();
-
+        
         File hoja1 = new File(libreta + "\\Z");
         hoja1.mkdir();
         try
@@ -216,7 +219,7 @@ public class Libreta extends javax.swing.JFrame
         CrearHojas();
 
     }//GEN-LAST:event_btnNuevaActionPerformed
-
+    
     protected void Renombrar(File[] obj)
     {
         String s = "";
