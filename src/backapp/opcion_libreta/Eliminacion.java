@@ -204,6 +204,11 @@ public class Eliminacion extends javax.swing.JFrame
         index = jCListaLibretas.getSelectedIndex();
     }//GEN-LAST:event_jCListaLibretasItemStateChanged
 
+    /**
+     * Método que elimina una libreta del sistema y actualiza la interfaz 
+     * Opciones y actualiza la lista de libretas que el sistema contempla
+     * @param evt 
+     */
     private void btnEliminacionActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminacionActionPerformed
     {//GEN-HEADEREND:event_btnEliminacionActionPerformed
 

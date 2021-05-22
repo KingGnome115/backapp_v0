@@ -18,6 +18,11 @@ public class HojaLibreta implements Serializable
         this.texto = "";
     }
 
+    /**
+     * Constructor de la clase HojaLibreta
+     * @param titulo el titulo de la pagina
+     * @param texto el texto de la pagina
+     */
     public HojaLibreta(String titulo, String texto)
     {
         this.titulo = titulo;

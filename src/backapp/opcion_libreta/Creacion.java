@@ -171,6 +171,11 @@ public class Creacion extends javax.swing.JFrame
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Método que crea las libretas en la carpeta mochila y revisa que el
+     * nombre este disponible
+     * @param evt evento que se llama al dar clic en el boton
+     */
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCrearActionPerformed
     {//GEN-HEADEREND:event_btnCrearActionPerformed
 

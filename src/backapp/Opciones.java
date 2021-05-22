@@ -112,6 +112,12 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         }
     }
 
+    /**
+     * Pequeño método para eliminar los acentos de los dias y no cause problemas
+     * para las consultas
+     * @param texto el texto al que se le retira los acentos
+     * @return el texto sin acentos
+     */
     public String quitarAcentos(String texto)
     {
         texto = Normalizer.normalize(texto, Normalizer.Form.NFD);
@@ -119,6 +125,9 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         return texto;
     }
 
+    /**
+     * Representa las libretas en el sub menu libretas de la interfaz
+     */
     public void MostrarLibretas()
     {
         for (int i = 0; i < lista.length; i++)
@@ -154,6 +163,10 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         return retValue;
     }
 
+    /**
+     * Método que lee la hora cada minuto para llamar a la notificacion de inicio
+     * de clase (solo horas cerradas)
+     */
     @Override
     public void run()
     {
@@ -197,6 +210,12 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         }
     }
 
+    /**
+     * Método que llama a una notificacion de sistema para que lo vea el 
+     * usuario
+     * @param titulo Que titulo tendra la notificacion
+     * @param mensaje Que mensaje tendra la notificacion
+     */
     protected void Notificaciones(String titulo, String mensaje)
     {
         try
@@ -220,6 +239,10 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         }
     }
 
+    /**
+     * Método que renombra las hojas para que se lean de 00 a 0n
+     * @param obj arreglo de las hojas de una libreta
+     */
     protected void Renombrar(File[] obj)
     {
         String s = "";
@@ -496,6 +519,10 @@ public class Opciones extends javax.swing.JFrame implements Runnable
         new Exportar().setVisible(true);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    /**
+     * Método que crea las hojas de la libreta actual
+     * @param evt 
+     */
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton3ActionPerformed
     {//GEN-HEADEREND:event_jButton3ActionPerformed
 

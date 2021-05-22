@@ -38,6 +38,9 @@ public class Libreta extends javax.swing.JFrame
         this.pack();
     }
     
+    /**
+     * Método que crea los applet de las hojas de una libreta para representarlos
+     */
     public void CrearHojas()
     {
         jTabbedPane1.removeAll();
@@ -55,6 +58,10 @@ public class Libreta extends javax.swing.JFrame
         
     }
     
+    /**
+     * Método llamado desde la hoja que elimina la carpeta de mochila de la pc
+     * @param elimina el File de la hoja
+     */
     public void Eliminar(File elimina)
     {
         try
@@ -196,6 +203,10 @@ public class Libreta extends javax.swing.JFrame
         jLabel_Mover.setIcon(new ImageIcon(getClass().getResource("/iconos/hold.png")));
     }//GEN-LAST:event_jLabel_MoverMouseReleased
 
+    /**
+     * Crea una nueva hoja y la representa
+     * @param evt evento que se llama al dar clic al boton
+     */
     private void btnNuevaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnNuevaActionPerformed
     {//GEN-HEADEREND:event_btnNuevaActionPerformed
         
@@ -220,6 +231,10 @@ public class Libreta extends javax.swing.JFrame
 
     }//GEN-LAST:event_btnNuevaActionPerformed
     
+    /**
+     * Método que renombra las hojas para que se lean de 00 a 0n
+     * @param obj arreglo de las hojas de una libreta
+     */
     protected void Renombrar(File[] obj)
     {
         String s = "";

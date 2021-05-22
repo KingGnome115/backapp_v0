@@ -14,6 +14,11 @@ public class ManipulaBD
 
     private static Conexion con = new Conexion();
 
+    /**
+     * Método quehace la conexion con xampp
+     *
+     * @return la conexion con la bd o null si no logro conectarse
+     */
     public static Connection conecta()
     {
         try
@@ -27,22 +32,22 @@ public class ManipulaBD
         }
     }
 
+    /**
+     * desconecta la aplicacion del xampp
+     *
+     * @param conn la conexion a terminar
+     */
     public static void desconecta(Connection conn)
     {
         con.desconectar(conn);
     }
 
-    /*
-    Avion
-    
-    nuas 0
-    bole 1
-    dest 2
-    
-    nuas bole dest
-    1    5    mexico
-    3    7    francia
-    1,5,mexico,3,7,francia
+    /**
+     * Método que recontruye los objetos dependiendo de los datos traidos de la
+     * bd
+     *
+     * @param reg el arraylist de todos los datos que llegaron
+     * @return arreglo de materias
      */
     public static ArrayList<Materias> cargarMaterias(ArrayList<Object> reg)
     {
@@ -83,6 +88,16 @@ public class ManipulaBD
         }
     }
 
+    /**
+     * Método que recibe los datos de materias y los registra en la bd
+     *
+     * @param id identificador de la materia
+     * @param semestre al cual pertenece la materia
+     * @param nombreMaestro nombre del maestro de la materia
+     * @param nombreMateria nombre de la materia
+     * @param grupo el grupo de la materia
+     * @param color el color para representar la materia
+     */
     public static void AltaMaterias(int id, int semestre, String nombreMaestro, String nombreMateria, String grupo, String color)
     {
         Connection con = ManipulaBD.conecta();
@@ -101,6 +116,11 @@ public class ManipulaBD
         desconecta(con);
     }
 
+    /**
+     * Método que da de baja la materia de la bd
+     *
+     * @param id identificador con el cual se hara la eliminacion
+     */
     public static void BajasMaterias(int id)
     {
         Connection con = ManipulaBD.conecta();
@@ -112,6 +132,14 @@ public class ManipulaBD
         desconecta(con);
     }
 
+    /**
+     * Método que consulta las materias en la bd
+     *
+     * @param variable la variable por la cual se consultara
+     * @param condicion la condicion que se debe cumplir
+     * @return las materias en forma de arraylist nt: las variables se envias
+     * así "variable=" la condicion las cadenas "'cadena'" y numeros "1"
+     */
     public static ArrayList<Materias> ConsultaMaterias(String variable, String condicion)
     {
         Connection con = ManipulaBD.conecta();
@@ -126,10 +154,12 @@ public class ManipulaBD
     }
 
     /**
-     * 
-     * @param id
-     * @param campos 
-     * @param datos
+     * Método que modifica los datos de la bd de materias
+     *
+     * @param id identificador de la materia
+     * @param campos los campos que seran modificados
+     * @param datos los nuevos datos nt: las variables se envias así "variable="
+     * la condicion las cadenas "'cadena'" y numeros "1"
      */
     public static void ModificarMaterias(int id, String campos, String datos)
     {
@@ -147,6 +177,13 @@ public class ManipulaBD
         }
     }
 
+    /**
+     * Método que recontruye los objetos dependiendo de los datos traidos de la
+     * bd
+     *
+     * @param reg el arraylist de todos los datos que llegaron
+     * @return arreglo de horarios
+     */
     public static ArrayList<Horarios> cargarHorarios(ArrayList<Object> reg)
     {
         ArrayList<Horarios> v = new ArrayList<>();
@@ -187,6 +224,15 @@ public class ManipulaBD
         }
     }
 
+    /**
+     * Método que da de alta horarios
+     * @param id el identificador
+     * @param materia identificador de la materia al que pertenece el horario
+     * @param dia el dia del horario
+     * @param horaInicio hora de inicio de la clase
+     * @param horaFinal hora en que termina la clase
+     * @param notificar si la clase debe ser o no notificada
+     */
     public static void AltaHorarios(int id, int materia, String dia, String horaInicio, String horaFinal, boolean notificar)
     {
         Connection con = ManipulaBD.conecta();
@@ -205,6 +251,11 @@ public class ManipulaBD
         desconecta(con);
     }
 
+    /**
+     * Método que da de baja horarios dependiendo del campo y del dato
+     * @param campo "variable="
+     * @param dato "'cadena'" o "numero"
+     */
     public static void BajasHorarios(String campo, int dato)
     {
         Connection con = ManipulaBD.conecta();
@@ -216,6 +267,13 @@ public class ManipulaBD
         desconecta(con);
     }
 
+    /**
+     * Método que consulta los horarios de la bd
+     * @param variable la variable por la cual se consultara
+     * @param condicion la condicion que se debe cumplir
+     * @return los horarios en forma de arraylist nt: las variables se envias
+     * así "variable=" la condicion las cadenas "'cadena'" y numeros "1"
+     */
     public static ArrayList<Horarios> ConsultaHorarios(String variable, String condicion)
     {
         Connection con = ManipulaBD.conecta();
@@ -229,6 +287,14 @@ public class ManipulaBD
         return ap;
     }
 
+    /**
+     * Método que modifica los datos de la bd de materias
+     *
+     * @param id identificador del horario
+     * @param campos los campos que seran modificados
+     * @param datos los nuevos datos nt: las variables se envias así "variable="
+     * la condicion las cadenas "'cadena'" y numeros "1"
+     */
     public static void ModificarHorarios(int id, String campos, String datos)
     {
         Connection con = ManipulaBD.conecta();

@@ -18,6 +18,15 @@ public class Horarios implements Comparable<Horarios>
     {
     }
 
+    /**
+     * Constructor de la clase horarios
+     * @param id el identificador
+     * @param materia identificador de la materia al que pertenece el horario
+     * @param dia el dia del horario
+     * @param horaInicio hora de inicio de la clase
+     * @param horaFinal hora en que termina la clase
+     * @param notificar si la clase debe ser o no notificada
+     */
     public Horarios(int id, int materia, String dia, String horaInicio, String horaFinal, boolean notificar)
     {
         this.id = id;
@@ -108,6 +117,11 @@ public class Horarios implements Comparable<Horarios>
         this.id = id;
     }
 
+    /**
+     * Método que ordenara las horas de inicio para su representacion
+     * @param o el arreglo de horarios
+     * @return los horarios ordenados
+     */
     @Override
     public int compareTo(Horarios o)
     {

@@ -225,6 +225,10 @@ public class Exportar extends javax.swing.JFrame
         jLabel_Mover.setIcon(new ImageIcon(getClass().getResource("/iconos/hold.png")));
     }//GEN-LAST:event_jLabel_MoverMouseReleased
 
+    /**
+     * Método que permite elegir la carpeta donde se guardara la libreta .zip
+     * @param evt evento que se llama al dar clic en el boton
+     */
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnExportarActionPerformed
     {//GEN-HEADEREND:event_btnExportarActionPerformed
 
@@ -242,6 +246,10 @@ public class Exportar extends javax.swing.JFrame
 
     }//GEN-LAST:event_btnExportarActionPerformed
 
+    /**
+     * Método que selecciona cual es la libreta seleccionada para su exportacion
+     * @param evt 
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
 
@@ -259,6 +267,12 @@ public class Exportar extends javax.swing.JFrame
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    /**
+     * Método que comprime la libreta y la envia al su destino
+     * @param archivo destino del archivo
+     * @param archivoZIP el archivo que sera comprimido
+     * @throws Exception 
+     */
     public void comprimir(String archivo, String archivoZIP) throws Exception
     {
         ZipOutputStream zip = new ZipOutputStream(new FileOutputStream(archivoZIP));
@@ -267,6 +281,13 @@ public class Exportar extends javax.swing.JFrame
         zip.close();
     }
 
+    /**
+     * Método que comprime archivos dentro de la carpeta enviada
+     * @param ruta la ruta del archivo
+     * @param directorio carpeta padre del archivo
+     * @param zip donde se esta comprimiendo
+     * @throws Exception si el archivo no puede ser compreso
+     */
     private void Agregar(String ruta, String directorio, ZipOutputStream zip) throws Exception
     {
         File archivo = new File(directorio);
@@ -286,6 +307,14 @@ public class Exportar extends javax.swing.JFrame
         }
     }
 
+    /**
+     * Método que envia a agregar archivos a su compresion o a carpetas 
+     * para se analisis de archivos a comprimir
+     * @param ruta ruta del archivo
+     * @param carpeta padre del archivo
+     * @param zip donde se comprime
+     * @throws Exception 
+     */
     public void Carpeta(String ruta, String carpeta, ZipOutputStream zip) throws Exception
     {
         File directorio = new File(carpeta);

@@ -71,6 +71,10 @@ public class Horario extends javax.swing.JFrame
         btnSalir.setMnemonic(KeyEvent.VK_ESCAPE);
     }
 
+    /**
+     * Este método llama a la bd u trae todas las materias registradas
+     * así como representarlas en la tabla de materias
+     */
     public void ConsultarMaterias()
     {
         mate = ManipulaBD.ConsultaMaterias("id!=", "-1");
@@ -100,6 +104,10 @@ public class Horario extends javax.swing.JFrame
         }
     }
 
+    /**
+     * Método que consulta los horarios de la bd y los asigna a sus arraylist
+     * así como representarlos en sus distintas tablas
+     */
     public void ConsultarHorarios()
     {
         horari = ManipulaBD.ConsultaHorarios("id!=", "-1");
@@ -165,6 +173,12 @@ public class Horario extends javax.swing.JFrame
         ActualizarTablaHorario();
     }
 
+    /**
+     * Muestra los datos de las materias en las cajas individuales de las
+     * materias
+     * @param lista el arraylist del dia de la semana de la materia
+     * @param dia la caja de cada dia de la materia
+     */
     public void ActualizarDias(ArrayList<Horarios> lista, JPanel dia)
     {
         dia.removeAll();
@@ -187,6 +201,10 @@ public class Horario extends javax.swing.JFrame
         dia.updateUI();
     }
 
+    /**
+     * Método para representar las materias de forma dinamica, así como
+     * asignarle la posibilidad de editar los distintos datos.
+     */
     public void ActualizarTablaMaterias()
     {
         Object matriz[][] = new Object[tamMate][5];
@@ -246,6 +264,10 @@ public class Horario extends javax.swing.JFrame
         });
     }
 
+    /**
+     * Actualiza la tabla comun de los horarios mostrando la materias y horas
+     * de forma dinamica así como los campos que pueden ser modificados
+     */
     public void ActualizarTablaHorario()
     {
         Object matriz[][] = new Object[tamHor][6];
@@ -1034,6 +1056,10 @@ public class Horario extends javax.swing.JFrame
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Método que registra un nuevo horario en la bd
+     * @param evt evento llamado por el boton
+     */
     private void btnAgregarHorarioActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAgregarHorarioActionPerformed
     {//GEN-HEADEREND:event_btnAgregarHorarioActionPerformed
 
@@ -1053,6 +1079,10 @@ public class Horario extends javax.swing.JFrame
         Limpiar();
     }//GEN-LAST:event_btnLimpiarMateriasActionPerformed
 
+    /**
+     * Método que registra las materias en la bd y crea su respectiva materia
+     * @param evt evento llamado por el boton
+     */
     private void btnAgregarMateriasActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAgregarMateriasActionPerformed
     {//GEN-HEADEREND:event_btnAgregarMateriasActionPerformed
 
@@ -1132,6 +1162,11 @@ public class Horario extends javax.swing.JFrame
         jLabel_Color.setBackground(c0);
     }//GEN-LAST:event_btnCancelar1ActionPerformed
 
+    /**
+     * Edita los campos habilitados de la tabla materia y manda los cambios a la
+     * bd
+     * @param evt evento que se llama cuando se da clic en el boton
+     */
     private void btnEditarMateriasActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEditarMateriasActionPerformed
     {//GEN-HEADEREND:event_btnEditarMateriasActionPerformed
 
@@ -1157,6 +1192,10 @@ public class Horario extends javax.swing.JFrame
 
     }//GEN-LAST:event_btnEditarMateriasActionPerformed
 
+    /**
+     * Método que elimina la materia y sus horarios de la bd
+     * @param evt evento que se llama cuando se da clic en el boton
+     */
     private void btnEliminarMateriaActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminarMateriaActionPerformed
     {//GEN-HEADEREND:event_btnEliminarMateriaActionPerformed
 
@@ -1176,6 +1215,10 @@ public class Horario extends javax.swing.JFrame
         txtFinSemestre.setText("DD/MM/AAAA");
     }//GEN-LAST:event_btnLimpiarHorarioActionPerformed
 
+    /**
+     * Elimina el horario seleccionado de la bd.
+     * @param evt evento que se llama cuando se da clci en el boton
+     */
     private void btnEliminarHorarioActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminarHorarioActionPerformed
     {//GEN-HEADEREND:event_btnEliminarHorarioActionPerformed
         for (int i = 0; i < seleccionadosHorarios.length; i++)
@@ -1185,6 +1228,9 @@ public class Horario extends javax.swing.JFrame
         ConsultarHorarios();
     }//GEN-LAST:event_btnEliminarHorarioActionPerformed
 
+    /**
+     * Limpia las cajas de texto del formulario materia
+     */
     public void Limpiar()
     {
         txtSemestre.setText("");

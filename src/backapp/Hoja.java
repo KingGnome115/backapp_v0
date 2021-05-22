@@ -67,6 +67,10 @@ public class Hoja extends javax.swing.JPanel
         Actualizar();
     }
 
+    /**
+     * Método que permite renombras las imagenes incluidas en las hojas
+     * desde 00 a 0n permitiendo su mejor manejo y representación de las mismas
+     */
     protected void RenombrarImagenes()
     {
         String s = "";
@@ -100,6 +104,10 @@ public class Hoja extends javax.swing.JPanel
         SepararFormatos();
     }
 
+    /**
+     * Método que separa los distintos ficheros de la carpeta libreta y los
+     * separa entre las imagenes, binarios etc.
+     */
     private void SepararFormatos()
     {
         ArrayList<File> tmp = new ArrayList<>();
@@ -119,6 +127,9 @@ public class Hoja extends javax.swing.JPanel
         }
     }
 
+    /**
+     * Método que representa las imagenes en el panel de la hoja
+     */
     public void Actualizar()
     {
         jPanelImagenes.removeAll();
@@ -143,6 +154,14 @@ public class Hoja extends javax.swing.JPanel
         }
     }
 
+    /**
+     * Cuando se selecciona una imagen de la computadora la representamos de
+     * inmediato y por eso no podemos renombrarla, entonces usamos este
+     * método para acortar el nombre
+     * @param nombre como esta guardada la imagen en el archivo
+     * @return una cadena que inicia con los primeros 4 digitos seguido de 3
+     * puntos y finalizando con los ultimos 3 digitos del nombre original
+     */
     private String RecortarNombre(String nombre)
     {
         String s = "";
@@ -307,6 +326,11 @@ public class Hoja extends javax.swing.JPanel
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Método que mueve las imagenes a la carpeta hoja de la libreta, las 
+     * renombra, guarda el titulo y el texto de la hoja.
+     * @param evt evento cuando se llama al boton
+     */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnGuardarActionPerformed
     {//GEN-HEADEREND:event_btnGuardarActionPerformed
 
@@ -349,6 +373,11 @@ public class Hoja extends javax.swing.JPanel
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    /**
+     * Método que permite elegir las imagenes de la computadora y los añade a la
+     * hoja
+     * @param evt evento que se llama al dar clic al boton
+     */
     private void btnNuevaImagenActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnNuevaImagenActionPerformed
     {//GEN-HEADEREND:event_btnNuevaImagenActionPerformed
 
@@ -377,6 +406,10 @@ public class Hoja extends javax.swing.JPanel
 
     }//GEN-LAST:event_btnNuevaImagenActionPerformed
 
+    /**
+     * Elimina una hoja de la libreta
+     * @param evt 
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminarActionPerformed
     {//GEN-HEADEREND:event_btnEliminarActionPerformed
 

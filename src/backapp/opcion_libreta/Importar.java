@@ -19,7 +19,7 @@ import javax.swing.JFileChooser;
  */
 public class Importar extends javax.swing.JFrame
 {
-    
+
     private String user = System.getProperty("user.name");
     private String padre = "C:\\Users\\" + user + "\\Documents\\Mochila";
 
@@ -228,9 +228,14 @@ public class Importar extends javax.swing.JFrame
         jLabel_Mover.setIcon(new ImageIcon(getClass().getResource("/iconos/hold.png")));
     }//GEN-LAST:event_jLabel_MoverMouseReleased
 
+    /**
+     * Método que descomprime el archivo libreta y lo envia a mochila
+     *
+     * @param evt evento que se llama al dar clic en el boton
+     */
     private void btnImportarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnImportarActionPerformed
     {//GEN-HEADEREND:event_btnImportarActionPerformed
-        
+
         try
         {
             Descomprimir(padre, "C:\\Users\\" + user + "\\Documents\\Mochila");
@@ -243,9 +248,13 @@ public class Importar extends javax.swing.JFrame
 
     }//GEN-LAST:event_btnImportarActionPerformed
 
+    /**
+     * Método que selecciona el archivo .zip que sera descomprimido
+     * @param evt evento que se llama al dar clic en el boton
+     */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jButton1ActionPerformed
     {//GEN-HEADEREND:event_jButton1ActionPerformed
-        
+
         JFileChooser carpeta = new JFileChooser();
         carpeta.setCurrentDirectory(new File("."));
         carpeta.setDialogTitle("Seleccione la carpeta para trabajar");
@@ -259,24 +268,34 @@ public class Importar extends javax.swing.JFrame
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
-    
-        public void Descomprimir(String archivoZip, String rutaSalida) {
+
+    /**
+     * Método que descomprime y reestructura los archivos y los compone
+     * @param archivoZip archivo zip a descomprimir
+     * @param rutaSalida ruta destino de la descompresion
+     */
+    public void Descomprimir(String archivoZip, String rutaSalida)
+    {
         byte[] buffer = new byte[1024];
-        try {
+        try
+        {
             File folder = new File("C:\\Users\\" + user + "\\Documents\\Mochila");
-            if (!folder.exists()) {
+            if (!folder.exists())
+            {
                 folder.mkdir();
             }
             ZipInputStream zis = new ZipInputStream(new FileInputStream(archivoZip));
             ZipEntry ze = zis.getNextEntry();
-            while (ze != null) {
+            while (ze != null)
+            {
                 String nombreArchivo = ze.getName();
                 File archivoNuevo = new File(rutaSalida + File.separator + nombreArchivo);
                 System.out.println("archivo descomprimido : " + archivoNuevo.getAbsoluteFile());
                 new File(archivoNuevo.getParent()).mkdirs();
                 FileOutputStream fos = new FileOutputStream(archivoNuevo);
                 int len;
-                while ((len = zis.read(buffer)) > 0) {
+                while ((len = zis.read(buffer)) > 0)
+                {
                     fos.write(buffer, 0, len);
                 }
                 fos.close();
@@ -285,7 +304,8 @@ public class Importar extends javax.swing.JFrame
             zis.closeEntry();
             zis.close();
             System.out.println("Listo");
-        } catch (IOException ex) {
+        } catch (IOException ex)
+        {
             ex.printStackTrace();
         }
     }

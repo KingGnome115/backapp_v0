@@ -21,6 +21,16 @@ public class Materias
     {
     }
 
+    /**
+     * Método que recibe los datos de materias y los registra en la bd
+     *
+     * @param id identificador de la materia
+     * @param semestre al cual pertenece la materia
+     * @param nombreMaestro nombre del maestro de la materia
+     * @param nombreMateria nombre de la materia
+     * @param grupo el grupo de la materia
+     * @param color el color para representar la materia
+     */
     public Materias(int id, int semestre, String grupo, String nombreMaestro, String nombreMateria, String color)
     {
         this.id = id;
