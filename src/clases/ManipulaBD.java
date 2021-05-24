@@ -23,8 +23,8 @@ public class ManipulaBD
     {
         try
         {
-            return con.Conecta("localhost:3306", "backapp", "root", "", 2);
-//            return con.Conecta("127.0.0.1:3307", "backapp", "root", "", 2);
+//            return con.Conecta("localhost:3306", "backapp", "root", "", 2);
+            return con.Conecta("127.0.0.1:3307", "backapp", "root", "", 2);
         } catch (Exception e)
         {
             System.out.println("No se pudo conectar a la bd");
@@ -67,8 +67,7 @@ public class ManipulaBD
                     String semestreS = ((String) reg.get(i + 3)).trim();
                     int semestre = Integer.parseInt(semestreS);
                     String grupo = ((String) reg.get(i + 4)).trim();
-                    String color = ((String) reg.get(i + 5)).replaceAll("|", ",");
-                    System.out.println(color + " AQUI LLEGUE");
+                    String color = ((String) reg.get(i + 5));
 
                     Materias obj = new Materias(id, semestre, grupo, nombreMaestro, nombreMateria, color);
                     v.add(obj);
@@ -77,7 +76,7 @@ public class ManipulaBD
             return v;
         } catch (Exception e)
         {
-            System.out.println("Error al crear objetos");
+            System.err.println("Error en cargarMaterias, "+e.toString());
             if (v != null)
             {
                 return v;
@@ -110,7 +109,7 @@ public class ManipulaBD
                     + "'" + nombreMaestro + "'" + ","
                     + semestre + ","
                     + "'" + grupo + "'" + ","
-                    + "'" + color.replaceAll(",", "|") + "'"
+                    + "'" + color + "'"
             );
         }
         desconecta(con);
@@ -213,7 +212,7 @@ public class ManipulaBD
             return v;
         } catch (Exception e)
         {
-            System.out.println("Error al crear objetos");
+            System.err.println("Error en cargarHorarios, "+e.toString());
             if (v != null)
             {
                 return v;
