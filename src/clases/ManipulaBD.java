@@ -23,8 +23,8 @@ public class ManipulaBD
     {
         try
         {
-//            return con.Conecta("localhost:3306", "backapp", "root", "", 2);
-            return con.Conecta("127.0.0.1:3307", "backapp", "root", "", 2);
+            return con.Conecta("localhost:3306", "backapp", "root", "", 2);
+//            return con.Conecta("127.0.0.1:3307", "backapp", "root", "", 2);
         } catch (Exception e)
         {
             System.out.println("No se pudo conectar a la bd");
@@ -68,6 +68,7 @@ public class ManipulaBD
                     int semestre = Integer.parseInt(semestreS);
                     String grupo = ((String) reg.get(i + 4)).trim();
                     String color = ((String) reg.get(i + 5));
+                    System.out.println(color + " AQUI LLEGUE");
 
                     Materias obj = new Materias(id, semestre, grupo, nombreMaestro, nombreMateria, color);
                     v.add(obj);
@@ -77,7 +78,7 @@ public class ManipulaBD
         } catch (Exception e)
         {
             System.err.println("Error en cargarMaterias, "+e.toString());
-            if (v != null)
+            if (!v.isEmpty())
             {
                 return v;
             } else
@@ -188,6 +189,7 @@ public class ManipulaBD
         ArrayList<Horarios> v = new ArrayList<>();
         try
         {
+            System.out.println(reg.size());
             for (int i = 0; i < reg.size(); i += 6)
             {
                 String idS = "";
@@ -199,9 +201,13 @@ public class ManipulaBD
 
                     String materiaS = ((String) reg.get(i + 1)).trim();
                     int materia = Integer.parseInt(materiaS);
+                    
                     String dia = ((String) reg.get(i + 2)).trim();
+                    
                     String horaInicio = ((String) reg.get(i + 3)).trim();
+                    
                     String horaFinal = ((String) reg.get(i + 4)).trim();
+                    
                     String notificarS = ((String) reg.get(i + 5)).trim();
                     boolean notificar = Boolean.parseBoolean(notificarS);
 
@@ -212,8 +218,8 @@ public class ManipulaBD
             return v;
         } catch (Exception e)
         {
-            System.err.println("Error en cargarHorarios, "+e.toString());
-            if (v != null)
+            System.err.println("Error en cargarHorarios, "+e.getMessage());
+            if (!v.isEmpty())
             {
                 return v;
             } else

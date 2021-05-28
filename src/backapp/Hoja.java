@@ -1,6 +1,7 @@
 package backapp;
 
 import clases.HojaLibreta;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -33,6 +34,9 @@ public class Hoja extends javax.swing.JPanel
     public String path;
     private File hojaA;
     private Libreta libretaM;
+    public int tamanio = 14;
+    public String tipo = "Segoe UI";
+    public String Cadena;
 
     protected ArrayList<String> label = new ArrayList<>();
     protected ArrayList<File> ImagenesNuevas = new ArrayList<>();
@@ -68,8 +72,8 @@ public class Hoja extends javax.swing.JPanel
     }
 
     /**
-     * Método que permite renombras las imagenes incluidas en las hojas
-     * desde 00 a 0n permitiendo su mejor manejo y representación de las mismas
+     * Método que permite renombras las imagenes incluidas en las hojas desde 00
+     * a 0n permitiendo su mejor manejo y representación de las mismas
      */
     protected void RenombrarImagenes()
     {
@@ -156,8 +160,9 @@ public class Hoja extends javax.swing.JPanel
 
     /**
      * Cuando se selecciona una imagen de la computadora la representamos de
-     * inmediato y por eso no podemos renombrarla, entonces usamos este
-     * método para acortar el nombre
+     * inmediato y por eso no podemos renombrarla, entonces usamos este método
+     * para acortar el nombre
+     *
      * @param nombre como esta guardada la imagen en el archivo
      * @return una cadena que inicia con los primeros 4 digitos seguido de 3
      * puntos y finalizando con los ultimos 3 digitos del nombre original
@@ -196,9 +201,9 @@ public class Hoja extends javax.swing.JPanel
         jLabel1 = new javax.swing.JLabel();
         txtTitulo = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        ComboLetra = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        ComboTamanio = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         btnNuevaImagen = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
@@ -231,15 +236,28 @@ public class Hoja extends javax.swing.JPanel
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Tipo de letra");
 
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Segoe UI", "Arial", "Sans", "Ink Free" }));
+        ComboLetra.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ComboLetra.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Segoe UI", "Arial", "Sans", "Ink Free" }));
+        ComboLetra.addItemListener(new java.awt.event.ItemListener()
+        {
+            public void itemStateChanged(java.awt.event.ItemEvent evt)
+            {
+                ComboLetraItemStateChanged(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Tamaño de letra");
 
-        jComboBox2.setEditable(true);
-        jComboBox2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "14", "16", "18" }));
+        ComboTamanio.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        ComboTamanio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "14", "16", "18" }));
+        ComboTamanio.addItemListener(new java.awt.event.ItemListener()
+        {
+            public void itemStateChanged(java.awt.event.ItemEvent evt)
+            {
+                ComboTamanioItemStateChanged(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setText("Agregar imagen:");
@@ -284,14 +302,14 @@ public class Hoja extends javax.swing.JPanel
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 254, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 344, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ComboLetra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(ComboTamanio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -311,9 +329,9 @@ public class Hoja extends javax.swing.JPanel
                     .addComponent(jLabel1)
                     .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComboLetra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ComboTamanio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13)
                 .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -327,8 +345,9 @@ public class Hoja extends javax.swing.JPanel
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Método que mueve las imagenes a la carpeta hoja de la libreta, las 
+     * Método que mueve las imagenes a la carpeta hoja de la libreta, las
      * renombra, guarda el titulo y el texto de la hoja.
+     *
      * @param evt evento cuando se llama al boton
      */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnGuardarActionPerformed
@@ -376,6 +395,7 @@ public class Hoja extends javax.swing.JPanel
     /**
      * Método que permite elegir las imagenes de la computadora y los añade a la
      * hoja
+     *
      * @param evt evento que se llama al dar clic al boton
      */
     private void btnNuevaImagenActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnNuevaImagenActionPerformed
@@ -408,22 +428,47 @@ public class Hoja extends javax.swing.JPanel
 
     /**
      * Elimina una hoja de la libreta
-     * @param evt 
+     *
+     * @param evt
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminarActionPerformed
     {//GEN-HEADEREND:event_btnEliminarActionPerformed
 
         libretaM.Eliminar(hojaA);
-        
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void ComboTamanioItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_ComboTamanioItemStateChanged
+    {//GEN-HEADEREND:event_ComboTamanioItemStateChanged
+
+        cambioLF();
+
+    }//GEN-LAST:event_ComboTamanioItemStateChanged
+
+    private void ComboLetraItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_ComboLetraItemStateChanged
+    {//GEN-HEADEREND:event_ComboLetraItemStateChanged
+
+        cambioLF();
+
+    }//GEN-LAST:event_ComboLetraItemStateChanged
+
+    public void cambioLF()
+    {
+        Cadena = txtArcTexto.getText();
+        tamanio = Integer.parseInt((String) ComboTamanio.getSelectedItem());
+        String tipo = (String) ComboLetra.getSelectedItem();
+        Font fuente = new Font(tipo, Font.PLAIN, tamanio);
+        txtArcTexto.setText("");
+        txtArcTexto.setFont(fuente);
+        txtArcTexto.setText(Cadena);
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboLetra;
+    private javax.swing.JComboBox<String> ComboTamanio;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevaImagen;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

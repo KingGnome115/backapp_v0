@@ -195,7 +195,7 @@ public class Horario extends javax.swing.JFrame
                     "Profesor :" + materia.get(0).getNombreMaestro() + " \nSemestre:"
                     + +materia.get(0).getSemestre());
             caja.setEditable(false);
-            caja.setBackground(materia.get(i).getColor());
+            caja.setForeground(materia.get(i).getColor());
             dia.add(caja);
         }
         dia.updateUI();
@@ -717,7 +717,7 @@ public class Horario extends javax.swing.JFrame
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(txtMateria, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -794,7 +794,7 @@ public class Horario extends javax.swing.JFrame
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(200, 200, 200)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
                     .addComponent(jLabel56, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addComponent(btnEditarMaterias)
@@ -1025,7 +1025,7 @@ public class Horario extends javax.swing.JFrame
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 860, Short.MAX_VALUE))
                 .addGap(0, 0, 0))
         );
         jPanel4Layout.setVerticalGroup(
